@@ -59,3 +59,19 @@ Le projets utilise différentes dépendances, en voici les principales :
 - [**redux**](https://redux.js.org/) state manager
 
 Je ne détailles pas les autres car elles servent surtout pour le développement.
+
+## Annexe
+
+Apprendre React :
+
+- Sur le site de React :
+
+  - https://fr.reactjs.org/tutorial/tutorial.html
+  - https://fr.reactjs.org/docs/hello-world.html
+
+- OpenClassroom
+- Grafikart
+
+Plein d'autre ressources sont disponibles sur internet ou sur YouTube.
+
+Jetez aussi un oeil à Redux et React Router
