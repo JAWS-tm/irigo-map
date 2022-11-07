@@ -19,7 +19,7 @@ public class UserDaoTests {
 
     /**
      * @author Louise
-     * We create one user and testing if all is done well
+     * We create one user and testing if all is done well without motion and frequencys
      */
     @Test
     public void testCreateUser() {
