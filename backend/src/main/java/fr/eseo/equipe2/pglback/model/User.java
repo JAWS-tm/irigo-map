@@ -16,26 +16,20 @@ public class User implements UserDetails {
     private String login; // e-mail
     @Column(length = 60, nullable = false)
     private String password;
-
     @Id
     @Column(length = 30, nullable = false)
     private String name;
-
     @Id
     @Column(length = 30, nullable = false)
     private String lastName;
-
     @Id
     @Column(length = 30 ,nullable = false)
     private String sex;
-
     @Id
     @Column(length = 30 ,nullable = false)
     private Date dateBirth;
-
     @Column(length = 40 ,nullable = true)
     private String motion;
-
     @Column(length = 30 ,nullable = true)
     private String frequency;
 
