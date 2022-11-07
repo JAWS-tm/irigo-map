@@ -21,6 +21,7 @@ Vous devez installer les plugins VS Code suivant pour une meilleur compatibilit√
 
 - [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
 - [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+- Conventionnal Commits
 
 #### Prettier
 
