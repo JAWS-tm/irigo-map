@@ -35,3 +35,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+#### Own ignores
+backend/src/main/resources/application.properties
