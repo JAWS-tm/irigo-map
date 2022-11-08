@@ -12,20 +12,18 @@ import java.util.Collection;
 @Table(name = "users")
 public class User implements UserDetails {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     @Column(length = 30, nullable = false)
     private String login; // e-mail
     @Column(length = 60, nullable = false)
     private String password;
-    @Id
     @Column(length = 30, nullable = false)
     private String name;
-    @Id
     @Column(length = 30, nullable = false)
     private String lastName;
-    @Id
     @Column(length = 30 ,nullable = false)
     private String sex;
-    @Id
     @Column(length = 30 ,nullable = false)
     private Date dateBirth;
     @Column(length = 40 ,nullable = true)
@@ -35,7 +33,20 @@ public class User implements UserDetails {
 
     public User() {}
 
-    public User(String login, String password, String name, String lastName, String sex, Date dateBirth, String motion, String frequency) {
+    /**
+     * when we want create an user we take all parameters
+     * @param id
+     * @param login
+     * @param password
+     * @param name
+     * @param lastName
+     * @param sex
+     * @param dateBirth
+     * @param motion
+     * @param frequency
+     */
+    public User(int id, String login, String password, String name, String lastName, String sex, Date dateBirth, String motion, String frequency) {
+        this.id = id;
         this.login = login;
         this.password = password;
         this.name = name;
@@ -46,9 +57,8 @@ public class User implements UserDetails {
         this.frequency = frequency;
     }
     // getters
-    public String getLogin() {
-        return login;
-    }
+    public int getId() { return id; }
+    public String getLogin() {return login;}
     public String getPassword() {return password;}
     public String getName() {return name;}
     public String getLastName() {return lastName;}
@@ -58,6 +68,8 @@ public class User implements UserDetails {
     public String getFrequency() {return frequency;}
 
     // setters
+
+    public void setId(int id) {this.id = id;}
     public void setLogin(String login) {this.login = login;}
     public void setPassword(String password) {this.password = password;}
     public void setName(String name) {this.name = name;}
