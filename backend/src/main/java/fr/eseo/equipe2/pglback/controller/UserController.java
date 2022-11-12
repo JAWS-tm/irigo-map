@@ -1,17 +1,11 @@
 package fr.eseo.equipe2.pglback.controller;
 
-import fr.eseo.clients.model.User;
-import fr.eseo.clients.security.AuthRequest;
-import fr.eseo.clients.security.AuthResponse;
-import fr.eseo.clients.security.JwtTokenUtil;
+import fr.eseo.equipe2.pglback.dao.UserDao;
+import fr.eseo.equipe2.pglback.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @CrossOrigin
@@ -25,9 +19,9 @@ public class UserController {
         this.userDao = userDao;
     }
 
-    @GetMapping("/user/{id}")
-    public Optional<User> getUser(@PathVariable int id) {
-        return userDao.findById(id);
+    @GetMapping("/user/{login}")
+    public Optional<User> getUser(@PathVariable String login) {
+        return userDao.findById(login);
     }
 
     /**
@@ -41,12 +35,12 @@ public class UserController {
 
     /**
      * if we want delete user with his unique id
-     * @param id
+     * @param login id of the user
      */
-    @DeleteMapping("/user/{id}")
-    public void deleteUser(@PathVariable int id){
-        if(clientsDao.existsById(id)){
-            clientsDao.deleteById(id);
+    @DeleteMapping("/user/{login}")
+    public void deleteUser(@PathVariable String login){
+        if(userDao.existsById(login)){
+            userDao.deleteById(login);
         }
     }
 }

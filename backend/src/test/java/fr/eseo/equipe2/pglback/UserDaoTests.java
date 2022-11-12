@@ -18,14 +18,18 @@ public class UserDaoTests {
     private UserDao userDao;
 
     /**
-     * @author Louise
-     * We create one user and testing if all is done well without motion and frequencys
+     * We create one user and testing if all is done well with frequency and motion
      */
     @Test
     public void testCreateUser() {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String password = passwordEncoder.encode("b3"); //encode password
-        User newUser = new User("eseo@reseau.eseo.fr", password, "Patrick", "Dubois", "H", "2012-12-06");
+        User newUser = new User("PatateFM@reseau.eseo.fr", password, "Patrick", "Dubois", "H", "2012-12-06","bike", "2 per day");
         userDao.save(newUser);
+        BCryptPasswordEncoder passwordEncoder2 = new BCryptPasswordEncoder();
+        String password2 = passwordEncoder2.encode("B3"); //encode password
+        User newUser2 = new User("Pomme@reseau.eseo.fr", password2, "Michelle", "Oro", "F", "1986-05-21");
+        userDao.save(newUser2);
     }
+
 }

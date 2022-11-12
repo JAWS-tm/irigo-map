@@ -1,9 +1,9 @@
 package fr.eseo.equipe2.pglback.controller;
 
-import fr.eseo.clients.model.User;
-import fr.eseo.clients.security.AuthRequest;
-import fr.eseo.clients.security.AuthResponse;
-import fr.eseo.clients.security.JwtTokenUtil;
+import fr.eseo.equipe2.pglback.model.User;
+import fr.eseo.equipe2.pglback.security.AuthRequest;
+import fr.eseo.equipe2.pglback.security.AuthResponse;
+import fr.eseo.equipe2.pglback.security.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

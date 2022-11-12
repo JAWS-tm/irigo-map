@@ -5,9 +5,11 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
+@Component
 public class JwtTokenUtil {
     private static final long EXPIRE_DURATION = 24 * 60 * 60 * 1000;
     @Value("${app.jwt.secret}") // You need to update the document "application.properties" WARNING!! some information are confidential
