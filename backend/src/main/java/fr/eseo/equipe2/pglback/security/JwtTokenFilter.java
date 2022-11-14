@@ -17,10 +17,19 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
 
-@Component
+@Component //Tells Spring to look for addiction injections
 public class JwtTokenFilter extends OncePerRequestFilter {
     @Autowired
     private JwtTokenUtil jwtUtil;
+
+    /**
+     * invoked once per request within a single request thread
+     * @param request type doGet, doPost, ...
+     * @param response with token access or Json
+     * @param filterChain
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response, FilterChain filterChain)
@@ -37,14 +46,27 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             }
         }
     }
+
+    /**
+     * Verify if header type is a bearer type
+     * @param request type doGet, doPost, ...
+     * @return boolean
+     */
     private boolean hasAuthorizationBearer(HttpServletRequest request) {
         String header = request.getHeader("Authorization");
         return !ObjectUtils.isEmpty(header) && header.startsWith("Bearer");
     }
+
+    /**
+     * get header authorization
+     * @param request type doGet, doPost, ...
+     * @return
+     */
     private String getAccessToken(HttpServletRequest request) {
         String header = request.getHeader("Authorization");
         return header.split(" ")[1].trim();
     }
+
     private void setAuthenticationContext(String token, HttpServletRequest request) {
         UserDetails userDetails = getUserDetails(token);
         UsernamePasswordAuthenticationToken
@@ -53,6 +75,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                 new WebAuthenticationDetailsSource().buildDetails(request));
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
+
     private UserDetails getUserDetails(String token) {
         User userDetails = new User();
         String[] jwtSubject = jwtUtil.getSubject(token).split(",");
