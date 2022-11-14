@@ -11,21 +11,24 @@ import java.util.Date;
 @Table(name = "users") //name of the table on database
 public class User implements UserDetails {
     @Id
-    @Column(length = 30, nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @Column(name="login",length = 30, nullable = false, unique = true)
     private String login; // e-mail
-    @Column(length = 60, nullable = false)
+    @Column(name="password",length = 60, nullable = false)
     private String password;
-    @Column(length = 30, nullable = false)
+    @Column(name="name",length = 30, nullable = false)
     private String name;
-    @Column(length = 30, nullable = false)
+    @Column(name="lastName",length = 30, nullable = false)
     private String lastName;
-    @Column(length = 30 ,nullable = false)
+    @Column(name="sex",length = 30 ,nullable = false)
     private String sex;
-    @Column(length = 30 ,nullable = false)
+    @Column(name="dateBirth",length = 30 ,nullable = false)
     private String dateBirth;
-    @Column(length = 40 ,nullable = true)
+    @Column(name="motion",length = 40 ,nullable = true)
     private String motion;
-    @Column(length = 30 ,nullable = true)
+    @Column(name="frequency",length = 30 ,nullable = true)
     private String frequency;
 
     public User() {}
@@ -42,6 +45,7 @@ public class User implements UserDetails {
      * @param frequency how many times
      */
     public User(String login, String password, String name, String lastName, String sex, String dateBirth, String motion, String frequency) {
+        this.id = id;
         this.login = login;
         this.password = password;
         this.name = name;
@@ -62,6 +66,7 @@ public class User implements UserDetails {
      * @param dateBirth date of birth (AAAA-MM-DD)
      */
     public User(String login, String password, String name, String lastName, String sex, String dateBirth) {
+        this.id = id;
         this.login = login;
         this.password = password;
         this.name = name;
