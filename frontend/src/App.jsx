@@ -1,20 +1,31 @@
 import { Route, Routes } from 'react-router-dom';
-import './assets/styles/App.css';
 import About from './pages/About';
 import Home from './pages/Home';
+import Navbar from './layout/Navbar';
+import Footer from './layout/Footer';
+import Contact from './pages/Contact';
+import ContentLayout from './layout/ContentLayout';
+import Login from './pages/Login';
+import Register from './pages/Register';
 import Map from './pages/Map';
-import User from './pages/User';
 
 function App() {
   return (
-    <div className="App">
+    <>
+      <Navbar />
+      {/* <h1>Welcome to React Router!</h1> */}
       <Routes>
-        <Route path="/home" element={<Home />} />
-        <Route path="users" element={<User />} />
-        <Route path="about" element={<About />} />
-        <Route path="map" element={<Map />} />
+        <Route path="/" element={<ContentLayout />}>
+          <Route index element={<Home />} />
+          <Route path="about" element={<About />} />
+          <Route path="contact" element={<Contact />} />
+          <Route path="sign-in" element={<Login />} />
+          <Route path="sign-up" element={<Register />} />
+          <Route path="map" element={<Map />} />
+        </Route>
       </Routes>
-    </div>
+      <Footer />
+    </>
   );
 }
 
