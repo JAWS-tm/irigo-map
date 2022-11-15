@@ -6,8 +6,9 @@ const About = (props) => {
   return (
     <div>
       <h2>About Pages</h2>
-      <p>PGL default project structure</p>
-      <Link to="/">Home</Link>
+      <Link to="/Home">Home</Link>
+      <Link to="/map">Map Page</Link>
+      <Link to="/users">User</Link>
     </div>
   );
 };

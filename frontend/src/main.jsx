@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import './assets/styles/index.css';
+import 'leaflet/dist/leaflet.css';
 import store from './store/store';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
