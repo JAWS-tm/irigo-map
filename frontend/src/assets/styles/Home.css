@@ -1,0 +1,10 @@
+.Head {
+  color: blue;
+  height: 100px;
+  width: 100%;
+  background: linear-gradient(70deg, red, #9198e5);
+}
+
+.title {
+  margin: 0px;
+}
