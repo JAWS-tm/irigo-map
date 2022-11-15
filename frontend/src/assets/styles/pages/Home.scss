@@ -1,0 +1,118 @@
+.Home {
+  .header {
+    background-color: var(--primary-color);
+    padding: 30px 0 0;
+  }
+
+  .hero-section {
+    display: flex;
+    gap: 40px;
+    padding: 0 var(--container-margin);
+
+    & > div {
+      width: 50%;
+    }
+
+    img {
+      width: 100%;
+    }
+
+    .hero-data {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      .title {
+        font-family: var(--font-secondary);
+        font-size: 40px;
+        color: white;
+        line-height: 40px;
+        margin-bottom: 30px;
+      }
+      .description {
+        color: var(--light-text-color);
+        margin-bottom: 25px;
+      }
+    }
+  }
+
+  .card-section {
+    margin-top: 25px;
+    position: relative;
+
+    &::after {
+      content: '';
+      width: 100%;
+      height: 50%;
+      position: absolute;
+      top: 50%;
+      background-color: white;
+      z-index: 0;
+    }
+    // justify-content: space-between;
+
+    .card-list {
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+      padding: 0 var(--container-margin);
+    }
+
+    .card {
+      // margin: 0 15px;
+      padding: 70px 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--primary-light-color);
+      box-shadow: 0 0 29px 0 var(--shadow-color);
+      border-radius: 8px;
+      transition: 0.3s;
+      z-index: 1;
+
+      @include sm {
+        width: calc(50% - 15px);
+      }
+
+      @include xl {
+        width: calc(25% - 3 * 30px / 4);
+      }
+
+      &:hover {
+        background-color: var(--primary-hover-color);
+
+        i {
+          color: white;
+        }
+      }
+
+      i {
+        font-size: 48px;
+        line-height: 1;
+        color: var(--light-text-color);
+        transition: 0.3s;
+        margin-bottom: 15px;
+      }
+      h3 {
+        color: white;
+        font-family: var(--font-secondary);
+        font-weight: 700;
+        margin-bottom: 15px;
+        font-size: 25px;
+        line-height: 1.2;
+        text-align: center;
+      }
+    }
+  }
+
+  .about-section {
+    margin: 75px 0;
+    text-align: center;
+
+    .description {
+      color: var(--secondary-text-color);
+      margin: 0 var(--container-margin);
+    }
+  }
+}
