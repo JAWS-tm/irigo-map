@@ -15,9 +15,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Date;
 
-@Component //Tells Spring to look for addiction injections
+
+@Component
 public class JwtTokenFilter extends OncePerRequestFilter {
     @Autowired
     private JwtTokenUtil jwtUtil;
@@ -57,7 +57,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         return !ObjectUtils.isEmpty(header) && header.startsWith("Bearer");
     }
 
-    /**
+    /** 
      * get header authorization
      * @param request type doGet, doPost, ...
      * @return
@@ -79,7 +79,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     private UserDetails getUserDetails(String token) {
         User userDetails = new User();
         String[] jwtSubject = jwtUtil.getSubject(token).split(",");
-        userDetails.setLogin(jwtSubject[0]);
+        userDetails.setEmail(jwtSubject[0]);
         return userDetails;
     }
 }

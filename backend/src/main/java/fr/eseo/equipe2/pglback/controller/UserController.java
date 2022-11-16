@@ -1,27 +1,31 @@
 package fr.eseo.equipe2.pglback.controller;
 
-import fr.eseo.equipe2.pglback.dao.UserDao;
+import fr.eseo.equipe2.pglback.controller.request.RegisterRequest;
+import fr.eseo.equipe2.pglback.controller.request.mapper.UserRequestMapper;
+import fr.eseo.equipe2.pglback.dto.UserDto;
+import fr.eseo.equipe2.pglback.dto.response.Response;
 import fr.eseo.equipe2.pglback.model.User;
+import fr.eseo.equipe2.pglback.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import java.util.List;
 
 @RestController
-@CrossOrigin
-@RequestMapping("/auth")
-
+//@CrossOrigin
+@RequestMapping("/users")
 public class UserController {
     @Autowired
-    private final UserDao userDao;
+    private UserService userService;
 
-    public UserController(UserDao userDao) {
-        this.userDao = userDao;
+    @GetMapping
+    public Response getUsers() {
+        return Response.ok().setPayload(userService.getUsers());
     }
 
-    @GetMapping("/user/{login}")
-    public Optional<User> getUser(@PathVariable String login) {
-        return userDao.findById(login);
+    @GetMapping("/{id}")
+    public Response getUser(@PathVariable int id) {
+        return Response.ok().setPayload(userService.findById(id));
     }
 
     /**
@@ -29,18 +33,20 @@ public class UserController {
      * @param user
      */
     @PutMapping("/user")
-    public  void updateUser(@RequestBody User user){
-        userDao.save(user);
+    public Response updateUser(@RequestBody UserDto userDto){
+        userService.updateUser(userDto);
+        return Response.ok();
     }
 
     /**
      * if we want delete user with his unique id
-     * @param login id of the user
+     * @param email email of the user
      */
-    @DeleteMapping("/user/{login}")
-    public void deleteUser(@PathVariable String login){
-        if(userDao.existsById(login)){
-            userDao.deleteById(login);
-        }
+    @DeleteMapping("/user/{email}")
+    public Response deleteUser(@PathVariable String email){
+        userService.deleteUser(email);
+        return Response.ok();
     }
+
+
 }
