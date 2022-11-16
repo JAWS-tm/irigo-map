@@ -2,17 +2,17 @@ package fr.eseo.equipe2.pglback.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.experimental.Accessors;
+//import lombok.Getter;
+//import lombok.NoArgsConstructor;
+//import lombok.Setter;
+//import lombok.experimental.Accessors;
 
 import java.util.Date;
 
-@Getter
-@Setter
-@Accessors(chain = true)
-@NoArgsConstructor
+//@Getter
+//@Setter
+//@Accessors(chain = true)
+//@NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Response<T> {
@@ -106,4 +106,42 @@ public class Response<T> {
         }
     }*/
 
+    public Response() {
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public Response<T> setStatus(Status status) {
+        this.status = status;
+        return this;
+    }
+
+    public T getPayload() {
+        return payload;
+    }
+
+    public Response<T> setPayload(T payload) {
+        this.payload = payload;
+        return this;
+    }
+
+    public Object getErrors() {
+        return errors;
+    }
+
+    public Response<T> setErrors(Object errors) {
+        this.errors = errors;
+        return this;
+    }
+
+    public Object getMetadata() {
+        return metadata;
+    }
+
+    public Response<T> setMetadata(Object metadata) {
+        this.metadata = metadata;
+        return this;
+    }
 }

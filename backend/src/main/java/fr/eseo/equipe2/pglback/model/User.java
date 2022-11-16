@@ -3,9 +3,9 @@ package fr.eseo.equipe2.pglback.model;
 import fr.eseo.equipe2.pglback.enumeration.TravelFrequency;
 import fr.eseo.equipe2.pglback.enumeration.TravelHabits;
 import fr.eseo.equipe2.pglback.enumeration.UserSex;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.Accessors;
+//import lombok.Getter;
+//import lombok.Setter;
+//import lombok.experimental.Accessors;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -13,9 +13,9 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.Date;
 
-@Getter
-@Setter
-@Accessors(chain = true)
+//@Getter
+//@Setter
+//@Accessors(chain = true)
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
@@ -94,6 +94,7 @@ public class User implements UserDetails {
     }
 
 
+
     // Spring security
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -116,5 +117,91 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+
+
+    // Getters & Setters
+
+    public int getId() {
+        return id;
+    }
+
+    public User setId(int id) {
+        this.id = id;
+        return this;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public User setEmail(String email) {
+        this.email = email;
+        return this;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    public User setPassword(String password) {
+        this.password = password;
+        return this;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public User setFirstName(String firstName) {
+        this.firstName = firstName;
+        return this;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public User setLastName(String lastName) {
+        this.lastName = lastName;
+        return this;
+    }
+
+    public UserSex getSex() {
+        return sex;
+    }
+
+    public User setSex(UserSex sex) {
+        this.sex = sex;
+        return this;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public User setBirthday(Date birthday) {
+        this.birthday = birthday;
+        return this;
+    }
+
+    public TravelHabits getTravelHabits() {
+        return travelHabits;
+    }
+
+    public User setTravelHabits(TravelHabits travelHabits) {
+        this.travelHabits = travelHabits;
+        return this;
+    }
+
+    public TravelFrequency getTravelFrequency() {
+        return travelFrequency;
+    }
+
+    public User setTravelFrequency(TravelFrequency travelFrequency) {
+        this.travelFrequency = travelFrequency;
+        return this;
     }
 }
