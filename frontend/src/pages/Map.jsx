@@ -11,8 +11,6 @@ import {
   Marker,
 } from 'react-leaflet';
 import * as L from 'leaflet';
-import '../assets/styles/Map.css';
-import useFetch from './mapFetch.js';
 import bus from '../pictures/bus.png';
 import axios from 'axios';
 import { useState } from 'react';
@@ -26,6 +24,7 @@ const stopURL =
   'https://data.angers.fr/api/records/1.0/search/?dataset=bus-tram-circulation-passages&q=&rows=2000&facet=mnemoligne&facet=nomligne&facet=dest&facet=mnemoarret&facet=nomarret&facet=numarret';
 const busURL =
   'https://data.angers.fr/api/records/1.0/search/?dataset=bus-tram-position-tr&q=&rows=2000&facet=novh&facet=mnemoligne&facet=nomligne&facet=dest';
+
 const southWest = L.latLng(47.39, -0.66);
 const northEast = L.latLng(47.58, -0.44);
 const bounds = L.latLngBounds(southWest, northEast);
@@ -51,6 +50,17 @@ const colorLine = [
   ['#'],
   ['#41A3D7'],
 ];
+
+const useFetch = (url) => {
+  const [datad, setDatas] = useState(null);
+
+  useEffect(() => {
+    axios.get(url).then((response) => {
+      setDatas(response.data);
+    });
+  }, [url]);
+  return datad;
+};
 
 const Map = (props) => {
   let lineData = useFetch(lineURL);
