@@ -30,7 +30,7 @@ public class UserController {
 
     /**
      * when we do modification on user
-     * @param user
+     * @param userDto
      */
     @PutMapping("/user")
     public Response updateUser(@RequestBody UserDto userDto){

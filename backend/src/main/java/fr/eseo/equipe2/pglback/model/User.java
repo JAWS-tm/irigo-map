@@ -82,8 +82,8 @@ public class User implements UserDetails {
      * @param travelHabits habits of travel
      * @param travelFrequency frequency of travel
      */
-    public User(String login, String password, String firstName, String lastName, UserSex sex, Date birthday, TravelHabits travelHabits, TravelFrequency travelFrequency) {
-        this.email = login;
+    public User(String email, String password, String firstName, String lastName, UserSex sex, Date birthday, TravelHabits travelHabits, TravelFrequency travelFrequency) {
+        this.email = email;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;

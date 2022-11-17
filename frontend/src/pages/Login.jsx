@@ -54,4 +54,36 @@ const Login = (props) => {
 
 Login.propTypes = {};
 
+let val = '';
+let pw = '';
+//const urlSignin= ;
+
+//EvenClick() get email and password
+function EvenClick() {
+  return () => {
+    console.log('connexion ma gueule ' + val + '   ' + pw);
+    /*//chekUser
+    fetch(urlSignin, {
+      method: 'GET',
+      headers: {
+        Authentication: 'Bearer Token',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: val,
+        password: pw,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        document.getElementById('password').style.backgroundColor = '#ffffff';
+        sessionStorage.setItem('accessToken', data.accessToken);
+      })
+      .catch((err) => {
+        document.getElementById('password').value = '';
+        document.getElementById('password').style.backgroundColor = '#ff0000';
+      });*/
+  };
+}
+
 export default Login;

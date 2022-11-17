@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import heroImg from '../assets/images/hero-bus-illustration.png';
+import heroImg from '../assets/pictures/hero-bus-illustration.png';
 import { Link } from 'react-router-dom';
 import UnderlinedTitle from '../components/UnderlinedTitle';
 import Button from '../components/Button';

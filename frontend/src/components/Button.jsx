@@ -18,7 +18,8 @@ const Button = ({ text, className, onClick, type, disabled }) => {
 Button.defaultProps = {
   type: 'button',
 };
-
+//used to make sure the data you receive is valid
+//we need to do: name: PropTypes.type   type can be: func, array, string,
 Button.propTypes = {
   text: PropTypes.string.isRequired,
   className: PropTypes.string,
