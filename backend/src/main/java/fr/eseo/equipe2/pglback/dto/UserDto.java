@@ -16,8 +16,8 @@ import java.util.Date;
 //@Setter
 //@Accessors(chain = true)
 //@NoArgsConstructor
-@JsonInclude(JsonInclude.Include.NON_NULL)
-//@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class UserDto {
     private String firstName;
     private String lastName;

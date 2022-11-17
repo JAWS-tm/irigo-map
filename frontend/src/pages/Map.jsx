@@ -11,7 +11,7 @@ import {
   Marker,
 } from 'react-leaflet';
 import * as L from 'leaflet';
-import bus from '../pictures/bus.png';
+import bus from '../assets/images/bus.png';
 import axios from 'axios';
 import { useState } from 'react';
 import { useEffect } from 'react';

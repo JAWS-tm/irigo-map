@@ -1,9 +1,9 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { IDLE_STATE } from "../constants";
+import { createSlice } from '@reduxjs/toolkit';
+import { IDLE_STATE } from '../constants';
 
 // Create actions & reducer
 export const usersSlice = createSlice({
-  name: "users",
+  name: 'users',
   initialState: {
     list: [],
     error: false,
@@ -13,7 +13,7 @@ export const usersSlice = createSlice({
     addUser: (state) => {
       state.list.push({
         id: 1,
-        name: "Jules",
+        name: 'Jules',
         age: 20,
       });
     },
