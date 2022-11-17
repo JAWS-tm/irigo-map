@@ -1,17 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const RadioOption = ({ label, name, onChange, isChecked, value }) => {
-  const id = value + '-radio';
+const RadioOption = ({ label, radioValue, field }) => {
+  const id = label + '-radio';
+
   return (
     <div className="radio-input">
       <input
         type="radio"
-        name={name}
-        onChange={onChange}
-        value={value}
         id={id}
-        checked={isChecked}
+        {...field}
+        value={radioValue}
+        checked={field.value === radioValue}
       />
       <label htmlFor={id}>{label}</label>
     </div>
@@ -20,10 +20,7 @@ const RadioOption = ({ label, name, onChange, isChecked, value }) => {
 
 RadioOption.propTypes = {
   label: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
-  name: PropTypes.string,
-  onChange: PropTypes.func,
-  isChecked: PropTypes.bool,
+  radioValue: PropTypes.string.isRequired,
 };
 
 export default RadioOption;

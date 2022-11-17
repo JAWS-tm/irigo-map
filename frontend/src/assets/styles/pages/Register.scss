@@ -46,7 +46,7 @@
     .row {
       display: flex;
       gap: 20px;
-      .input {
+      .form-input {
         width: 50%;
       }
     }
@@ -62,7 +62,8 @@
       }
     }
 
-    .input {
+    .form-input,
+    .date-picker {
       margin-bottom: 20px;
     }
 
