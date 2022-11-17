@@ -38,7 +38,13 @@ const Login = (props) => {
       >
         <Form>
           <Field name="email" label="Email" className="input" component={FormInput} />
-          <Field name="password" label="Mot de passe" className="input" component={FormInput} />
+          <Field
+            name="password"
+            label="Mot de passe"
+            type="password"
+            className="input"
+            component={FormInput}
+          />
 
           {/* <Input label="Email" className="input" type={'email'} />
           <Input label="Mot de passe" className="input" type={'password'} /> */}
