@@ -29,27 +29,17 @@ public class UserDaoTests {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String password = passwordEncoder.encode("b3"); //encode password
         UserSex sex= UserSex.MALE;
-        Date birthday= new Date(1993,6,20);
+        Date birthday1= new Date("1993/06/20");
         TravelFrequency frequency = TravelFrequency.WEEKLY;
         TravelHabits motion = TravelHabits.BICYCLE;
         User newUser = new User("patrick.dubois@reseau.eseo.fr", password, "Patrick",
-
-                "Dubois", UserSex.MALE, new Date(), TravelHabits.CAR, TravelFrequency.DAILY);
-        userDao.save(newUser);
-
-//        BCryptPasswordEncoder passwordEncoder2 = new BCryptPasswordEncoder();
-//        String password2 = passwordEncoder2.encode("B3"); //encode password
-//        User newUser2 = new User("michelle.oro@reseau.eseo.fr", password2, "Michelle",
-//                "Oro", "F", "1986-05-21");
-//        userDao.save(newUser2);
-
-                "Dubois", sex, birthday,motion, frequency);
+                "Dubois", sex, birthday1, motion, frequency);
         userDao.save(newUser);
 
         BCryptPasswordEncoder passwordEncoder2 = new BCryptPasswordEncoder();
         String password2 = passwordEncoder2.encode("B3"); //encode password
         UserSex sex2 = UserSex.FEMALE;
-        Date birthday2 = new Date(1954,12,1);
+        Date birthday2 = new Date("1954/12/01");
         User newUser2 = new User("michelle.oro@reseau.eseo.fr", password2, "Michelle",
                 "Oro", sex2, birthday2);
         userDao.save(newUser2);

@@ -1,3 +1,41 @@
-#Map {
-  height: 800px;
+#ContainerMapPage {
+  display: flex;
+  flex-direction: row;
+  font-family: var(--font-secondary);
+  background-color: var(--dark-background-color);
+
+  #Map {
+    height: 800px;
+    width: 80vw;
+    z-index: 9;
+  }
+
+  #legend {
+    height: 800px;
+    color: aliceblue;
+    width: 20vw;
+    text-align: center;
+
+    h2 {
+      margin: 2vw;
+    }
+    #bus {
+      font-family: var(--font-secondary);
+      text-transform: uppercase;
+      text-align: left;
+      padding-left: 1vw;
+    }
+    ul {
+      list-style: none;
+      text-align: left;
+      padding-left: 1vw;
+
+      li {
+        #bullet {
+          font-size: 1.5rem;
+          font-weight: 900;
+        }
+      }
+    }
+  }
 }
