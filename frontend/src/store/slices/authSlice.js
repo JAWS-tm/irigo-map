@@ -2,8 +2,6 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import authService from '../../services/auth.service';
 import { IDLE_STATE, LOADING_STATE } from '../constants';
 
-const user = JSON.parse(localStorage.getItem('user') ?? '{}');
-
 export const login = createAsyncThunk(
   'auth/login',
   async ({ email, password }, { rejectWithValue }) => {
@@ -11,7 +9,7 @@ export const login = createAsyncThunk(
       const value = await authService.login(email, password);
       return value;
     } catch (err) {
-      return rejectWithValue(err.message);
+      return rejectWithValue(err.response.data.errors.message);
     }
   }
 );
@@ -32,14 +30,29 @@ export const register = createAsyncThunk(
       );
       return value;
     } catch (err) {
-      return rejectWithValue(err.message);
+      return rejectWithValue(err.response.data.errors.message);
     }
   }
 );
 
+export const getMe = createAsyncThunk('auth/me', async (_, { rejectWithValue }) => {
+  try {
+    const res = await authService.getMe();
+    if (res.status === 'OK') return res.payload;
+  } catch (err) {
+    return rejectWithValue(err.response.data?.errors.message || err.response.data);
+  }
+});
+
+export const logout = createAsyncThunk('auth/logout', () => {
+  authService.logout();
+});
+
+// const user = JSON.parse(localStorage.getItem('user') ?? '{}');
+
 const authInitialState = {
-  currentUser: user ?? null,
-  error: {},
+  currentUser: null,
+  error: null,
   status: IDLE_STATE,
 };
 
@@ -54,6 +67,9 @@ export const authSlice = createSlice({
     // login: (state, action) => {
     //   state.currentUser = action.payload.user;
     // },
+    clearAuthError: (state, action) => {
+      state.error = null;
+    },
   },
   extraReducers(builder) {
     builder
@@ -68,8 +84,35 @@ export const authSlice = createSlice({
       })
       .addCase(login.rejected, (state, action) => {
         state.status = IDLE_STATE;
-        state.currentUser = {};
+        state.currentUser = null;
         state.error = action.payload;
+      });
+
+    builder
+      // .addCase(logout.pending, (state, action) => {
+      //   state.status = LOADING_STATE;
+      //   state.error = '';
+      // })
+      .addCase(logout.fulfilled, (state, action) => {
+        // state.status = IDLE_STATE;
+        state.currentUser = null;
+        // state.error = '';
+      });
+    // .addCase(logout.rejected, (state, action) => {
+    //   state.status = IDLE_STATE;
+    //   state.currentUser = {};
+    //   state.error = action.payload;
+    // });
+
+    builder
+      .addCase(getMe.pending, (state, action) => {
+        state.status = LOADING_STATE;
+        state.error = '';
+      })
+      .addCase(getMe.fulfilled, (state, action) => {
+        state.status = IDLE_STATE;
+        state.currentUser = action.payload;
+        state.error = '';
       });
 
     builder
@@ -84,15 +127,18 @@ export const authSlice = createSlice({
       })
       .addCase(register.rejected, (state, action) => {
         state.status = IDLE_STATE;
-        state.currentUser = {};
+        state.currentUser = null;
         state.error = action.payload;
       });
   },
 });
 
 // Action creators are generated for each case reducer function
-// export const { login } = authSlice.actions;
+export const { clearAuthError } = authSlice.actions;
 
 export default authSlice.reducer;
 
 // Selects
+
+export const selectAuthError = (state) => state.auth.error;
+export const selectCurrentUser = (state) => state.auth.currentUser;

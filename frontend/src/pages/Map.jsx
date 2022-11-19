@@ -267,7 +267,6 @@ function fillLegend(listLine) {
       legend.push(new Item(listLine[i].number, listLine[i].name, listLine[i].color));
     }
   } catch (e) {} //prevent the code from crashing when list is undefined
-  //console.log(legend);
 }
 //define component to display legend content
 var Legend = () => {

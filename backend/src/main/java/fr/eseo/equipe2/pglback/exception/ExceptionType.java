@@ -3,6 +3,7 @@ package fr.eseo.equipe2.pglback.exception;
 public enum ExceptionType {
     ENTITY_NOT_FOUND("not.found"),
     DUPLICATE_ENTITY("duplicate"),
+    BAD_CREDENTIALS("bad.credentials"),
     ENTITY_EXCEPTION("exception");
 
     String value;
