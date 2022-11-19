@@ -37,18 +37,19 @@ const busIcon = L.icon({
 });
 const position = [47.472062, -0.55253];
 const colorLine = [
-  ['#'],
+  [''],
   ['#1FA22E'],
   ['#006AB2'],
   ['#EE7F00'],
   ['#93117E'],
   ['#FFDD00'],
   ['#555540'],
-  ['#'],
+  ['#8E96C7'],
   ['#BD7419'],
   ['#E2007A'],
-  ['#'],
+  ['#91C581'],
   ['#41A3D7'],
+  ['#DE84B1'],
 ];
 
 const useFetch = (url) => {
@@ -134,98 +135,97 @@ const Map = (props) => {
       let list = [];
       for (let currentBus of busData.records) {
         let dateArret = new Date(currentBus.fields.harret);
-        list.push({
-          posBus: currentBus.fields.coordonnees,
-          numberLine: currentBus.fields.mnemoligne,
-          nextStation: currentBus.fields.nomarret,
-          nameLine: currentBus.fields.nomligne,
-          dest: currentBus.fields.dest,
-          arriveTime: dateArret.getHours() + ':' + dateArret.getMinutes(),
-          retard: Math.round(currentBus.fields.ecart / 60),
-          date: currentBus.fields.harret.split('T')[0],
-        });
+        if (currentBus.fields.dest != 'PAS EN SERVICE') {
+          list.push({
+            posBus: currentBus.fields.coordonnees,
+            numberLine: currentBus.fields.mnemoligne,
+            color: colorLine[parseFloat(currentBus.fields.mnemoligne)],
+            nextStation: currentBus.fields.nomarret,
+            nameLine: currentBus.fields.nomligne,
+            dest: currentBus.fields.dest,
+            arriveTime: dateArret.getHours() + ':' + dateArret.getMinutes(),
+            retard: Math.round(currentBus.fields.ecart / 60),
+            date: currentBus.fields.harret.split('T')[0],
+          });
+        }
       }
       return list;
     }
   }, [busData]);
 
   return (
-    <div id="ContainerMapPage">
-      <div>
-        <MapContainer id="Map" center={position} zoom={15} minZoom={12.5} maxBounds={bounds}>
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-          <LayersControl position="topright" style="text-align:left">
-            {listLine &&
-              listLine.map((line, i) => {
-                return (
-                  <LayersControl.Overlay key={i} name={'(' + line.number + ')' + line.name}>
-                    <LayerGroup>
-                      <Polyline positions={line.posL} color={'#' + line.color} />
-                    </LayerGroup>
-                  </LayersControl.Overlay>
-                );
-              })}
-            <LayersControl.Overlay name={'station'}>
-              <LayerGroup>
-                {nextStop &&
-                  nextStop.map((stop, i) => {
-                    return (
-                      <CircleMarker
-                        key={i}
-                        center={stop.posStop}
-                        pathOptions={{ fillColor: 'blue' }}
-                        radius={15}
-                      >
-                        <Popup>
-                          arret: {stop.nameStation} <br />
-                          nom de la ligne: {stop.nameLine}({stop.numberLine}) <br />
-                          prochain passage: {stop.arriveTime} <br />
-                          destination: {stop.nextDest} <br />
-                          date: {stop.date}
-                        </Popup>
-                      </CircleMarker>
-                    );
-                  })}
-              </LayerGroup>
-            </LayersControl.Overlay>
-            <LayersControl.Overlay name={'bus'}>
-              <LayerGroup>
-                {bus &&
-                  bus.map((currBus, i) => {
-                    return (
-                      <Marker key={i} position={currBus.posBus} icon={busIcon}>
-                        <Popup>
-                          prochain arret: {currBus.nextStation} <br />
-                          nom de la ligne: {currBus.nameLine}({currBus.numberLine}) <br />
-                          destination: {currBus.dest} <br />
-                          Arrivée au prochain arret: {currBus.arriveTime} <br />
-                          retard estimer: {currBus.retard} <br />
-                          date: {currBus.date}
-                        </Popup>
-                      </Marker>
-                    );
-                  })}
-              </LayerGroup>
-            </LayersControl.Overlay>
-          </LayersControl>
-        </MapContainer>
-      </div>
-      <div id="legend">
-        <h2>Légende Map</h2>
-        <div id="bus">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style={{ width: '1rem' }}>
-            <path
-              d="M256 0C390.4 0 480 35.2 480 80V96l0 32c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32l0 160c0 17.7-14.3 32-32 32v32c0 17.7-14.3 32-32 32H384c-17.7 0-32-14.3-32-32V448H160v32c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32l0-32c-17.7 0-32-14.3-32-32l0-160c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h0V96h0V80C32 35.2 121.6 0 256 0zM96 160v96c0 17.7 14.3 32 32 32H240V128H128c-17.7 0-32 14.3-32 32zM272 288H384c17.7 0 32-14.3 32-32V160c0-17.7-14.3-32-32-32H272V288zM112 400c17.7 0 32-14.3 32-32s-14.3-32-32-32s-32 14.3-32 32s14.3 32 32 32zm288 0c17.7 0 32-14.3 32-32s-14.3-32-32-32s-32 14.3-32 32s14.3 32 32 32zM352 80c0-8.8-7.2-16-16-16H176c-8.8 0-16 7.2-16 16s7.2 16 16 16H336c8.8 0 16-7.2 16-16z"
-              fill="white"
-            />
-          </svg>{' '}
-          Bus
-        </div>
-        <Legend></Legend>
-      </div>
+    <div>
+      <h2>Map Pages</h2>
+      <Link to="/Home">Home</Link>
+      <Link to="/about">About project</Link>
+      <Link to="/users">User</Link>
+
+      <MapContainer id="Map" center={position} zoom={15} minZoom={12.5} maxBounds={bounds}>
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        <LayersControl position="topright">
+          <LayersControl.Overlay name={'station'}>
+            <LayerGroup>
+              {nextStop &&
+                nextStop.map((stop, i) => {
+                  return (
+                    <CircleMarker
+                      key={i}
+                      center={stop.posStop}
+                      pathOptions={{ color: 'blue' }}
+                      radius={15}
+                    >
+                      <Popup>
+                        arret: {stop.nameStation} <br />
+                        nom de la ligne: {stop.nameLine}({stop.numberLine}) <br />
+                        prochain passage: {stop.arriveTime} <br />
+                        destination: {stop.nextDest} <br />
+                        date: {stop.date}
+                      </Popup>
+                    </CircleMarker>
+                  );
+                })}
+            </LayerGroup>
+          </LayersControl.Overlay>
+          <LayersControl.Overlay name={'bus'}>
+            <LayerGroup>
+              {bus &&
+                bus.map((currBus, i) => {
+                  return (
+                    <CircleMarker
+                      key={i}
+                      center={currBus.posBus}
+                      pathOptions={{ fillColor: currBus.color, color: 'black' }}
+                      radius={15}
+                    >
+                      <Popup>
+                        prochain arret: {currBus.nextStation} <br />
+                        nom de la ligne: {currBus.nameLine}({currBus.numberLine}) <br />
+                        destination: {currBus.dest} <br />
+                        Arrivée au prochain arret: {currBus.arriveTime} <br />
+                        retard estimer: {currBus.retard} <br />
+                        date: {currBus.date}
+                      </Popup>
+                    </CircleMarker>
+                  );
+                })}
+            </LayerGroup>
+          </LayersControl.Overlay>
+          <div className="separator"></div>
+          {listLine &&
+            listLine.map((line, i) => {
+              return (
+                <LayersControl.Overlay key={i} name={'(' + line.number + ')' + line.name}>
+                  <LayerGroup>
+                    <Polyline positions={line.posL} color={'#' + line.color} />
+                  </LayerGroup>
+                </LayersControl.Overlay>
+              );
+            })}
+        </LayersControl>
+      </MapContainer>
     </div>
   );
 };

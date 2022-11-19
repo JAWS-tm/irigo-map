@@ -48,9 +48,9 @@ const Home = (props) => {
       <section className="about-section">
         <UnderlinedTitle>À propos</UnderlinedTitle>
         <p className="description">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequuntur, nobis? Placeat
-          maxime illo est repudiandae dignissimos voluptates inventore sunt vero earum, iste
-          necessitatibus reprehenderit fuga aperiam quas voluptatum aut sapiente.
+          Nous sommes 3 étudiants en dernière année de Bachelor Ingénierie Informatique et
+          Electronique. Dans le cadre de notre formation, nous avons été amené à créer ce site pour
+          un enseignement intitulé Projet Génie Logiciel. Bonne visite !
         </p>
       </section>
     </div>
