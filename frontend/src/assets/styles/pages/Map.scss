@@ -3,7 +3,9 @@
   flex-direction: row;
   font-family: var(--font-secondary);
   background-color: var(--dark-background-color);
-
+  .bus-icon {
+    background-color: none;
+  }
   #Map {
     height: 800px;
     width: 80vw;

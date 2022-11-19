@@ -18,8 +18,6 @@ import { useEffect } from 'react';
 
 const lineURL =
   'https://data.angers.fr/api/records/1.0/search/?dataset=irigo_gtfs_lines&q=&rows=118&facet=route_short_name&facet=route_long_name&facet=route_type';
-const stationURL =
-  'https://data.angers.fr/api/records/1.0/search/?dataset=horaires-theoriques-et-arrets-du-reseau-irigo-gtfs&q=&rows=2000&facet=stop_id&facet=stop_name&facet=wheelchair_boarding';
 const stopURL =
   'https://data.angers.fr/api/records/1.0/search/?dataset=bus-tram-circulation-passages&q=&rows=2000&facet=mnemoligne&facet=nomligne&facet=dest&facet=mnemoarret&facet=nomarret&facet=numarret';
 const busURL =
@@ -28,13 +26,6 @@ const busURL =
 const southWest = L.latLng(47.39, -0.66);
 const northEast = L.latLng(47.58, -0.44);
 const bounds = L.latLngBounds(southWest, northEast);
-const busIcon = L.icon({
-  iconUrl: bus,
-
-  iconSize: [45, 50], // size of the icon
-  iconAnchor: [22, 50], // point of the icon which will correspond to marker's location
-  popupAnchor: [0, 0], // point from which the popup should open relative to the iconAnchor
-});
 const position = [47.472062, -0.55253];
 const colorLine = [
   [''],
@@ -62,7 +53,21 @@ const useFetch = (url) => {
   }, [url]);
   return datad;
 };
-
+const svgIcon = (color) => {
+  return L.divIcon({
+    html: `
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" >
+    <path
+      d="M256 0C390.4 0 480 35.2 480 80V96l0 32c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32l0 160c0 17.7-14.3 32-32 32v32c0 17.7-14.3 32-32 32H384c-17.7 0-32-14.3-32-32V448H160v32c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32l0-32c-17.7 0-32-14.3-32-32l0-160c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h0V96h0V80C32 35.2 121.6 0 256 0zM96 160v96c0 17.7 14.3 32 32 32H240V128H128c-17.7 0-32 14.3-32 32zM272 288H384c17.7 0 32-14.3 32-32V160c0-17.7-14.3-32-32-32H272V288zM112 400c17.7 0 32-14.3 32-32s-14.3-32-32-32s-32 14.3-32 32s14.3 32 32 32zm288 0c17.7 0 32-14.3 32-32s-14.3-32-32-32s-32 14.3-32 32s14.3 32 32 32zM352 80c0-8.8-7.2-16-16-16H176c-8.8 0-16 7.2-16 16s7.2 16 16 16H336c8.8 0 16-7.2 16-16z"
+      fill=${color}
+    />
+  </svg>
+`,
+    iconSize: [34, 34],
+    iconAnchor: [17, 17],
+    className: 'bus-icon',
+  });
+};
 const Map = (props) => {
   let lineData = useFetch(lineURL);
   let listLine = useMemo(() => {
@@ -122,7 +127,6 @@ const Map = (props) => {
   const [busData, setBusData] = useState(null);
   useEffect(() => {
     const loadBus = () => {
-      console.log('refresh buses');
       axios.get(busURL).then((res) => setBusData(res.data));
     };
     loadBus();
@@ -155,78 +159,83 @@ const Map = (props) => {
   }, [busData]);
 
   return (
-    <div>
-      <h2>Map Pages</h2>
-      <Link to="/Home">Home</Link>
-      <Link to="/about">About project</Link>
-      <Link to="/users">User</Link>
-
-      <MapContainer id="Map" center={position} zoom={15} minZoom={12.5} maxBounds={bounds}>
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        <LayersControl position="topright">
-          <LayersControl.Overlay name={'station'}>
-            <LayerGroup>
-              {nextStop &&
-                nextStop.map((stop, i) => {
-                  return (
-                    <CircleMarker
-                      key={i}
-                      center={stop.posStop}
-                      pathOptions={{ color: 'blue' }}
-                      radius={15}
-                    >
-                      <Popup>
-                        arret: {stop.nameStation} <br />
-                        nom de la ligne: {stop.nameLine}({stop.numberLine}) <br />
-                        prochain passage: {stop.arriveTime} <br />
-                        destination: {stop.nextDest} <br />
-                        date: {stop.date}
-                      </Popup>
-                    </CircleMarker>
-                  );
-                })}
-            </LayerGroup>
-          </LayersControl.Overlay>
-          <LayersControl.Overlay name={'bus'}>
-            <LayerGroup>
-              {bus &&
-                bus.map((currBus, i) => {
-                  return (
-                    <CircleMarker
-                      key={i}
-                      center={currBus.posBus}
-                      pathOptions={{ fillColor: currBus.color, color: 'black' }}
-                      radius={15}
-                    >
-                      <Popup>
-                        prochain arret: {currBus.nextStation} <br />
-                        nom de la ligne: {currBus.nameLine}({currBus.numberLine}) <br />
-                        destination: {currBus.dest} <br />
-                        Arrivée au prochain arret: {currBus.arriveTime} <br />
-                        retard estimer: {currBus.retard} <br />
-                        date: {currBus.date}
-                      </Popup>
-                    </CircleMarker>
-                  );
-                })}
-            </LayerGroup>
-          </LayersControl.Overlay>
-          <div className="separator"></div>
-          {listLine &&
-            listLine.map((line, i) => {
-              return (
-                <LayersControl.Overlay key={i} name={'(' + line.number + ')' + line.name}>
-                  <LayerGroup>
-                    <Polyline positions={line.posL} color={'#' + line.color} />
-                  </LayerGroup>
-                </LayersControl.Overlay>
-              );
-            })}
-        </LayersControl>
-      </MapContainer>
+    <div id="ContainerMapPage">
+      <div>
+        <MapContainer id="Map" center={position} zoom={15} minZoom={12.5} maxBounds={bounds}>
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          <LayersControl position="topright">
+            <LayersControl.Overlay name={'station'}>
+              <LayerGroup>
+                {nextStop &&
+                  nextStop.map((stop, i) => {
+                    return (
+                      <CircleMarker
+                        key={i}
+                        center={stop.posStop}
+                        pathOptions={{ color: 'blue' }}
+                        radius={15}
+                      >
+                        <Popup>
+                          arret: {stop.nameStation} <br />
+                          nom de la ligne: {stop.nameLine}({stop.numberLine}) <br />
+                          prochain passage: {stop.arriveTime} <br />
+                          destination: {stop.nextDest} <br />
+                          date: {stop.date}
+                        </Popup>
+                      </CircleMarker>
+                    );
+                  })}
+              </LayerGroup>
+            </LayersControl.Overlay>
+            <LayersControl.Overlay name={'bus'}>
+              <LayerGroup>
+                {bus &&
+                  bus.map((currBus, i) => {
+                    return (
+                      <Marker key={i} icon={svgIcon(currBus.color)} position={currBus.posBus}>
+                        <Popup>
+                          prochain arret: {currBus.nextStation} <br />
+                          nom de la ligne: {currBus.nameLine}({currBus.numberLine}) <br />
+                          destination: {currBus.dest} <br />
+                          Arrivée au prochain arret: {currBus.arriveTime} <br />
+                          retard estimer: {currBus.retard} <br />
+                          date: {currBus.date}
+                        </Popup>
+                      </Marker>
+                    );
+                  })}
+              </LayerGroup>
+            </LayersControl.Overlay>
+            <div className="separator"></div>
+            {listLine &&
+              listLine.map((line, i) => {
+                return (
+                  <LayersControl.Overlay key={i} name={'(' + line.number + ')' + line.name}>
+                    <LayerGroup>
+                      <Polyline positions={line.posL} color={'#' + line.color} />
+                    </LayerGroup>
+                  </LayersControl.Overlay>
+                );
+              })}
+          </LayersControl>
+        </MapContainer>
+      </div>
+      <div id="legend">
+        <h2>Légende Map</h2>
+        <div id="bus">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style={{ width: '1rem' }}>
+            <path
+              d="M256 0C390.4 0 480 35.2 480 80V96l0 32c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32l0 160c0 17.7-14.3 32-32 32v32c0 17.7-14.3 32-32 32H384c-17.7 0-32-14.3-32-32V448H160v32c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32l0-32c-17.7 0-32-14.3-32-32l0-160c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h0V96h0V80C32 35.2 121.6 0 256 0zM96 160v96c0 17.7 14.3 32 32 32H240V128H128c-17.7 0-32 14.3-32 32zM272 288H384c17.7 0 32-14.3 32-32V160c0-17.7-14.3-32-32-32H272V288zM112 400c17.7 0 32-14.3 32-32s-14.3-32-32-32s-32 14.3-32 32s14.3 32 32 32zm288 0c17.7 0 32-14.3 32-32s-14.3-32-32-32s-32 14.3-32 32s14.3 32 32 32zM352 80c0-8.8-7.2-16-16-16H176c-8.8 0-16 7.2-16 16s7.2 16 16 16H336c8.8 0 16-7.2 16-16z"
+              fill="white"
+            />
+          </svg>{' '}
+          Bus
+        </div>
+        <Legend></Legend>
+      </div>
     </div>
   );
 };
@@ -258,7 +267,7 @@ function fillLegend(listLine) {
       legend.push(new Item(listLine[i].number, listLine[i].name, listLine[i].color));
     }
   } catch (e) {} //prevent the code from crashing when list is undefined
-  console.log(legend);
+  //console.log(legend);
 }
 //define component to display legend content
 var Legend = () => {
