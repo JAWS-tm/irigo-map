@@ -2,7 +2,12 @@ plugins {
     id 'org.springframework.boot' version '2.7.5'
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
     id 'java'
+    id 'war'
 //    id "io.freefair.lombok" version "6.5.1"
+}
+
+bootWar {
+    archiveName 'app.war'
 }
 
 group = 'fr.eseo.equipe2'
@@ -18,12 +23,14 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
 
+
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
 
     implementation group: 'io.springfox', name: 'springfox-boot-starter', version: '3.0.0'
 
+    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 
 }
 

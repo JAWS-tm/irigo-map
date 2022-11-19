@@ -21,9 +21,23 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
     }
 
     @ExceptionHandler(CustomException.DuplicateEntityException.class)
-    public final ResponseEntity handleNotFountExceptions1(Exception ex, WebRequest request) {
+    public final ResponseEntity handleDuplicateExceptions(Exception ex, WebRequest request) {
         Response response = Response.duplicateEntity();
         response.addErrorMsgToResponse(ex.getMessage(), ex);
         return new ResponseEntity(response, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(CustomException.BadCredentialsException.class)
+    public final ResponseEntity handleBadCredentialsExceptions(Exception ex, WebRequest request) {
+        Response response = Response.wrongCredentials();
+        response.addErrorMsgToResponse(ex.getMessage(), ex);
+        return new ResponseEntity(response, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(RuntimeException.class)
+    public final ResponseEntity handleRuntimeExceptions(Exception ex, WebRequest request) {
+        Response response = Response.exception();
+        response.addErrorMsgToResponse(ex.getMessage(), ex);
+        return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
     }
 }

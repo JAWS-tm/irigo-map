@@ -72,10 +72,14 @@
       z-index: 1;
 
       @include sm {
+        width: calc(100%);
+      }
+
+      @include md {
         width: calc(50% - 15px);
       }
 
-      @include xl {
+      @include lg {
         width: calc(25% - 3 * 30px / 4);
       }
 

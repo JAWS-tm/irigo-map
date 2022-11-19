@@ -43,7 +43,7 @@ public class AuthService {
             return new AuthDto(user.getEmail(), accessToken);
         } catch (BadCredentialsException ex) {
             System.out.println(ex);
-            throw exception(EntityType.USER, ExceptionType.ENTITY_EXCEPTION, "Bad credentials");
+            throw exception(EntityType.USER, ExceptionType.BAD_CREDENTIALS, "Bad credentials");
         }
     }
 
@@ -62,6 +62,21 @@ public class AuthService {
                             .setPassword(passwordEncoder.encode(userDto.getPassword()));
 
         return UserMapper.toUserDto(userDao.save(user).setPassword(""));
+    }
+
+    /**
+     * Get current user data
+     * @param email email of logged user
+     * @return user data
+     */
+    public UserDto me(String email) {
+        if (!userDao.existsByEmail(email)) {
+            throw exception(EntityType.USER, ExceptionType.ENTITY_NOT_FOUND, email);
+        }
+
+        User user = userDao.getByEmail(email);
+
+        return UserMapper.toUserDto(user.setPassword(""));
     }
 
     /**

@@ -121,7 +121,6 @@ const Map = (props) => {
   const [busData, setBusData] = useState(null);
   useEffect(() => {
     const loadBus = () => {
-      console.log('refresh buses');
       axios.get(busURL).then((res) => setBusData(res.data));
     };
     loadBus();
@@ -257,8 +256,9 @@ function fillLegend(listLine) {
       //for each element we fill legend
       legend.push(new Item(listLine[i].number, listLine[i].name, listLine[i].color));
     }
-  } catch (e) {} //prevent the code from crashing when list is undefined
-  console.log(legend);
+  } catch (e) {
+    console.log(e);
+  } //prevent the code from crashing when list is undefined
 }
 //define component to display legend content
 var Legend = () => {

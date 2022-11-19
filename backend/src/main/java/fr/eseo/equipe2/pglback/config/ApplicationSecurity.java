@@ -67,9 +67,9 @@ public class ApplicationSecurity {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests()
                 .antMatchers(AUTH_WHITELIST).permitAll()
-                .antMatchers("/auth/**").permitAll()
-                .antMatchers("/**").authenticated();
-                //.anyRequest().permitAll();
+                .antMatchers("/api/auth/**").permitAll()
+//                .antMatchers("/api/**").authenticated()
+                .antMatchers("/**").permitAll();
         http.exceptionHandling()
                 .authenticationEntryPoint(
                         (request, response, ex) -> response.sendError(

@@ -56,3 +56,19 @@
     border-color: rgba(255, 255, 255, 0.5);
   }
 }
+
+// Error message
+.error-message {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  color: var(--secondary-color);
+
+  border-radius: 5px;
+  border: 1px solid #ffcacf;
+  background-color: #ffdfe2;
+  width: 100%;
+  i {
+    margin-right: 10px;
+  }
+}

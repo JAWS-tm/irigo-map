@@ -1,9 +1,0 @@
-// {
-//   "compilerOptions": {
-//     "target": "ES6",
-//     "module": "ESNext"
-//     // "allowSyntheticDefaultImports": true
-//     // "esModuleInterop": true
-//   },
-//   "exclude": ["dist", "node_modules"]
-// }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Formik, Form, ErrorMessage, Field } from 'formik';
 import * as Yup from 'yup';
@@ -10,8 +10,9 @@ import RadioOption from '../components/Radio/RadioOption';
 import { TravelFrequency, TravelHabits, UserSex } from '../constants';
 import DatePicker from '../components/DatePicker';
 import moment from 'moment';
-import { register } from '../store/slices/authSlice';
-import { useDispatch } from 'react-redux';
+import { clearAuthError, register, selectAuthError } from '../store/slices/authSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import ErrorBanner from '../components/ErrorBanner';
 
 const initialValues = {
   firstName: '',
@@ -50,29 +51,22 @@ const validationSchema = Yup.object({
     })
     .required('Requis'),
   sex: Yup.string().required('Requis'),
-
-  // 'travelHabits': Yup.string()
-  //   .notRequired()
-  //   .test('valid', 'Type invalide', (value) => {
-  //     return !!TravelHabits[value];
-  //   }),
-  // 'travelFrequency': Yup.string().test('valid', 'Type invalide', (value) => {
-  //   return !!TravelHabits[value];
-  // }),
 });
 
 const Register = (props) => {
   const dispatch = useDispatch();
   const handleSubmit = (values, { setSubmitting }) => {
-    console.log(values);
     dispatch(register(values));
-
-    // setTimeout(() => {
-    //   alert(JSON.stringify(values, null, 2));
-    //   console.log('submit form');
-    //   setSubmitting(false);
-    // }, 400);
   };
+
+  useEffect(() => {
+    return () => {
+      console.log('clear');
+      dispatch(clearAuthError());
+    };
+  }, []);
+
+  const authError = useSelector(selectAuthError);
 
   return (
     <div className="Register">
@@ -84,6 +78,8 @@ const Register = (props) => {
         onSubmit={handleSubmit}
       >
         <Form>
+          {authError && <ErrorBanner message={authError} className="request-error" />}
+
           <div className="row">
             <Field name="firstName" label="Prénom *" component={FormInput} />
             <Field name="lastName" label="Nom *" component={FormInput} />

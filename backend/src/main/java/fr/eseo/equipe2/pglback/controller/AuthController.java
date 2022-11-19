@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
 @RestController
 @CrossOrigin
 @RequestMapping("/auth")
@@ -37,5 +39,18 @@ public class AuthController {
     @PostMapping("/register")
     public Response register(@RequestBody RegisterRequest registerRequest) {
         return Response.ok().setPayload(authService.register(UserRequestMapper.toUserDto(registerRequest)));
+    }
+
+    /**
+     * Get current user data
+     * @param principal currentUser
+     * @return Ok or Unauthorized
+     */
+    @GetMapping("/me")
+    public Response me(Principal principal) {
+        if (principal == null)
+            return Response.unauthorized();
+
+        return Response.ok().setPayload(authService.me(principal.getName()));
     }
 }
