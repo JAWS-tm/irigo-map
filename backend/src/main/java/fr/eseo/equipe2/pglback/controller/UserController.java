@@ -1,52 +1,52 @@
 package fr.eseo.equipe2.pglback.controller;
 
-import fr.eseo.clients.model.User;
-import fr.eseo.clients.security.AuthRequest;
-import fr.eseo.clients.security.AuthResponse;
-import fr.eseo.clients.security.JwtTokenUtil;
+import fr.eseo.equipe2.pglback.controller.request.RegisterRequest;
+import fr.eseo.equipe2.pglback.controller.request.mapper.UserRequestMapper;
+import fr.eseo.equipe2.pglback.dto.UserDto;
+import fr.eseo.equipe2.pglback.dto.response.Response;
+import fr.eseo.equipe2.pglback.model.User;
+import fr.eseo.equipe2.pglback.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/auth")
-
+@RequestMapping("/users")
 public class UserController {
     @Autowired
-    private final UserDao userDao;
+    private UserService userService;
 
-    public UserController(UserDao userDao) {
-        this.userDao = userDao;
+    @GetMapping
+    public Response getUsers() {
+        return Response.ok().setPayload(userService.getUsers());
     }
 
-    @GetMapping("/user/{id}")
-    public Optional<User> getUser(@PathVariable int id) {
-        return userDao.findById(id);
+    @GetMapping("/{id}")
+    public Response getUser(@PathVariable int id) {
+        return Response.ok().setPayload(userService.findById(id));
     }
 
     /**
      * when we do modification on user
-     * @param user
+     * @param userDto
      */
     @PutMapping("/user")
-    public  void updateUser(@RequestBody User user){
-        userDao.save(user);
+    public Response updateUser(@RequestBody UserDto userDto){
+        userService.updateUser(userDto);
+        return Response.ok();
     }
 
     /**
      * if we want delete user with his unique id
-     * @param id
+     * @param email email of the user
      */
-    @DeleteMapping("/user/{id}")
-    public void deleteUser(@PathVariable int id){
-        if(clientsDao.existsById(id)){
-            clientsDao.deleteById(id);
-        }
+    @DeleteMapping("/user/{email}")
+    public Response deleteUser(@PathVariable String email){
+        userService.deleteUser(email);
+        return Response.ok();
     }
+
+
 }

@@ -1,0 +1,42 @@
+:root {
+  --primary-color: #00796b;
+  --primary-light-color: #008d7d;
+  --primary-hover-color: #009786;
+  --secondary-color: #f85a40;
+  --dark-background-color: #181a1b;
+
+  /* Text */
+  --primary-text-color: #222222;
+  --secondary-text-color: #6f6f6f;
+  --light-text-color: rgba(255, 255, 255, 0.65);
+
+  /* Others */
+  --border-color: rgb(186, 186, 186);
+  --shadow-color: rgba(0, 0, 0, 0.2);
+
+  --navbar-color: var(--primary-color);
+  --navbar-active-text-color: white;
+  --navbar-text-color: rgba(255, 255, 255, 0.6);
+  --navbar-active-line-color: var(--secondary-color);
+
+  --font-primary: Poppins, Helvetica, Arial, sans-serif;
+  --font-secondary: 'Montserrat', sans-serif;
+  --font-default: 'Open Sans', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    'Noto Sans', 'Liberation Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+// Scss variables
+
+// Meadia queries breakpoints size
+// Small tablets and large smartphones (landscape view)
+$screen-sm-min: 576px;
+
+// Small tablets (portrait view)
+$screen-md-min: 768px;
+
+// Tablets and small desktops
+$screen-lg-min: 992px;
+
+// Large tablets and desktops
+$screen-xl-min: 1200px;

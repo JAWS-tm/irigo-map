@@ -1,93 +1,107 @@
 package fr.eseo.equipe2.pglback.model;
+
+import fr.eseo.equipe2.pglback.enumeration.TravelFrequency;
+import fr.eseo.equipe2.pglback.enumeration.TravelHabits;
+import fr.eseo.equipe2.pglback.enumeration.UserSex;
+//import lombok.Getter;
+//import lombok.Setter;
+//import lombok.experimental.Accessors;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Collection;
+import java.util.Date;
 
+//@Getter
+//@Setter
+//@Accessors(chain = true)
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
-    @Column(length = 30, nullable = false)
-    private String login; // e-mail
+
+    @Column(length = 30, nullable = false, unique = true)
+    private String email;
+
     @Column(length = 60, nullable = false)
     private String password;
+
     @Column(length = 30, nullable = false)
-    private String name;
+    private String firstName;
+
     @Column(length = 30, nullable = false)
     private String lastName;
-    @Column(length = 30 ,nullable = false)
-    private String sex;
-    @Column(length = 30 ,nullable = false)
-    private Date dateBirth;
-    @Column(length = 40 ,nullable = true)
-    private String motion;
-    @Column(length = 30 ,nullable = true)
-    private String frequency;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private UserSex sex;
+
+    @Column(nullable = false)
+    private Date birthday;
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    private TravelHabits travelHabits;
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    private TravelFrequency travelFrequency;
 
     public User() {}
 
     /**
-     * when we want create an user we take all parameters
-     * @param id
-     * @param login
-     * @param password
-     * @param name
-     * @param lastName
-     * @param sex
-     * @param dateBirth
-     * @param motion
-     * @param frequency
+     * when we want new user we take all parameters
+     * @param email     e-mail
+     * @param password  password
+     * @param firstName      first name
+     * @param lastName  last name
+     * @param sex       (H,F,other,no precision)
+     * @param birthday (AAAA-MM-DD)
      */
-    public User(int id, String login, String password, String name, String lastName, String sex, Date dateBirth, String motion, String frequency) {
-        this.id = id;
-        this.login = login;
+    public User(String email, String password, String firstName, String lastName, UserSex sex, Date birthday) {
+        this.email = email;
         this.password = password;
-        this.name = name;
+        this.firstName = firstName;
         this.lastName = lastName;
         this.sex = sex;
-        this.dateBirth = dateBirth;
-        this.motion = motion;
-        this.frequency = frequency;
+        this.birthday = birthday;
     }
-    // getters
-    public int getId() { return id; }
-    public String getLogin() {return login;}
-    public String getPassword() {return password;}
-    public String getName() {return name;}
-    public String getLastName() {return lastName;}
-    public String getSex() {return sex;}
-    public Date getDateBirth() {return dateBirth;}
-    public String getMotion() {return motion;}
-    public String getFrequency() {return frequency;}
 
-    // setters
+    /**
+     * when we want new user we take all parameters
+     * @param email     e-mail
+     * @param password  password
+     * @param firstName      first name
+     * @param lastName  last name
+     * @param sex       (H,F,other,no precision)
+     * @param birthday (AAAA-MM-DD)
+     * @param travelHabits habits of travel
+     * @param travelFrequency frequency of travel
+     */
+    public User(String email, String password, String firstName, String lastName, UserSex sex, Date birthday, TravelHabits travelHabits, TravelFrequency travelFrequency) {
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.sex = sex;
+        this.birthday = birthday;
+        this.travelHabits = travelHabits;
+        this.travelFrequency = travelFrequency;
+    }
 
-    public void setId(int id) {this.id = id;}
-    public void setLogin(String login) {this.login = login;}
-    public void setPassword(String password) {this.password = password;}
-    public void setName(String name) {this.name = name;}
-    public void setLastName(String lastName) {this.lastName = lastName;}
-    public void setSex(String sex) {this.sex = sex;}
-    public void setDateBirth(Date dateBirth) {this.dateBirth = dateBirth;}
-    public void setMotion(String motion) {this.motion = motion;}
-    public void setFrequency(String frequency) {this.frequency = frequency;}
 
-    //problems with security Spring
+
+    // Spring security
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
     }
     @Override
-    public String getUsername() {
-        return this.login;
-    }
+    public String getUsername() { return this.email; }
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -103,5 +117,91 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+
+
+    // Getters & Setters
+
+    public int getId() {
+        return id;
+    }
+
+    public User setId(int id) {
+        this.id = id;
+        return this;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public User setEmail(String email) {
+        this.email = email;
+        return this;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    public User setPassword(String password) {
+        this.password = password;
+        return this;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public User setFirstName(String firstName) {
+        this.firstName = firstName;
+        return this;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public User setLastName(String lastName) {
+        this.lastName = lastName;
+        return this;
+    }
+
+    public UserSex getSex() {
+        return sex;
+    }
+
+    public User setSex(UserSex sex) {
+        this.sex = sex;
+        return this;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public User setBirthday(Date birthday) {
+        this.birthday = birthday;
+        return this;
+    }
+
+    public TravelHabits getTravelHabits() {
+        return travelHabits;
+    }
+
+    public User setTravelHabits(TravelHabits travelHabits) {
+        this.travelHabits = travelHabits;
+        return this;
+    }
+
+    public TravelFrequency getTravelFrequency() {
+        return travelFrequency;
+    }
+
+    public User setTravelFrequency(TravelFrequency travelFrequency) {
+        this.travelFrequency = travelFrequency;
+        return this;
     }
 }

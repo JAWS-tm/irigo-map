@@ -1,27 +1,23 @@
 package fr.eseo.equipe2.pglback.controller;
 
-import fr.eseo.clients.model.User;
-import fr.eseo.clients.security.AuthRequest;
-import fr.eseo.clients.security.AuthResponse;
-import fr.eseo.clients.security.JwtTokenUtil;
+import fr.eseo.equipe2.pglback.controller.request.LoginRequest;
+import fr.eseo.equipe2.pglback.controller.request.RegisterRequest;
+import fr.eseo.equipe2.pglback.controller.request.mapper.UserRequestMapper;
+import fr.eseo.equipe2.pglback.dto.response.Response;
+import fr.eseo.equipe2.pglback.security.JwtTokenUtil;
+import fr.eseo.equipe2.pglback.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 @RestController
 @CrossOrigin
 @RequestMapping("/auth")
-
 public class AuthController {
     @Autowired
-    AuthenticationManager authenticationManager;
-    @Autowired
-    JwtTokenUtil jwtUtil;
+    AuthService authService;
 
     @PostMapping("/login")
     /**
@@ -31,19 +27,30 @@ public class AuthController {
      * @param request of authentication
      * @return Unauthorized or Ok
      */
-    public ResponseEntity<?> login(@RequestBody AuthRequest request) {
-        try {
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            request.getLogin(), request.getPassword())
-            );
-            User user = (User) authentication.getPrincipal();
-            String accessToken = jwtUtil.generateAccessToken(user);
-            AuthResponse response = new AuthResponse(user.getLogin(), accessToken);
-            return ResponseEntity.ok().body(response);
-        } catch (BadCredentialsException ex) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
+    public Response login(@RequestBody LoginRequest loginRequest) {
+        return Response.ok().setPayload(authService.login(UserRequestMapper.toUserDto(loginRequest)));
     }
 
+    /**
+     * Register a new user
+     * @param registerRequest request with register data
+     * @return Ok or 409 CONFLICT
+     */
+    @PostMapping("/register")
+    public Response register(@RequestBody RegisterRequest registerRequest) {
+        return Response.ok().setPayload(authService.register(UserRequestMapper.toUserDto(registerRequest)));
+    }
+
+    /**
+     * Get current user data
+     * @param principal currentUser
+     * @return Ok or Unauthorized
+     */
+    @GetMapping("/me")
+    public Response me(Principal principal) {
+        if (principal == null)
+            return Response.unauthorized();
+
+        return Response.ok().setPayload(authService.me(principal.getName()));
+    }
 }

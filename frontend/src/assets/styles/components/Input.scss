@@ -1,0 +1,132 @@
+.input-outlined {
+  position: relative;
+
+  .field {
+    width: 100%;
+    display: block;
+    border: 1px solid var(--border-color);
+    background-color: white;
+    padding: 12px 15px;
+    border-radius: 5px;
+    // line-height: 1.2;
+    font-family: var(--font-primary);
+    font-size: 14px;
+
+    &:focus,
+    &:not(:placeholder-shown) {
+      outline-color: var(--primary-color);
+
+      & + .label {
+        transform: translate(0, -80%) scale(0.85);
+      }
+    }
+  }
+
+  .label {
+    font-family: var(--font-primary);
+    font-size: 14px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(0, 0);
+    transform-origin: 0 0;
+    line-height: 1.2;
+    margin: 11px 10px;
+    padding: 4px 5px;
+    background-color: white;
+    transition: 0.15s;
+    pointer-events: none;
+    color: var(--secondary-text-color);
+    white-space: nowrap;
+  }
+}
+
+.form-input,
+.date-picker,
+.radio-group {
+  .error,
+  & + .error {
+    margin: 2px 0 0 2px;
+    font-size: 12px;
+    color: var(--secondary-color);
+  }
+}
+
+.radio-group {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  .radio-input {
+    display: flex;
+    align-items: center;
+    height: 30px;
+    input {
+      appearance: none;
+      margin: 0;
+
+      width: 16px;
+      height: 16px;
+      background-color: white;
+      border: 2px solid var(--border-color);
+      border-radius: 20px;
+      cursor: pointer;
+
+      // center the after
+      display: grid;
+      place-content: center;
+
+      &::after {
+        content: '';
+        display: block;
+        width: 8px;
+        height: 8px;
+        border-radius: 5px;
+        background-color: var(--primary-color);
+        transform: scale(0);
+        transition: 0.3s;
+      }
+
+      &:hover {
+        border-color: var(--primary-color);
+      }
+      &:checked {
+        border-color: var(--primary-color);
+        &::after {
+          transform: scale(1);
+        }
+      }
+      &:focus {
+        border-color: var(--primary-color);
+      }
+    }
+
+    label {
+      cursor: pointer;
+      padding-left: 5px;
+    }
+  }
+}
+
+.date-picker {
+  .input-row {
+    display: flex;
+    gap: 20px;
+
+    .input-outlined {
+      width: 100%;
+    }
+  }
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+}

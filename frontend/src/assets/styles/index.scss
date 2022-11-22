@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Poppins:wght@200;300;400;600;700&display=swap');
+
+@import 'variables.scss';
+@import 'mixins.scss';
+
+// Pages
+@import 'pages/Contact.scss';
+@import 'pages/Home.scss';
+@import 'pages/Login.scss';
+@import 'pages/Register.scss';
+@import 'pages/Map.scss';
+@import 'pages/About.scss';
+
+// components
+@import 'components/index.scss';
+@import 'components/Input.scss';
+
+// Layout
+@import 'layout/Footer.scss';
+@import 'layout/Navbar.scss';
+
+:root {
+  font-size: 16px;
+  font-weight: 400;
+
+  color-scheme: light dark;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+
+  font-family: var(--font-primary);
+  color: var(--primary-text-color);
+
+  @include sm {
+    --container-margin: 20px;
+  }
+
+  @include md {
+    --container-margin: 60px;
+  }
+
+  @include lg {
+    --container-margin: 100px;
+  }
+}
+
+*,
+::after,
+::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+}
+
+#root {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.App {
+  height: 100%;
+}
+
+.content-layout {
+  flex: 1;
+  padding-top: 100px;
+}

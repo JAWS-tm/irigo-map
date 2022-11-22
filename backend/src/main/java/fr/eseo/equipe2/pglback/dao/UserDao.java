@@ -7,6 +7,9 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface UserDao extends JpaRepository<User, String> {
-    Optional<User> findByLogin(String login);
+public interface UserDao extends JpaRepository<User, Integer> {
+    Optional<User> findByEmail(String email);
+    User getByEmail(String email);
+    Boolean existsByEmail(String email);
+    void deleteByEmail(String email);
 }

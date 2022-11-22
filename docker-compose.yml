@@ -1,0 +1,53 @@
+version: '3.3'
+services:
+  mariadb:
+    image: mariadb:10.6
+    volumes:
+      # - /opt/test:/var/lib/mysql
+      - db:/var/lib/mysql
+      # - ./mysql-dump:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_USER: pgl
+      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: pgl
+      MYSQL_ROOT_PASSWORD: root
+    # networks:
+    #   - pgl-network
+    ports:
+      - 3306:3306
+      
+
+  phpmyadmin:
+    depends_on:
+      - mariadb
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - '8081:80'
+    environment:
+      PMA_HOST: mariadb
+      MYSQL_ROOT_PASSWORD: root
+    # networks:
+    #   - pgl-network
+
+  web:
+    depends_on:
+      - mariadb
+    image: tomcat:jdk11
+
+    volumes:
+      - ./backend/build/libs/app.war:/usr/local/tomcat/webapps/app.war
+    # networks:
+    #   - pgl-network
+    ports:
+      - '8082:8080'
+    # environment:
+      # MYSQL_ROOT_PASSWORD: root
+      # MYSQL_DATABASE: pgl
+      # MYSQL_USER: pgl
+      # MYSQL_PASSWORD: root
+
+# networks:
+#   pgl-network:
+
+volumes:
+  db:
