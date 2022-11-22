@@ -15,16 +15,7 @@
     margin-top: 25px;
     position: relative;
 
-    &::after {
-      content: '';
-      width: 100%;
-      height: 50%;
-      position: absolute;
-      top: 50%;
-      z-index: 0;
-    }
-    // justify-content: space-between;
-
+    width: 100%;
     .card-list {
       display: flex;
       gap: 30px; //between 2 card
@@ -33,9 +24,7 @@
     }
 
     .card {
-      margin: 0 15px;
-      margin-bottom: 15px;
-      padding: 70px 13em;
+      padding: 70px 30px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -45,31 +34,26 @@
       border-radius: 8px;
       transition: 0.3s;
       z-index: 1;
+      cursor: pointer;
 
       &:hover {
         background-color: var(--primary-hover-color);
-
-        i {
-          color: white;
-        }
       }
 
-      i {
-        font-size: 48px;
-        line-height: 1;
-        color: var(--light-text-color);
-        transition: 0.3s;
-        margin-bottom: 15px;
+      width: 100%;
 
-        Link {
-          color: white;
-          font-family: var(--font-secondary);
-          font-weight: 700;
-          margin-bottom: 15px;
-          font-size: 25px;
-          line-height: 1.2;
-          text-align: center;
-        }
+      @include md {
+        width: calc(50% - 15px);
+      }
+
+      a {
+        color: white;
+        font-family: var(--font-secondary);
+        font-weight: 700;
+        margin-bottom: 15px;
+        font-size: 25px;
+        line-height: 1.2;
+        text-align: center;
       }
     }
   }

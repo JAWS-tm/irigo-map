@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import UnderlinedTitle from '../components/UnderlinedTitle';
-import Input from '../components/Input';
 import Button from '../components/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearAuthError, login, selectAuthError } from '../store/slices/authSlice';
@@ -8,9 +7,6 @@ import * as Yup from 'yup';
 import { Field, Form, Formik } from 'formik';
 import FormInput from '../components/FormInput';
 import ErrorBanner from '../components/ErrorBanner';
-import axios from 'axios';
-import { API_URL } from '../config/config';
-import authHeader from '../services/auth-header';
 
 const initialValues = {
   email: '',
