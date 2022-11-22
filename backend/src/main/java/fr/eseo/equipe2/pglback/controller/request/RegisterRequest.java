@@ -15,6 +15,9 @@ import java.util.Optional;
 //@Getter
 //@Setter
 //@Accessors(chain = true)
+/**
+ * Request used for register
+ */
 public class RegisterRequest {
     @NotNull
     private String firstName;
