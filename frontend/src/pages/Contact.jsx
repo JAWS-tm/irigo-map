@@ -18,7 +18,7 @@ const Contact = (props) => {
           <TextArea label="Message" className="message-input" />
         </div>
         <div className="btn-wrapper">
-          <Button text="Essayer" />
+          <Button text="Envoyer" />
         </div>
       </form>
     </div>

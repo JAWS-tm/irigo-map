@@ -53,6 +53,7 @@ const useFetch = (url) => {
   }, [url]);
   return datad;
 };
+
 const svgIcon = (color) => {
   return L.divIcon({
     html: `
@@ -68,6 +69,7 @@ const svgIcon = (color) => {
     className: 'bus-icon',
   });
 };
+
 const Map = (props) => {
   let lineData = useFetch(lineURL);
   let listLine = useMemo(() => {
@@ -100,10 +102,10 @@ const Map = (props) => {
         }
         return 0;
       });
+      fillLegend(list);
       return list;
     }
   }, [lineData]);
-  fillLegend(listLine);
 
   let stopData = useFetch(stopURL);
   let nextStop = useMemo(() => {
