@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { API_URL } from '../config/config';
+import { config } from '../config/config';
 import authHeader from './auth-header';
 
-const AUTH_API_URL = API_URL + '/auth/';
+const AUTH_API_URL = config.API_URL + '/auth/';
 
 class AuthService {
   async login(email, password) {
