@@ -7,6 +7,15 @@ package fr.eseo.equipe2.pglback.dto;
 //@Getter
 //@Setter
 //@AllArgsConstructor
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+/**
+ * Data Transfer Object used for transfer data between services & controllers
+ */
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class AuthDto {
     private String email;
     private String accessToken;

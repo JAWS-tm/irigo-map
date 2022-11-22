@@ -7,6 +7,10 @@ package fr.eseo.equipe2.pglback.controller.request;
 //@Getter
 //@Setter
 //@Accessors(chain = true)
+
+/**
+ * Request used for login
+ */
 public class LoginRequest {
     private String email;
     private String password;

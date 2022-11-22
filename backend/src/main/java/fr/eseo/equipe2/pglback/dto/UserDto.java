@@ -18,6 +18,9 @@ import java.util.Date;
 //@NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonIgnoreProperties(ignoreUnknown = true)
+/**
+ * Data Transfer Object used for transfer data between services & controllers
+ */
 public class UserDto {
     private String firstName;
     private String lastName;
