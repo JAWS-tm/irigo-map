@@ -4,10 +4,12 @@ import Home from './pages/Home';
 import Navbar from './layout/Navbar';
 import Footer from './layout/Footer';
 import Contact from './pages/Contact';
+import Help from './pages/Help';
 import ContentLayout from './layout/ContentLayout';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Map from './pages/Map';
+import User_data from './pages/User_data';
 import PrivateRoute from './components/routes/PrivateRoute';
 import PublicRoute from './components/routes/PublicRoute';
 import Logout from './pages/Logout';
@@ -31,10 +33,12 @@ function App() {
           <Route index element={<Home />} />
           <Route path="about" element={<About />} />
           <Route path="contact" element={<Contact />} />
+          <Route path="help" element={<Help />} />
 
           <Route path="/" element={<PrivateRoute />}>
             <Route path="map" element={<Map />} />
             <Route path="logout" element={<Logout />} />
+            <Route path="user_data" element={<User_data />} />
           </Route>
           <Route path="/" element={<PublicRoute />}>
             <Route path="sign-in" element={<Login />} />

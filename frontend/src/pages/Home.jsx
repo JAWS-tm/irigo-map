@@ -4,6 +4,7 @@ import heroImg from '../assets/pictures/hero-bus-illustration.png';
 import { Link } from 'react-router-dom';
 import UnderlinedTitle from '../components/UnderlinedTitle';
 import Button from '../components/Button';
+import PopupError from '../components/PopupError';
 
 const Home = (props) => {
   return (
@@ -17,7 +18,7 @@ const Home = (props) => {
               eaque laudantium.
             </p>
             <div className="buttons-wrapper">
-              <Button text="Essayer" />
+              <Button onClick={PopupError} text="Carte" />
             </div>
           </div>
           <div>
