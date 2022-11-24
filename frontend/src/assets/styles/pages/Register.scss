@@ -3,7 +3,9 @@
   align-items: center;
   flex-direction: column;
   margin: 50px 0 15px;
-
+  p {
+    text-align: center;
+  }
   form {
     width: 50%;
     max-width: 500px;

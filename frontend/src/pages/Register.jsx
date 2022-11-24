@@ -71,6 +71,16 @@ const Register = (props) => {
   return (
     <div className="Register">
       <UnderlinedTitle>Inscription</UnderlinedTitle>
+      <div>
+        <p>
+          Les élements avec le caractère * sont obligatoires. Le mot de passe doit contenir au moins
+          8 caractères
+        </p>
+        <p>
+          Pour plus de sécurité, veillez à mettre au moins une Majuscule, un chiffre et un caractère
+          spécial à votre mot de passe
+        </p>
+      </div>
 
       <Formik
         initialValues={initialValues}
