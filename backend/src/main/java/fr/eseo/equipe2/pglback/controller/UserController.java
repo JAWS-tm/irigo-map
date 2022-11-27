@@ -1,15 +1,10 @@
 package fr.eseo.equipe2.pglback.controller;
 
-import fr.eseo.equipe2.pglback.controller.request.RegisterRequest;
-import fr.eseo.equipe2.pglback.controller.request.mapper.UserRequestMapper;
-import fr.eseo.equipe2.pglback.dto.UserDto;
-import fr.eseo.equipe2.pglback.dto.response.Response;
-import fr.eseo.equipe2.pglback.model.User;
+import fr.eseo.equipe2.pglback.payload.UserDto;
+import fr.eseo.equipe2.pglback.payload.response.Response;
 import fr.eseo.equipe2.pglback.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @CrossOrigin
