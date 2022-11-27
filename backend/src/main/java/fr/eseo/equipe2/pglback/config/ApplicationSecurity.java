@@ -68,8 +68,9 @@ public class ApplicationSecurity {
         http.authorizeRequests()
                 .antMatchers(AUTH_WHITELIST).permitAll()
                 .antMatchers("/api/auth/**").permitAll()
-//                .antMatchers("/api/**").authenticated()
-                .antMatchers("/**").permitAll();
+                .antMatchers("/api/**").authenticated();
+//                .antMatchers("/**").permitAll();
+
         http.exceptionHandling()
                 .authenticationEntryPoint(
                         (request, response, ex) -> response.sendError(
@@ -77,6 +78,7 @@ public class ApplicationSecurity {
                                 ex.getMessage() + " erreur test dans AppSecuritu"
                         )
                 );
+
         http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }

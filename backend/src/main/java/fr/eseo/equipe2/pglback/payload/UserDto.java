@@ -1,48 +1,46 @@
-package fr.eseo.equipe2.pglback.controller.request;
+package fr.eseo.equipe2.pglback.payload;
 
-import com.sun.istack.NotNull;
-import com.sun.istack.Nullable;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import fr.eseo.equipe2.pglback.enumeration.TravelFrequency;
 import fr.eseo.equipe2.pglback.enumeration.TravelHabits;
 import fr.eseo.equipe2.pglback.enumeration.UserSex;
 //import lombok.Getter;
+//import lombok.NoArgsConstructor;
 //import lombok.Setter;
 //import lombok.experimental.Accessors;
 
 import java.util.Date;
-import java.util.Optional;
 
 //@Getter
 //@Setter
 //@Accessors(chain = true)
+//@NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonIgnoreProperties(ignoreUnknown = true)
 /**
- * Request used for register
+ * Data Transfer Object used for transfer data between services & controllers
  */
-public class RegisterRequest {
-    @NotNull
+public class UserDto {
     private String firstName;
-    @NotNull
     private String lastName;
-    @NotNull
     private String email;
-    @NotNull
     private String password;
-    @NotNull
     private UserSex sex;
-    @NotNull
     private Date birthday;
 
     private TravelHabits travelHabits;
     private TravelFrequency travelFrequency;
 
-    public RegisterRequest() {
+
+    public UserDto() {
     }
 
     public String getFirstName() {
         return firstName;
     }
 
-    public RegisterRequest setFirstName(String firstName) {
+    public UserDto setFirstName(String firstName) {
         this.firstName = firstName;
         return this;
     }
@@ -51,7 +49,7 @@ public class RegisterRequest {
         return lastName;
     }
 
-    public RegisterRequest setLastName(String lastName) {
+    public UserDto setLastName(String lastName) {
         this.lastName = lastName;
         return this;
     }
@@ -60,7 +58,7 @@ public class RegisterRequest {
         return email;
     }
 
-    public RegisterRequest setEmail(String email) {
+    public UserDto setEmail(String email) {
         this.email = email;
         return this;
     }
@@ -69,7 +67,7 @@ public class RegisterRequest {
         return password;
     }
 
-    public RegisterRequest setPassword(String password) {
+    public UserDto setPassword(String password) {
         this.password = password;
         return this;
     }
@@ -78,7 +76,7 @@ public class RegisterRequest {
         return sex;
     }
 
-    public RegisterRequest setSex(UserSex sex) {
+    public UserDto setSex(UserSex sex) {
         this.sex = sex;
         return this;
     }
@@ -87,7 +85,7 @@ public class RegisterRequest {
         return birthday;
     }
 
-    public RegisterRequest setBirthday(Date birthday) {
+    public UserDto setBirthday(Date birthday) {
         this.birthday = birthday;
         return this;
     }
@@ -96,7 +94,7 @@ public class RegisterRequest {
         return travelHabits;
     }
 
-    public RegisterRequest setTravelHabits(TravelHabits travelHabits) {
+    public UserDto setTravelHabits(TravelHabits travelHabits) {
         this.travelHabits = travelHabits;
         return this;
     }
@@ -105,10 +103,8 @@ public class RegisterRequest {
         return travelFrequency;
     }
 
-    public RegisterRequest setTravelFrequency(TravelFrequency travelFrequency) {
+    public UserDto setTravelFrequency(TravelFrequency travelFrequency) {
         this.travelFrequency = travelFrequency;
         return this;
     }
 }
-
-
