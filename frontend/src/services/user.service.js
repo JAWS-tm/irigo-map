@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { API_URL } from '../config/config';
+import { config } from '../config/config';
 import authHeader from './auth-header';
 
-const USER_API_URL = API_URL + '/users/';
+const USER_API_URL = config.API_URL + '/users/';
 
 class UserService {
   getAll() {
