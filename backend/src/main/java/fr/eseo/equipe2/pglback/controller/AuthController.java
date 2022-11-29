@@ -4,10 +4,9 @@ import fr.eseo.equipe2.pglback.controller.request.LoginRequest;
 import fr.eseo.equipe2.pglback.controller.request.RegisterRequest;
 import fr.eseo.equipe2.pglback.controller.request.mapper.UserRequestMapper;
 import fr.eseo.equipe2.pglback.dto.response.Response;
-import fr.eseo.equipe2.pglback.security.JwtTokenUtil;
 import fr.eseo.equipe2.pglback.service.AuthService;
+import fr.eseo.equipe2.pglback.service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -19,14 +18,13 @@ public class AuthController {
     @Autowired
     AuthService authService;
 
-    @PostMapping("/login")
     /**
      * @author Louise
-     * @version 1.1
      * Check if User is authorized
      * @param request of authentication
      * @return Unauthorized or Ok
      */
+    @PostMapping("/login")
     public Response login(@RequestBody LoginRequest loginRequest) {
         return Response.ok().setPayload(authService.login(UserRequestMapper.toUserDto(loginRequest)));
     }
