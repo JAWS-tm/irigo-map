@@ -29,7 +29,7 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
 
     @ExceptionHandler(CustomException.BadCredentialsException.class)
     public final ResponseEntity handleBadCredentialsExceptions(Exception ex, WebRequest request) {
-        Response response = Response.wrongCredentials();
+        Response response = Response.unauthorized();
         response.addErrorMsgToResponse(ex.getMessage(), ex);
         return new ResponseEntity(response, HttpStatus.UNAUTHORIZED);
     }
