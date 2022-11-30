@@ -1,5 +1,7 @@
 #ContainerMapPage {
   display: flex;
+  height: 100%;
+  width: 100%;
   flex-direction: row;
   font-family: var(--font-secondary);
   background-color: var(--dark-background-color);
@@ -7,13 +9,14 @@
     background-color: none;
   }
   #Map {
-    height: 800px;
+    height: 100%;
     width: 80vw;
     z-index: 9;
   }
 
   #legend {
-    height: 800px;
+    height: 100%;
+    width: 100%;
     color: aliceblue;
     width: 20vw;
     text-align: center;

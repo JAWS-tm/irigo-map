@@ -42,11 +42,10 @@ public class UserController {
      * if we want delete user with his unique id
      * @param email email of the user
      */
+
     @DeleteMapping("/user/{email}")
     public Response deleteUser(@PathVariable String email){
         userService.deleteUser(email);
         return Response.ok();
     }
-
-
 }

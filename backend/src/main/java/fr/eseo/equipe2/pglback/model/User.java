@@ -57,7 +57,7 @@ public class User implements UserDetails {
      * when we want new user we take all parameters
      * @param email     e-mail
      * @param password  password
-     * @param firstName      first name
+     * @param firstName first name
      * @param lastName  last name
      * @param sex       (H,F,other,no precision)
      * @param birthday (AAAA-MM-DD)
