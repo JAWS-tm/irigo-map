@@ -1,9 +1,12 @@
 package fr.eseo.equipe2.pglback.controller;
 
+import fr.eseo.equipe2.pglback.controller.request.ForgotPasswordRequest;
+import fr.eseo.equipe2.pglback.controller.request.PasswordResetRequest;
 import fr.eseo.equipe2.pglback.dto.UserDto;
 import fr.eseo.equipe2.pglback.dto.response.Response;
 import fr.eseo.equipe2.pglback.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -28,7 +31,7 @@ public class UserController {
      * @param userDto
      */
     @PutMapping("/user")
-    public Response updateUser(@RequestBody UserDto userDto){
+    public Response<?> updateUser(@RequestBody UserDto userDto){
         userService.updateUser(userDto);
         return Response.ok();
     }
@@ -38,10 +41,53 @@ public class UserController {
      * @param email email of the user
      */
     @DeleteMapping("/user/{email}")
-    public Response deleteUser(@PathVariable String email){
+    public Response<?> deleteUser(@PathVariable String email){
         userService.deleteUser(email);
         return Response.ok();
     }
 
+    /**
+     * Forgot password (create & send recovery link)
+     * @param forgotPasswordRequest account email to recover
+     */
+    @PostMapping("/forgot-password")
+    public Response<?> forgotPassword(@RequestBody ForgotPasswordRequest forgotPasswordRequest) {
+        userService.forgotPassword(forgotPasswordRequest.getEmail());
+        return Response.ok();
+    }
 
+    /**
+     * Validate the password token
+     * @param token token to verify
+     */
+    @GetMapping("/validate-password-token/{token}")
+    public ResponseEntity<?> isTokenValid(@PathVariable String token) {
+        String result = userService.validatePasswordToken(token);
+
+        if (result != null && result.equals("invalidToken"))
+            return Response.badRequest().addErrorMsgToResponse("Le lien de réinitialisation est invalide.").build();
+        else if (result != null && result.equals("expired"))
+            return Response.badRequest().addErrorMsgToResponse("Le lien est expiré, veuillez refaire une demande de réinitialisation.").build();
+
+        return Response.ok().build();
+    }
+
+
+    /**
+     * Update the password
+     * @param passwordResetRequest params used to update (token & password)
+     */
+    @PostMapping("/reset-password")
+    public ResponseEntity<?> savePassword(@RequestBody PasswordResetRequest passwordResetRequest) {
+        String result = userService.validatePasswordToken(passwordResetRequest.getToken());
+
+        if (result != null && result.equals("invalidToken"))
+            return Response.badRequest().addErrorMsgToResponse("Le lien de réinitialisation est invalide.").build();
+        else if (result != null && result.equals("expired"))
+            return Response.badRequest().addErrorMsgToResponse("Le lien est expiré, veuillez refaire une demande de réinitialisation.").build();
+
+
+        userService.updatePassword(passwordResetRequest.getToken(), passwordResetRequest.getPassword());
+        return Response.ok().build();
+    }
 }
