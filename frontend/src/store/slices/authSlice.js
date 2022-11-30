@@ -141,4 +141,5 @@ export default authSlice.reducer;
 // Selects
 
 export const selectAuthError = (state) => state.auth.error;
+export const selectAuthIsLoading = (state) => state.auth.status == LOADING_STATE;
 export const selectCurrentUser = (state) => state.auth.currentUser;
