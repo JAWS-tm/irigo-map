@@ -1,23 +1,33 @@
 package fr.eseo.equipe2.pglback.service;
 
+import fr.eseo.equipe2.pglback.dao.PasswordResetTokenDao;
 import fr.eseo.equipe2.pglback.dao.UserDao;
 import fr.eseo.equipe2.pglback.dto.UserDto;
 import fr.eseo.equipe2.pglback.dto.mapper.UserMapper;
 import fr.eseo.equipe2.pglback.exception.CustomException;
 import fr.eseo.equipe2.pglback.exception.EntityType;
 import fr.eseo.equipe2.pglback.exception.ExceptionType;
+import fr.eseo.equipe2.pglback.model.PasswordResetToken;
 import fr.eseo.equipe2.pglback.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class UserService {
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private PasswordResetTokenDao passwordResetTokenDao;
+
+    @Autowired
+    private MailService mailService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     /**
      * List all users
@@ -57,6 +67,71 @@ public class UserService {
         if(userDao.existsByEmail(email)){
             userDao.deleteByEmail(email);
         }
+    }
+
+    /**
+     * Send mail with reset link to the given email
+     * @param email user email
+     */
+    public void forgotPassword(String email) {
+        Optional<User> userReq = userDao.findByEmail(email);
+        if (userReq.isEmpty())
+            throw exception(EntityType.USER, ExceptionType.ENTITY_NOT_FOUND);
+
+        User user = userReq.get();
+
+        String token = UUID.randomUUID().toString();
+
+        PasswordResetToken myToken = new PasswordResetToken(token, user);
+        passwordResetTokenDao.save(myToken);
+
+        HashMap<String, Object> mailData = new HashMap<>();
+        mailData.put("name", user.getFirstName());
+        mailData.put("token", token);
+
+        mailService.sendHtmlMessage(user.getEmail(), "Réinitialiser votre mot de passe","resetPassword.html", mailData);
+    }
+
+    /**
+     * Check if password token is valid
+     * @param token token to validate
+     * @return invalidToken if token is not valid, expired if token is expired or null if token is valid
+     */
+    public String validatePasswordToken(String token) {
+        Optional<PasswordResetToken> passToken = passwordResetTokenDao.findByToken(token);
+
+        return passToken.isEmpty() ? "invalidToken"
+                : isTokenExpired(passToken.get()) ? "expired"
+                : null;
+    }
+
+    /**
+     * Verify the validity of the given token
+     * @param token token to validate
+     * @return if its expired or not
+     */
+    private Boolean isTokenExpired(PasswordResetToken token) {
+        Calendar cal = Calendar.getInstance();
+        return token.getExpiryDate().before(cal.getTime());
+    }
+
+    /**
+     * update the password user by the token
+     * @param password new password
+     * @param token validation token
+     */
+    public void updatePassword(String token, String password) {
+        User user = passwordResetTokenDao.getByToken(token).getUser();
+
+
+        user.setPassword(passwordEncoder.encode(password));
+        userDao.save(user);
+
+        // Remove all generated password recovery codes
+        passwordResetTokenDao.deleteAllByUser(user);
+
+        // notify the user
+        mailService.sendMessage(user.getEmail(), "Mot de passe réinitialisé", "Bonjour "+ user.getFirstName() +", \nVotre mot de passe vient d'être réinitialisé avec succès. \nSi vous n'etes pas à l'origine de ce changement contactez un administrateur dès que possible.");
     }
 
     /**
