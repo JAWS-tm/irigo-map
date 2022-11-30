@@ -68,8 +68,10 @@ public class ApplicationSecurity {
         http.authorizeRequests()
                 .antMatchers(AUTH_WHITELIST).permitAll()
                 .antMatchers("/api/auth/**").permitAll()
-//                .antMatchers("/api/**").authenticated()
-                .antMatchers("/**").permitAll();
+                .antMatchers("/api/users/forgot-password", "/api/users/reset-password",  "/api/users/validate-password-token/*").permitAll()
+                .antMatchers("/api/**").authenticated()
+                .anyRequest().permitAll();
+
         http.exceptionHandling()
                 .authenticationEntryPoint(
                         (request, response, ex) -> response.sendError(

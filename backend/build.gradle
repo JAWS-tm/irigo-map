@@ -29,7 +29,11 @@ dependencies {
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
+<<<<<<< backend/build.gradle
+    testImplementation 'com.h2database:h2'
+=======
     testImplementation 'com.icegreen:greenmail-junit5:1.6.11'
+>>>>>>> backend/build.gradle
 
     // Swagger
     implementation group: 'io.springfox', name: 'springfox-boot-starter', version: '3.0.0'
