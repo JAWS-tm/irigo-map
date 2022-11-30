@@ -2,8 +2,8 @@ package fr.eseo.equipe2.pglback.service;
 
 import fr.eseo.equipe2.pglback.dao.PasswordResetTokenDao;
 import fr.eseo.equipe2.pglback.dao.UserDao;
-import fr.eseo.equipe2.pglback.dto.UserDto;
-import fr.eseo.equipe2.pglback.dto.mapper.UserMapper;
+import fr.eseo.equipe2.pglback.payload.UserDto;
+import fr.eseo.equipe2.pglback.payload.mapper.UserMapper;
 import fr.eseo.equipe2.pglback.exception.CustomException;
 import fr.eseo.equipe2.pglback.exception.EntityType;
 import fr.eseo.equipe2.pglback.exception.ExceptionType;
@@ -44,7 +44,7 @@ public class UserService {
      */
     public User findById(int userId) {
         Optional<User> user = userDao.findById(userId);
-        if (!user.isPresent()) {
+        if (user.isEmpty()) {
             throw exception(EntityType.USER, ExceptionType.ENTITY_NOT_FOUND, String.valueOf(userId));
         }
         return user.get();
@@ -56,7 +56,7 @@ public class UserService {
      */
     public User findByEmail(String userEmail) {
         Optional<User> user = userDao.findByEmail(userEmail);
-        if (!user.isPresent()) {
+        if (user.isEmpty()) {
             throw exception(EntityType.USER, ExceptionType.ENTITY_NOT_FOUND, String.valueOf(userEmail));
         }
         return user.get();

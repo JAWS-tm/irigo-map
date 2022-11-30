@@ -1,4 +1,4 @@
-package fr.eseo.equipe2.pglback.controller.request;
+package fr.eseo.equipe2.pglback.payload.request;
 
 import org.springframework.lang.NonNull;
 

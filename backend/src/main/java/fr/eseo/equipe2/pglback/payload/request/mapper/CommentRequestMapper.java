@@ -1,7 +1,8 @@
-package fr.eseo.equipe2.pglback.controller.request.mapper;
+package fr.eseo.equipe2.pglback.payload.request.mapper;
 
-import fr.eseo.equipe2.pglback.controller.request.OpinionRequest;
-import fr.eseo.equipe2.pglback.dto.CommentDto;
+
+import fr.eseo.equipe2.pglback.payload.CommentDto;
+import fr.eseo.equipe2.pglback.payload.request.OpinionRequest;
 
 public class CommentRequestMapper {
     public static CommentDto toCommentDto(OpinionRequest opinionRequest) {

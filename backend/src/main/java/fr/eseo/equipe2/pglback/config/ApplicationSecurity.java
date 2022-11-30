@@ -79,6 +79,7 @@ public class ApplicationSecurity {
                                 ex.getMessage() + " erreur test dans AppSecuritu"
                         )
                 );
+
         http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }

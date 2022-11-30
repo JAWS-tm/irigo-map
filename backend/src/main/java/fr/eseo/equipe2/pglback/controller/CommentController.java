@@ -1,19 +1,13 @@
 package fr.eseo.equipe2.pglback.controller;
 
-import fr.eseo.equipe2.pglback.controller.request.OpinionRequest;
-import fr.eseo.equipe2.pglback.controller.request.mapper.CommentRequestMapper;
-import fr.eseo.equipe2.pglback.dao.UserDao;
-import fr.eseo.equipe2.pglback.dto.CommentDto;
-import fr.eseo.equipe2.pglback.dto.response.Response;
-import fr.eseo.equipe2.pglback.enumeration.UserSex;
-import fr.eseo.equipe2.pglback.model.Comment;
-import fr.eseo.equipe2.pglback.model.User;
+import fr.eseo.equipe2.pglback.payload.request.OpinionRequest;
+import fr.eseo.equipe2.pglback.payload.request.mapper.CommentRequestMapper;
+import fr.eseo.equipe2.pglback.payload.response.Response;
 import fr.eseo.equipe2.pglback.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.Date;
 
 //import static jdk.internal.net.http.common.Utils.encode;
 

@@ -1,4 +1,4 @@
-package fr.eseo.equipe2.pglback.dto.response;
+package fr.eseo.equipe2.pglback.payload.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -87,28 +87,6 @@ public class Response<T> {
         return new ResponseEntity<Response<T>>(this, this.status);
     }
 
-//    public enum HttpStatus {
-//        OK, BAD_REQUEST, UNAUTHORIZED, VALIDATION_EXCEPTION, EXCEPTION, WRONG_CREDENTIALS, ACCESS_DENIED, NOT_FOUND, DUPLICATE_ENTITY
-//    }
-
-    /*@Getter
-    @Accessors(chain = true)
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    public static class PageMetadata {
-        private final int size;
-        private final long totalElements;
-        private final int totalPages;
-        private final int number;
-
-        public PageMetadata(int size, long totalElements, int totalPages, int number) {
-            this.size = size;
-            this.totalElements = totalElements;
-            this.totalPages = totalPages;
-            this.number = number;
-        }
-    }*/
-
     public Response() {
     }
 
@@ -136,15 +114,6 @@ public class Response<T> {
 
     public Response<T> setErrors(Object errors) {
         this.errors = errors;
-        return this;
-    }
-
-    public Object getMetadata() {
-        return metadata;
-    }
-
-    public Response<T> setMetadata(Object metadata) {
-        this.metadata = metadata;
         return this;
     }
 }

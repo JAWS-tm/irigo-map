@@ -1,4 +1,4 @@
-package fr.eseo.equipe2.pglback.controller.request;
+package fr.eseo.equipe2.pglback.payload.request;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;

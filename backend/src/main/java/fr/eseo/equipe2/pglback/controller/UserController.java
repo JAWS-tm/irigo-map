@@ -1,9 +1,9 @@
 package fr.eseo.equipe2.pglback.controller;
 
-import fr.eseo.equipe2.pglback.controller.request.ForgotPasswordRequest;
-import fr.eseo.equipe2.pglback.controller.request.PasswordResetRequest;
-import fr.eseo.equipe2.pglback.dto.UserDto;
-import fr.eseo.equipe2.pglback.dto.response.Response;
+import fr.eseo.equipe2.pglback.payload.UserDto;
+import fr.eseo.equipe2.pglback.payload.request.ForgotPasswordRequest;
+import fr.eseo.equipe2.pglback.payload.request.PasswordResetRequest;
+import fr.eseo.equipe2.pglback.payload.response.Response;
 import fr.eseo.equipe2.pglback.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
