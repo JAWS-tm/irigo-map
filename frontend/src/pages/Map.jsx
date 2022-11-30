@@ -13,8 +13,14 @@ import {
 import * as L from 'leaflet';
 import bus from '../assets/pictures/bus.png';
 import axios from 'axios';
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import StarNotation from '../components/StarNotation';
+import Input from '../components/Input';
+import Button from '../components/Button';
+import { Field, Form, Formik } from 'formik';
+import FormInput from '../components/FormInput';
+import commentService from '../services/comment.service';
+import { config } from '../config/config';
 
 const lineURL =
   'https://data.angers.fr/api/records/1.0/search/?dataset=irigo_gtfs_lines&q=&rows=118&facet=route_short_name&facet=route_long_name&facet=route_type';
@@ -270,18 +276,67 @@ function fillLegend(listLine) {
     }
   } catch (e) {} //prevent the code from crashing when list is undefined
 }
-//define component to display legend content
+
+const initialValues_data = {
+  notation: '',
+  comment: '',
+};
+
+// const [data, setData] = useState(initialValues_data);
+
+// //define component to display legend content
+// const AUTH_API_URL = config.API_URL + '/comments/';
+// const ValueFormik = async () => {
+//   let res = await axios.get(AUTH_API_URL + id);
+//   setData(res.data.payload);
+// };
+
 var Legend = () => {
+  const [displayNotation, setDisplayNotation] = useState({ ...legend.map(() => false) });
+
+  const handleSent = (numberLine) => (values) => {
+    commentService.handleSent(values.notation, values.comment, numberLine);
+  };
   return (
     <ul>
       {legend.map((ligne) => (
-        <li value={ligne.name} key={ligne.name}>
-          <span id="bullet" style={{ color: '#' + ligne.color }}>
-            {' '}
-            -{' '}
-          </span>
-          <span id="number">{ligne.number} </span>
-          {ligne.name}
+        <li style={{ cursor: 'pointer' }} value={ligne.name} key={ligne.name}>
+          <div
+            onClick={() =>
+              setDisplayNotation({
+                ...displayNotation,
+                [ligne.number - 1]: !displayNotation[ligne.number - 1],
+              })
+            }
+          >
+            <span id="bullet" style={{ color: '#' + ligne.color }}>
+              {' '}
+              -{' '}
+            </span>
+            <span id="number">{ligne.number} </span>
+            {ligne.name}
+          </div>
+
+          <Formik onSubmit={handleSent(ligne.number)} initialValues={initialValues_data}>
+            {/* initialValues={data ? initialValues_data : ValueFormik()} */}
+            <Form>
+              <div style={{ display: displayNotation[ligne.number - 1] ? 'inline-block' : 'none' }}>
+                <Field component={StarNotation} name="notation"></Field>
+                <div style={{ padding: '10px' }}>
+                  <Field
+                    label="commentaire ..."
+                    name="comment"
+                    className="input"
+                    component={FormInput}
+                  />
+                </div>
+
+                <div className="btn-wrapper" style={{ padding: '5px' }}>
+                  <Button type="submit" text="envoyer" />
+                </div>
+              </div>
+            </Form>
+          </Formik>
         </li>
       ))}
     </ul>
