@@ -229,7 +229,7 @@ const Register = (props) => {
               <ErrorMessage name="travelFrequency">
                 {(msg) => <div className="error">{msg}</div>}
               </ErrorMessage>
-              {isValid ? 'valid' : 'no'}
+
               <div className="btn-wrapper">
                 <Button
                   type="submit"
