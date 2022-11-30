@@ -10,6 +10,7 @@ import fr.eseo.equipe2.pglback.exception.ExceptionType;
 import fr.eseo.equipe2.pglback.model.PasswordResetToken;
 import fr.eseo.equipe2.pglback.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
