@@ -10,7 +10,6 @@ import fr.eseo.equipe2.pglback.exception.ExceptionType;
 import fr.eseo.equipe2.pglback.model.PasswordResetToken;
 import fr.eseo.equipe2.pglback.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -46,6 +45,18 @@ public class UserService {
         Optional<User> user = userDao.findById(userId);
         if (!user.isPresent()) {
             throw exception(EntityType.USER, ExceptionType.ENTITY_NOT_FOUND, String.valueOf(userId));
+        }
+        return user.get();
+    }
+    /**
+     * Find a user by email
+     * @param userEmail user
+     * @return corresponding user
+     */
+    public User findByEmail(String userEmail) {
+        Optional<User> user = userDao.findByEmail(userEmail);
+        if (!user.isPresent()) {
+            throw exception(EntityType.USER, ExceptionType.ENTITY_NOT_FOUND, String.valueOf(userEmail));
         }
         return user.get();
     }
