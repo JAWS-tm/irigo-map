@@ -5,6 +5,8 @@ import fr.eseo.equipe2.pglback.enumeration.TravelFrequency;
 import fr.eseo.equipe2.pglback.enumeration.TravelHabits;
 import fr.eseo.equipe2.pglback.enumeration.UserSex;
 import fr.eseo.equipe2.pglback.model.User;
+import fr.eseo.equipe2.pglback.controller.DataController;
+import fr.eseo.equipe2.pglback.service.DataService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -24,6 +26,10 @@ import java.util.Date;
 public class UserDaoTests {
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private DataController dataController;
+    @Autowired
+    private DataService dataService;
 
     /**
      * We create one user and testing if all is done well with/without frequency and motion
@@ -39,14 +45,14 @@ public class UserDaoTests {
                 "Dubois", UserSex.MALE, birthday1, TravelHabits.BICYCLE, TravelFrequency.WEEKLY);
         userDao.save(newUser);
 
-//        BCryptPasswordEncoder passwordEncoder2 = new BCryptPasswordEncoder();
-//        String password2 = passwordEncoder2.encode("B3"); //encode password
-//        UserSex sex2 = UserSex.FEMALE;
-//        Date birthday2 = new Date("1954/12/01");
-//        User newUser2 = new User("michelle.oro@reseau.eseo.fr", password2, "Michelle",
-//                "Oro", sex2, birthday2);
-//        userDao.save(newUser2);
-
+    }
+    //testing delete user
+    @Test
+    public void testDeleteUser(){
+        if(userDao.existsByEmail("patrick.dubois@reseau.eseo.fr")){
+            dataService.deleteUser("patrick.dubois@reseau.eseo.fr");
+        }
+        System.out.println("test delete user");
     }
 
 }
