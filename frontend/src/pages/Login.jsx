@@ -7,6 +7,7 @@ import {
   login,
   selectAuthError,
   selectAuthIsLoading,
+  selectRequestedPage,
 } from '../store/slices/authSlice';
 import * as Yup from 'yup';
 import { Field, Form, Formik } from 'formik';
@@ -14,6 +15,7 @@ import FormInput from '../components/FormInput';
 import ErrorBanner from '../components/ErrorBanner';
 import StyledLink from '../components/Link';
 import { emailValidator } from '../helpers/validators';
+import { useNavigate } from 'react-router-dom';
 
 const initialValues = {
   email: '',
@@ -30,13 +32,16 @@ const validationSchema = Yup.object({
 
 const Login = (props) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const requestedPage = useSelector(selectRequestedPage);
 
   const authError = useSelector(selectAuthError);
   const loading = useSelector(selectAuthIsLoading);
 
   const handleSubmit = (values, { setSubmitting }) => {
     if (loading) return;
-    dispatch(login(values));
+
+    dispatch(login(values)).then(() => navigate(requestedPage ?? '/'));
   };
 
   useEffect(() => {

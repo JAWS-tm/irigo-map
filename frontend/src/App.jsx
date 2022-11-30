@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import About from './pages/About';
 import Home from './pages/Home';
 import Navbar from './layout/Navbar';
@@ -14,22 +14,25 @@ import PrivateRoute from './components/routes/PrivateRoute';
 import PublicRoute from './components/routes/PublicRoute';
 import Logout from './pages/Logout';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { getMe } from './store/slices/authSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { getMe, selectRequestedPage } from './store/slices/authSlice';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 
 function App() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const requestedPage = useSelector(selectRequestedPage);
+
   useEffect(() => {
     const token = localStorage.getItem('token');
-    if (token && token.length > 1) dispatch(getMe());
-  }, []);
+    if (token && token.length > 1) dispatch(getMe()).then(() => navigate(requestedPage ?? '/'));
+    // Todo : fix double call
+  }, [requestedPage]);
 
   return (
     <>
       <Navbar />
-      {/* <h1>Welcome to React Router!</h1> */}
       <Routes>
         <Route path="/" element={<ContentLayout />}>
           <Route index element={<Home />} />
