@@ -1,6 +1,6 @@
 package fr.eseo.equipe2.pglback.exception;
 
-import fr.eseo.equipe2.pglback.dto.response.Response;
+import fr.eseo.equipe2.pglback.payload.response.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

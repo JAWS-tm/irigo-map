@@ -1,4 +1,4 @@
-package fr.eseo.equipe2.pglback.dto;
+package fr.eseo.equipe2.pglback.payload;
 
 import fr.eseo.equipe2.pglback.model.User;
 

@@ -1,21 +1,12 @@
 package fr.eseo.equipe2.pglback.service;
 
-import fr.eseo.equipe2.pglback.controller.request.SaveRequest;
 import fr.eseo.equipe2.pglback.dao.UserDao;
-import fr.eseo.equipe2.pglback.dto.UserDto;
-import fr.eseo.equipe2.pglback.dto.mapper.UserMapper;
-import fr.eseo.equipe2.pglback.exception.EntityType;
-import fr.eseo.equipe2.pglback.exception.ExceptionType;
 import fr.eseo.equipe2.pglback.model.User;
+import fr.eseo.equipe2.pglback.payload.request.SaveRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import fr.eseo.equipe2.pglback.exception.EntityType;
-import fr.eseo.equipe2.pglback.exception.ExceptionType;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
-import static fr.eseo.equipe2.pglback.dto.response.Response.exception;
 
 @Service
 public class DataService {

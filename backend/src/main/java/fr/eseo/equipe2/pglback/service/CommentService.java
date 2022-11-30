@@ -2,13 +2,13 @@ package fr.eseo.equipe2.pglback.service;
 
 import fr.eseo.equipe2.pglback.dao.CommentDao;
 import fr.eseo.equipe2.pglback.dao.UserDao;
-import fr.eseo.equipe2.pglback.dto.CommentDto;
 import fr.eseo.equipe2.pglback.dto.mapper.CommentMapper;
 import fr.eseo.equipe2.pglback.exception.CustomException;
 import fr.eseo.equipe2.pglback.exception.EntityType;
 import fr.eseo.equipe2.pglback.exception.ExceptionType;
 import fr.eseo.equipe2.pglback.model.Comment;
 import fr.eseo.equipe2.pglback.model.User;
+import fr.eseo.equipe2.pglback.payload.CommentDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

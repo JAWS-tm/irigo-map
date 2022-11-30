@@ -1,7 +1,7 @@
 package fr.eseo.equipe2.pglback.dto.mapper;
 
-import fr.eseo.equipe2.pglback.dto.CommentDto;
 import fr.eseo.equipe2.pglback.model.Comment;
+import fr.eseo.equipe2.pglback.payload.CommentDto;
 
 public class CommentMapper {
     public static CommentDto toCommentDto(Comment comment) {

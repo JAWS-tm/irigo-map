@@ -1,8 +1,7 @@
 package fr.eseo.equipe2.pglback.controller;
 
-import fr.eseo.equipe2.pglback.controller.request.SaveRequest;
-import fr.eseo.equipe2.pglback.dto.UserDto;
-import fr.eseo.equipe2.pglback.dto.response.Response;
+import fr.eseo.equipe2.pglback.payload.request.SaveRequest;
+import fr.eseo.equipe2.pglback.payload.response.Response;
 import fr.eseo.equipe2.pglback.service.DataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

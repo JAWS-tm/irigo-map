@@ -1,4 +1,4 @@
-package fr.eseo.equipe2.pglback.dto;
+package fr.eseo.equipe2.pglback.payload;
 
 //import lombok.AllArgsConstructor;
 //import lombok.Getter;
