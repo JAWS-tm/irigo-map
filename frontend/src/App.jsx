@@ -16,6 +16,8 @@ import Logout from './pages/Logout';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { getMe } from './store/slices/authSlice';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 
 function App() {
   const dispatch = useDispatch();
@@ -43,6 +45,8 @@ function App() {
           <Route path="/" element={<PublicRoute />}>
             <Route path="sign-in" element={<Login />} />
             <Route path="sign-up" element={<Register />} />
+            <Route path="forgot-password" element={<ForgotPassword />} />
+            <Route path="reset-password/:token" element={<ResetPassword />} />
           </Route>
         </Route>
       </Routes>
