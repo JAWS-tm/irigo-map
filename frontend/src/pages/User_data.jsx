@@ -56,11 +56,12 @@ const User_data = (props) => {
       <div className="update">
         <Button onClick={PopupError} text="Enregistrer" />
         <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={handleSubmit}
         >
-        <Form>{authError && <ErrorBanner message={authError} className="request-error" />}</Form>
+          <Form>{authError && <ErrorBanner message={authError} className="request-error" />}</Form>
+        </Formik>
       </div>
       <div className="delete">
         <Button onClick={PopupError} text="Supprimer" />
