@@ -7,7 +7,6 @@ import { useAuth } from '../hooks/auth';
 const linksList = [
   { name: 'Accueil', to: '/', props: { end: true } },
   { name: 'Contact', to: '/contact' },
-  { name: 'Outils', to: '/about' },
   { name: 'Aide', to: '/help' },
 ];
 
@@ -44,6 +43,7 @@ function Navbar(props) {
         <div className="separator"></div>
         {isAuth ? (
           <>
+            <NavLink to={'/about'}>Outils</NavLink>
             <NavLink to={'/map'}>Carte</NavLink>
             <NavLink to={'/logout'}>Déconnexion</NavLink>
           </>
