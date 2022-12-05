@@ -8,6 +8,7 @@ import fr.eseo.equipe2.pglback.dao.BusStopDao;
 import fr.eseo.equipe2.pglback.exception.CustomException;
 import fr.eseo.equipe2.pglback.exception.EntityType;
 import fr.eseo.equipe2.pglback.exception.ExceptionType;
+import fr.eseo.equipe2.pglback.model.BusLine;
 import fr.eseo.equipe2.pglback.payload.response.BusLineResponse;
 import fr.eseo.equipe2.pglback.payload.response.BusResponse;
 import fr.eseo.equipe2.pglback.payload.response.BusStopResponse;
@@ -47,7 +48,9 @@ public class BusService {
     }
 
     public List<BusLineResponse> getLines() {
-        return busLineDao.findAll().stream()
+        List<BusLine> busLines = busLineDao.findAll();
+
+        return busLines.stream()
                 .map(ResponseMapper::toBusLineResponse)
                 .collect(Collectors.toList());
     }

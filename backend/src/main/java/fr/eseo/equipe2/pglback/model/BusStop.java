@@ -7,6 +7,7 @@ import java.util.List;
 @Table(name = "bus_stops")
 public class BusStop {
     @Id
+    @Column(length = 25)
     private String id;
 
     @Column(nullable = false)

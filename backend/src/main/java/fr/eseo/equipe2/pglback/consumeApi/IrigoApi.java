@@ -83,6 +83,8 @@ public class IrigoApi {
 
         if (busLines == null) return;
 
+        busLineDao.deleteAll();
+
         List<BusLine> linesEntities = Arrays.stream(busLines)
                 .map(IrigoResponseMapper::toBusLineEntity)
                 .collect(Collectors.toList());
