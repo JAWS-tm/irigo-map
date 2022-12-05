@@ -7,6 +7,7 @@ import java.util.List;
 @Table(name = "bus_lines")
 public class BusLine {
     @Id
+    @Column(length = 10)
     private String lineId;
 
     @Column(nullable = false)
@@ -19,7 +20,7 @@ public class BusLine {
 //    @CollectionTable(name="line_route_coordinates")
 //    private List<Coordinate> coordinates;
 
-    @OneToMany(mappedBy = "busLine", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy = "busLine", cascade = {CascadeType.ALL})
     @OrderBy("orderKey asc")
     private List<LinePoint> linePoints;
 

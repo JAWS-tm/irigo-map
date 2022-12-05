@@ -103,14 +103,12 @@ export const authSlice = createSlice({
     // });
 
     builder
-      .addCase(getMe.pending, (state, action) => {
-        state.status = LOADING_STATE;
-        state.error = '';
-      })
       .addCase(getMe.fulfilled, (state, action) => {
-        state.status = IDLE_STATE;
         state.currentUser = action.payload;
-        state.error = '';
+      })
+      .addCase(getMe.rejected, (state, action) => {
+        state.status = IDLE_STATE;
+        state.currentUser = null;
       });
 
     builder
