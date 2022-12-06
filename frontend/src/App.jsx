@@ -9,7 +9,7 @@ import ContentLayout from './layout/ContentLayout';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Map from './pages/Map';
-import User_data from './pages/User_data';
+import UserData from './pages/UserData';
 import PrivateRoute from './components/routes/PrivateRoute';
 import PublicRoute from './components/routes/PublicRoute';
 import Logout from './pages/Logout';
@@ -43,7 +43,7 @@ function App() {
           <Route path="/" element={<PrivateRoute />}>
             <Route path="map" element={<Map />} />
             <Route path="logout" element={<Logout />} />
-            <Route path="user_data" element={<User_data />} />
+            <Route path="profile" element={<UserData />} />
           </Route>
           <Route path="/" element={<PublicRoute />}>
             <Route path="sign-in" element={<Login />} />

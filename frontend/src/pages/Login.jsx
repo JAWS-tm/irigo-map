@@ -41,7 +41,9 @@ const Login = (props) => {
   const handleSubmit = (values, { setSubmitting }) => {
     if (loading) return;
 
-    dispatch(login(values)).then(() => navigate(requestedPage ?? '/'));
+    dispatch(login(values)).then((res) => {
+      if (res.type === 'auth/login/fulfilled') navigate(requestedPage ?? '/');
+    });
   };
 
   useEffect(() => {

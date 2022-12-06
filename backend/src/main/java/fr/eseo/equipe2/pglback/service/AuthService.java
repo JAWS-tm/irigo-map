@@ -42,7 +42,6 @@ public class AuthService {
 
             return new AuthDto(user.getEmail(), accessToken);
         } catch (BadCredentialsException ex) {
-            System.out.println(ex);
             throw exception(EntityType.USER, ExceptionType.BAD_CREDENTIALS, "Bad credentials");
         }
     }

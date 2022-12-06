@@ -6,6 +6,7 @@ import FormInput from '../components/FormInput';
 import Button from '../components/Button';
 import {
   clearAuthError,
+  getMe,
   register,
   selectAuthError,
   selectCurrentUser,
@@ -13,13 +14,14 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import ErrorBanner from '../components/ErrorBanner';
 import PopupError from '../components/PopupError';
-import { useAuth } from '../hooks/auth';
 import RadioGroup from '../components/Radio/RadioGroup';
 import RadioOption from '../components/Radio/RadioOption';
 import { UserSex } from '../constants';
 import axios from 'axios';
 import { config } from '../config/config';
-import { logout } from '../store/slices/authSlice';
+import authHeader from '../services/auth-header';
+import authService from '../services/auth.service';
+import { useNavigate } from 'react-router-dom';
 
 //get values if is necessary
 const initialValues = {
@@ -50,17 +52,14 @@ const validationSchema = Yup.object({
   sex: Yup.string(),
 });
 
-const User_data = (props) => {
+const UserData = (props) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const handleSubmit = (values, { setSubmitting }) => {
+    // attention register est pour créer un compte
     dispatch(register(values));
   };
-
-  useEffect(() => {
-    return () => {
-      dispatch(clearAuthError());
-    };
-  }, []);
 
   //update changes
   const submitChanges = async (values) => {
@@ -74,12 +73,13 @@ const User_data = (props) => {
     });
     console.log(res);
   };
+
   //Delete user
   const submitDelete = async () => {
-    console.log('1: ' + localStorage.getItem('email'));
-    const AUTH_API_URL = config.API_URL + '/data/delete/' + localStorage.getItem('email');
-    console.log('2: ' + localStorage.getItem('email'));
-    let res = await axios.delete(AUTH_API_URL);
+    const AUTH_API_URL = config.API_URL + '/users/' + localStorage.getItem('email');
+    let res = await axios.delete(AUTH_API_URL, { headers: authHeader() }).then(() => {
+      navigate('/logout');
+    });
   };
 
   const authError = useSelector(selectAuthError);
@@ -186,47 +186,52 @@ const User_data = (props) => {
   );
 }; //end register
 
-User_data.propTypes = {};
+UserData.propTypes = {};
 
-export default User_data;
+export default UserData;
 
-//data reload
+const initialValues_data = {
+  firstName: 'Loading',
+  lastName: 'Loading',
+  email: 'Loading',
+  sex: 'Loading',
+};
 const Display_user_data = () => {
-  const initialValues_data = {
-    firstName: 'Loading',
-    lastName: 'Loading',
-    email: 'Loading',
-    sex: 'Loading',
-  };
+  const dispatch = useDispatch();
+  const userData = useSelector(selectCurrentUser);
+
+  useEffect(() => {
+    dispatch(getMe());
+  }, []);
 
   //function get informations about user by his email
-  const AUTH_API_URL = config.API_URL + '/users/';
-  const fetch_ud = async (email) => {
-    let res = await axios.get(AUTH_API_URL + email);
-    setData(res.data.payload);
-  };
+  // const AUTH_API_URL = config.API_URL + '/users/';
+  // const fetch_ud = async (email) => {
+  //   let res = await axios.get(AUTH_API_URL + email);
+  //   setData(res.data.payload);
+  // };
 
-  const [data, setData] = useState(initialValues_data); //return data and function(modif data)
+  // const [data, setData] = useState(initialValues_data); //return data and function(modif data)
 
   //at the begging (loading page)
-  useEffect(() => {
-    fetch_ud(localStorage.getItem('email')); //get infos to date
-  });
+  // useEffect(() => {
+  //   fetch_ud(localStorage.getItem('email')); //get infos to date
+  // }, []);
 
   return (
     <div className="infos">
       <br />
       <p>
-        Prénom : <span>{data.firstName}</span>
+        Prénom : <span>{userData.firstName}</span>
       </p>
       <p>
-        Nom : <span>{data.lastName}</span>
+        Nom : <span>{userData.lastName}</span>
       </p>
       <p>
-        Email : <span>{data.email}</span>
+        Email : <span>{userData.email}</span>
       </p>
       <p>
-        Sexe : <span>{data.sex}</span>
+        Sexe : <span>{userData.sex}</span>
       </p>
     </div>
   );
