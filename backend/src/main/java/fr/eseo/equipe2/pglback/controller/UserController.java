@@ -31,7 +31,7 @@ public class UserController {
      * when we do modification on user
      * @param userDto
      */
-    @PutMapping("/change/{email}")
+    @PutMapping("/{email}")
     public Response updateUser(@RequestBody UserDto userDto, @PathVariable String email){
         userService.updateUser(userDto);
         System.out.println(userDto);
@@ -44,7 +44,7 @@ public class UserController {
      * @param email email of the user
      */
 
-    @DeleteMapping("/user/{email}")
+    @DeleteMapping("/{email}")
     public Response<?> deleteUser(@PathVariable String email){
         userService.deleteUser(email);
         return Response.ok();
