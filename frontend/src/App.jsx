@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getMe, selectRequestedPage } from './store/slices/authSlice';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
+import NotFound from './pages/NotFound';
 
 function App() {
   const dispatch = useDispatch();
@@ -26,7 +27,8 @@ function App() {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    if (token && token.length > 1) dispatch(getMe()).then(() => navigate(requestedPage ?? '/'));
+    if (token && token.length > 1)
+      dispatch(getMe()).then(() => requestedPage && navigate(requestedPage));
     // Todo : fix double call
   }, [requestedPage]);
 
@@ -45,12 +47,14 @@ function App() {
             <Route path="logout" element={<Logout />} />
             <Route path="profile" element={<UserData />} />
           </Route>
+
           <Route path="/" element={<PublicRoute />}>
             <Route path="sign-in" element={<Login />} />
             <Route path="sign-up" element={<Register />} />
             <Route path="forgot-password" element={<ForgotPassword />} />
             <Route path="reset-password/:token" element={<ResetPassword />} />
           </Route>
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
       <Footer />
