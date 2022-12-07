@@ -34,3 +34,20 @@
     margin-bottom: 15px;
   }
 }
+
+// Not found page
+.NotFound {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 50px;
+
+  h2 {
+    font-weight: 500;
+    font-size: 20px;
+  }
+
+  button {
+    margin-top: 20px;
+  }
+}
