@@ -1,11 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import heroImg from '../assets/pictures/hero-bus-illustration.png';
-import { Link } from 'react-router-dom';
 import UnderlinedTitle from '../components/UnderlinedTitle';
 import Button from '../components/Button';
+import PopupError from '../components/PopupError';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const Home = (props) => {
+  const navigate = useNavigate();
+
+  const goToAbout = () => {
+    location.hash = '';
+    location.hash = '#about';
+  };
+
   return (
     <div className="Home">
       <div className="header">
@@ -13,11 +21,12 @@ const Home = (props) => {
           <div className="hero-data">
             <h2 className="title">Bienvenue sur IrigoMap</h2>
             <p className="description">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus eveniet nemo rem
-              eaque laudantium.
+              Nous sommes 3 étudiants en dernière année de Bachelor Ingénierie Informatique et
+              Electronique. Dans le cadre de notre formation, nous avons été amené à créer ce site
+              pour un enseignement intitulé Projet Génie Logiciel. Bonne visite !
             </p>
             <div className="buttons-wrapper">
-              <Button text="Essayer" />
+              <Button onClick={goToAbout} text="En savoir plus" />
             </div>
           </div>
           <div>
@@ -45,12 +54,12 @@ const Home = (props) => {
           </div>
         </div>
       </div>
-      <section className="about-section">
-        <UnderlinedTitle>À propos</UnderlinedTitle>
+      <section className="about-section" id="about">
+        <UnderlinedTitle>À savoir</UnderlinedTitle>
         <p className="description">
-          Nous sommes 3 étudiants en dernière année de Bachelor Ingénierie Informatique et
-          Electronique. Dans le cadre de notre formation, nous avons été amené à créer ce site pour
-          un enseignement intitulé Projet Génie Logiciel. Bonne visite !
+          Attention, dans le cadre de notre projet nous récolotons les informations que vous
+          avez/allez rentrer dans l'inscription mais aussi dans les demandes Data Scientist et
+          Administrateur
         </p>
       </section>
     </div>

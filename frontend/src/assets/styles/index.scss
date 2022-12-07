@@ -4,12 +4,15 @@
 @import 'mixins.scss';
 
 // Pages
+@import 'pages/index.scss';
 @import 'pages/Contact.scss';
 @import 'pages/Home.scss';
 @import 'pages/Login.scss';
 @import 'pages/Register.scss';
 @import 'pages/Map.scss';
 @import 'pages/About.scss';
+@import 'pages/Help.scss';
+@import 'pages/User_data.scss';
 
 // components
 @import 'components/index.scss';
@@ -22,8 +25,6 @@
 :root {
   font-size: 16px;
   font-weight: 400;
-
-  color-scheme: light dark;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -45,6 +46,8 @@
   @include lg {
     --container-margin: 100px;
   }
+
+  scroll-behavior: smooth;
 }
 
 *,
