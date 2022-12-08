@@ -4,6 +4,7 @@ import Input from '../components/Input';
 import TextArea from '../components/TextArea';
 import UnderlinedTitle from '../components/UnderlinedTitle';
 import Button from '../components/Button';
+import PopupError from '../components/PopupError';
 
 const Contact = (props) => {
   return (
@@ -18,7 +19,7 @@ const Contact = (props) => {
           <TextArea label="Message" className="message-input" />
         </div>
         <div className="btn-wrapper">
-          <Button text="Envoyer" />
+          <Button text="Envoyer" onClick={PopupError} />
         </div>
       </form>
     </div>

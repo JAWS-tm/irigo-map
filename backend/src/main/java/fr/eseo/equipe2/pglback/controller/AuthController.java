@@ -1,9 +1,11 @@
 package fr.eseo.equipe2.pglback.controller;
 
-import fr.eseo.equipe2.pglback.controller.request.LoginRequest;
-import fr.eseo.equipe2.pglback.controller.request.RegisterRequest;
-import fr.eseo.equipe2.pglback.controller.request.mapper.UserRequestMapper;
-import fr.eseo.equipe2.pglback.dto.response.Response;
+import fr.eseo.equipe2.pglback.payload.request.LoginRequest;
+import fr.eseo.equipe2.pglback.payload.request.RegisterRequest;
+import fr.eseo.equipe2.pglback.payload.request.mapper.UserRequestMapper;
+import fr.eseo.equipe2.pglback.payload.AuthDto;
+import fr.eseo.equipe2.pglback.payload.UserDto;
+import fr.eseo.equipe2.pglback.payload.response.Response;
 import fr.eseo.equipe2.pglback.service.AuthService;
 import fr.eseo.equipe2.pglback.service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +27,8 @@ public class AuthController {
      * @return Unauthorized or Ok
      */
     @PostMapping("/login")
-    public Response login(@RequestBody LoginRequest loginRequest) {
-        return Response.ok().setPayload(authService.login(UserRequestMapper.toUserDto(loginRequest)));
+    public Response<AuthDto> login(@RequestBody LoginRequest loginRequest) {
+        return Response.<AuthDto>ok().setPayload(authService.login(UserRequestMapper.toUserDto(loginRequest)));
     }
 
     /**
@@ -35,8 +37,8 @@ public class AuthController {
      * @return Ok or 409 CONFLICT
      */
     @PostMapping("/register")
-    public Response register(@RequestBody RegisterRequest registerRequest) {
-        return Response.ok().setPayload(authService.register(UserRequestMapper.toUserDto(registerRequest)));
+    public Response<UserDto> register(@RequestBody RegisterRequest registerRequest) {
+        return Response.<UserDto>ok().setPayload(authService.register(UserRequestMapper.toUserDto(registerRequest)));
     }
 
     /**
@@ -45,10 +47,10 @@ public class AuthController {
      * @return Ok or Unauthorized
      */
     @GetMapping("/me")
-    public Response me(Principal principal) {
+    public Response<UserDto> me(Principal principal) {
         if (principal == null)
             return Response.unauthorized();
 
-        return Response.ok().setPayload(authService.me(principal.getName()));
+        return Response.<UserDto>ok().setPayload(authService.me(principal.getName()));
     }
 }

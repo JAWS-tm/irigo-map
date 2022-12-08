@@ -1,6 +1,6 @@
 package fr.eseo.equipe2.pglback.exception;
 
-import fr.eseo.equipe2.pglback.dto.response.Response;
+import fr.eseo.equipe2.pglback.payload.response.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -29,7 +29,7 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
 
     @ExceptionHandler(CustomException.BadCredentialsException.class)
     public final ResponseEntity handleBadCredentialsExceptions(Exception ex, WebRequest request) {
-        Response response = Response.wrongCredentials();
+        Response response = Response.unauthorized();
         response.addErrorMsgToResponse(ex.getMessage(), ex);
         return new ResponseEntity(response, HttpStatus.UNAUTHORIZED);
     }

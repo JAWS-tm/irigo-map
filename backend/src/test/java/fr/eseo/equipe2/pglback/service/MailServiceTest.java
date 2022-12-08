@@ -30,8 +30,7 @@ class MailServiceTest {
     static GreenMailExtension greenMail = new GreenMailExtension(ServerSetupTest.SMTP)
             .withConfiguration(GreenMailConfiguration.aConfig().withUser("test", "test"))
             .withPerMethodLifecycle(false);
-
-
+    
     @Test
     void sendHtmlMessage() throws MessagingException, IOException {
         String to = "jules.dempt@outlook.fr";

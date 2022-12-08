@@ -1,9 +1,9 @@
 package fr.eseo.equipe2.pglback.service;
 
 import fr.eseo.equipe2.pglback.dao.UserDao;
-import fr.eseo.equipe2.pglback.dto.AuthDto;
-import fr.eseo.equipe2.pglback.dto.UserDto;
-import fr.eseo.equipe2.pglback.dto.mapper.UserMapper;
+import fr.eseo.equipe2.pglback.payload.AuthDto;
+import fr.eseo.equipe2.pglback.payload.UserDto;
+import fr.eseo.equipe2.pglback.payload.mapper.UserMapper;
 import fr.eseo.equipe2.pglback.exception.CustomException;
 import fr.eseo.equipe2.pglback.exception.EntityType;
 import fr.eseo.equipe2.pglback.exception.ExceptionType;
@@ -42,7 +42,6 @@ public class AuthService {
 
             return new AuthDto(user.getEmail(), accessToken);
         } catch (BadCredentialsException ex) {
-            System.out.println(ex);
             throw exception(EntityType.USER, ExceptionType.BAD_CREDENTIALS, "Bad credentials");
         }
     }

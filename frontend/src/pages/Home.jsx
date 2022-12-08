@@ -1,12 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import heroImg from '../assets/pictures/hero-bus-illustration.png';
-import { Link } from 'react-router-dom';
 import UnderlinedTitle from '../components/UnderlinedTitle';
 import Button from '../components/Button';
 import PopupError from '../components/PopupError';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const Home = (props) => {
+  const navigate = useNavigate();
+
+  const goToAbout = () => {
+    location.hash = '';
+    location.hash = '#about';
+  };
+
   return (
     <div className="Home">
       <div className="header">
@@ -19,7 +26,7 @@ const Home = (props) => {
               pour un enseignement intitulé Projet Génie Logiciel. Bonne visite !
             </p>
             <div className="buttons-wrapper">
-              <Button onClick={PopupError} text="Carte" />
+              <Button onClick={goToAbout} text="En savoir plus" />
             </div>
           </div>
           <div>
@@ -47,7 +54,7 @@ const Home = (props) => {
           </div>
         </div>
       </div>
-      <section className="about-section">
+      <section className="about-section" id="about">
         <UnderlinedTitle>À savoir</UnderlinedTitle>
         <p className="description">
           Attention, dans le cadre de notre projet nous récolotons les informations que vous

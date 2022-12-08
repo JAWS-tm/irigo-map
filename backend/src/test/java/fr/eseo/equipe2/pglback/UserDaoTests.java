@@ -5,14 +5,12 @@ import fr.eseo.equipe2.pglback.enumeration.TravelFrequency;
 import fr.eseo.equipe2.pglback.enumeration.TravelHabits;
 import fr.eseo.equipe2.pglback.enumeration.UserSex;
 import fr.eseo.equipe2.pglback.model.User;
-import fr.eseo.equipe2.pglback.controller.DataController;
-import fr.eseo.equipe2.pglback.service.DataService;
+import fr.eseo.equipe2.pglback.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.test.annotation.Rollback;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -27,9 +25,7 @@ public class UserDaoTests {
     @Autowired
     private UserDao userDao;
     @Autowired
-    private DataController dataController;
-    @Autowired
-    private DataService dataService;
+    private UserService userService;
 
     /**
      * We create one user and testing if all is done well with/without frequency and motion
@@ -50,7 +46,7 @@ public class UserDaoTests {
     @Test
     public void testDeleteUser(){
         if(userDao.existsByEmail("patrick.dubois@reseau.eseo.fr")){
-            dataService.deleteUser("patrick.dubois@reseau.eseo.fr");
+            userService.deleteUser("patrick.dubois@reseau.eseo.fr");
         }
         System.out.println("test delete user");
     }
