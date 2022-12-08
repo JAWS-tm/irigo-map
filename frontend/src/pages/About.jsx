@@ -11,15 +11,12 @@ const About = (props) => {
       <div className="card-section">
         <div className="card-list">
           <div className="card">
-            <i className="fa-solid"></i>
             <Link to="/user_data">Informations Utilisateur</Link>
           </div>
           <div className="card">
-            <i className="fa-solid"></i>
             <Link onClick={PopupError}>Demande Data Scientist</Link>
           </div>
           <div className="card">
-            <i className="fa-solid"></i>
             <Link onClick={PopupError}>Demande Administrateur</Link>
           </div>
         </div>

@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.*;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
     /**
-     * Ensure client-side paths redirect to index.html because client handles routing. NOTE: Do NOT use @EnableWebMvc or it will break this.
+     * Ensure client-side paths redirect to index.html because client handles routing.
      */
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
@@ -39,11 +39,3 @@ public class WebConfig implements WebMvcConfigurer {
         configurer.addPathPrefix("/api", HandlerTypePredicate.forAnnotation(RestController.class));
     }
 }
-
-//@Controller
-//public class ForwardingController {
-//    @RequestMapping("/{path:[^\\.]+}/**")
-//    public String forward() {
-//        return "forward:/";
-//    }
-//}

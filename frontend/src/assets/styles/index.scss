@@ -4,6 +4,7 @@
 @import 'mixins.scss';
 
 // Pages
+@import 'pages/index.scss';
 @import 'pages/Contact.scss';
 @import 'pages/Home.scss';
 @import 'pages/Login.scss';
@@ -25,8 +26,6 @@
   font-size: 16px;
   font-weight: 400;
 
-  color-scheme: light dark;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -47,6 +46,8 @@
   @include lg {
     --container-margin: 100px;
   }
+
+  scroll-behavior: smooth;
 }
 
 *,

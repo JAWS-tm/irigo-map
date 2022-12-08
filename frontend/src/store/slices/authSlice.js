@@ -54,6 +54,7 @@ const authInitialState = {
   currentUser: null,
   error: null,
   status: IDLE_STATE,
+  requestedPage: null,
 };
 
 // Create actions & reducer
@@ -61,12 +62,9 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState: authInitialState,
   reducers: {
-    // register: (state, action) => {
-    //   state.currentUser = action.payload.user;
-    // },
-    // login: (state, action) => {
-    //   state.currentUser = action.payload.user;
-    // },
+    setRequestedPage: (state, action) => {
+      state.requestedPage = action.payload;
+    },
     clearAuthError: (state, action) => {
       state.error = null;
     },
@@ -105,14 +103,12 @@ export const authSlice = createSlice({
     // });
 
     builder
-      .addCase(getMe.pending, (state, action) => {
-        state.status = LOADING_STATE;
-        state.error = '';
-      })
       .addCase(getMe.fulfilled, (state, action) => {
-        state.status = IDLE_STATE;
         state.currentUser = action.payload;
-        state.error = '';
+      })
+      .addCase(getMe.rejected, (state, action) => {
+        state.status = IDLE_STATE;
+        state.currentUser = null;
       });
 
     builder
@@ -134,11 +130,13 @@ export const authSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { clearAuthError } = authSlice.actions;
+export const { clearAuthError, setRequestedPage } = authSlice.actions;
 
 export default authSlice.reducer;
 
 // Selects
 
 export const selectAuthError = (state) => state.auth.error;
+export const selectAuthIsLoading = (state) => state.auth.status == LOADING_STATE;
 export const selectCurrentUser = (state) => state.auth.currentUser;
+export const selectRequestedPage = (state) => state.auth.requestedPage;

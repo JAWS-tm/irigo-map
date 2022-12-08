@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Navigate, Outlet, Route } from 'react-router';
 import { useAuth } from '../../hooks/auth';
 
-const PublicRoute = ({ element, ...rest }) => {
+const PublicRoute = () => {
   const auth = useAuth();
 
   return auth ? <Navigate to="/" /> : <Outlet />;

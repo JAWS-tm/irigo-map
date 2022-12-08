@@ -1,0 +1,53 @@
+.ForgotPassword,
+.ResetPassword {
+  .info {
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  .token-error {
+    display: flex;
+    align-items: center;
+    margin: 35px 0;
+    i {
+      font-size: 25px;
+      margin-right: 10px;
+    }
+  }
+  .token-error i {
+    color: var(--secondary-color);
+  }
+
+  .field-wrapper {
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    justify-content: center;
+
+    button {
+      width: fit-content;
+      margin: 0 auto;
+    }
+  }
+
+  .error-message {
+    margin-bottom: 15px;
+  }
+}
+
+// Not found page
+.NotFound {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 50px;
+
+  h2 {
+    font-weight: 500;
+    font-size: 20px;
+  }
+
+  button {
+    margin-top: 20px;
+  }
+}

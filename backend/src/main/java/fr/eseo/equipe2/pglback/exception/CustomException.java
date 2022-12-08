@@ -1,6 +1,5 @@
 package fr.eseo.equipe2.pglback.exception;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
