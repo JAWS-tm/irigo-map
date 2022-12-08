@@ -1,2 +1,5 @@
 frontend/yarn.lock
 backend/src/main/resources/static/*
+backend/src/main/resources/application-dev.properties
+backend/src/main/resources/application-prod.properties
+backend/src/main/resources/application-test.properties
