@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.function.Function;
 
 @Component
 public class JwtTokenUtil {
@@ -17,9 +18,34 @@ public class JwtTokenUtil {
     @Value("${app.jwt.secret}") // You need to update the document "application.properties" WARNING!! some information are confidential
     private String SECRET_KEY;
 
+    public String getEmailFromToken(String token) {
+        return getClaimFromToken(token, Claims::getSubject);
+    }
+
+    public Date getExpirationDateFromToken(String token) {
+        return getClaimFromToken(token, Claims::getExpiration);
+    }
+
+    public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
+        final Claims claims = getAllClaimsFromToken(token);
+        return claimsResolver.apply(claims);
+    }
+
+    private Claims getAllClaimsFromToken(String token) {
+        return Jwts.parser()
+                .setSigningKey(SECRET_KEY)
+                .parseClaimsJws(token)
+                .getBody();
+    }
+
+    private Boolean isTokenExpired(String token) {
+        final Date expiration = getExpirationDateFromToken(token);
+        return expiration.before(new Date());
+    }
+
     public String generateAccessToken(User user) {
         return Jwts.builder()
-                .setSubject(String.format("%s", user.getEmail()))
+                .setSubject(user.getEmail())
                 .setIssuer("IrigoMap")
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRE_DURATION))
@@ -30,25 +56,12 @@ public class JwtTokenUtil {
     public boolean validateAccessToken(String token) {
         try {
             Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token);
-            return true;
+            return !isTokenExpired(token);
         } catch (Exception e) {
 //            e.printStackTrace();
         }
         return false;
     }
 
-    public Date getExpiration(String token) {
-        return parseClaims(token).getExpiration();
-    }
 
-    public String getSubject(String token) {
-        return parseClaims(token).getSubject();
-    }
-
-    private Claims parseClaims(String token) {
-        return Jwts.parser()
-                .setSigningKey(SECRET_KEY)
-                .parseClaimsJws(token)
-                .getBody();
-    }
 }
