@@ -22,6 +22,7 @@ import { config } from '../config/config';
 import authHeader from '../services/auth-header';
 import authService from '../services/auth.service';
 import { useNavigate } from 'react-router-dom';
+import jsPDF from 'jspdf';
 
 //get values if is necessary
 const initialValues = {
@@ -64,13 +65,14 @@ const UserData = (props) => {
   //update changes
   const submitChanges = async (values) => {
     console.log(values);
-    const AUTH_API_URL = config.API_URL + '/data/change/' + localStorage.getItem('email');
-    let res = await axios.put(AUTH_API_URL, {
+    const AUTH_API_URL = config.API_URL + '/users/' + localStorage.getItem('email');
+    let res = await axios.post(AUTH_API_URL, {
       firstName: values.firstName,
       lastName: values.lastName,
       password: values.password,
       sex: values.sex,
     });
+    console.log(values.firstName);
   };
 
   //Delete user
@@ -79,6 +81,36 @@ const UserData = (props) => {
     let res = await axios.delete(AUTH_API_URL, { headers: authHeader() }).then(() => {
       navigate('/logout');
     });
+  };
+
+  const userData = useSelector(selectCurrentUser);
+
+  //print pdf of informations
+  const print = () => {
+    console.log('print pdf');
+    //var image = new Image();
+    //image.src = '../pictures/banière.png';
+    const pdf = new jsPDF('p', 'px');
+
+    pdf.addFont('helvetica', 'normal');
+    //pdf.addImage(image, 'PNG');
+    pdf.text('Bienvenue sur votre page information', 120, 20);
+    pdf.text('Prénom', 30, 50);
+    pdf.text(userData.firstName, 90, 50);
+    pdf.text('Nom', 30, 70);
+    pdf.text(userData.lastName, 90, 70);
+    pdf.text('Email', 30, 90);
+    pdf.text(userData.email, 90, 90);
+    pdf.text('Sexe', 30, 110);
+    pdf.text(userData.sex, 90, 110);
+    pdf.text('Anniversaire', 30, 130);
+    pdf.text(userData.birthday, 130, 130);
+    pdf.text('Habitude de voyage', 30, 150);
+    pdf.text(userData.travelHabits, 150, 150);
+    pdf.text('Fréquence de voyage', 30, 170);
+    pdf.text(userData.travelFrequency, 150, 170);
+    pdf.text("EMPTY signifie que vous n'avez pas entré de donnée", 30, 210);
+    pdf.save('infos.pdf');
   };
 
   const authError = useSelector(selectAuthError);
@@ -179,7 +211,7 @@ const UserData = (props) => {
           </p>
         </div>
         <br />
-        <Button onClick={PopupError} text="Télécharger" />
+        <Button type="button" onClick={print} text="Télécharger PDF" />
       </div>
     </div>
   );

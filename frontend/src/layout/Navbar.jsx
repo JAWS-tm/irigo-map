@@ -6,7 +6,6 @@ import { useAuth } from '../hooks/auth';
 
 const linksList = [
   { name: 'Accueil', to: '/', props: { end: true } },
-  { name: 'Contact', to: '/contact' },
   { name: 'Aide', to: '/help' },
 ];
 
