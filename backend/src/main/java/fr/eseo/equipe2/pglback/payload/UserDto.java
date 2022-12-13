@@ -2,6 +2,7 @@ package fr.eseo.equipe2.pglback.payload;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import fr.eseo.equipe2.pglback.enumeration.Role;
 import fr.eseo.equipe2.pglback.enumeration.TravelFrequency;
 import fr.eseo.equipe2.pglback.enumeration.TravelHabits;
 import fr.eseo.equipe2.pglback.enumeration.UserSex;
@@ -31,6 +32,8 @@ public class UserDto {
 
     private TravelHabits travelHabits;
     private TravelFrequency travelFrequency;
+
+    private Role role;
 
 
     public UserDto() {
@@ -105,6 +108,15 @@ public class UserDto {
 
     public UserDto setTravelFrequency(TravelFrequency travelFrequency) {
         this.travelFrequency = travelFrequency;
+        return this;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public UserDto setRole(Role role) {
+        this.role = role;
         return this;
     }
 }
