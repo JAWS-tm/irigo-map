@@ -10,6 +10,7 @@ import fr.eseo.equipe2.pglback.exception.ExceptionType;
 import fr.eseo.equipe2.pglback.model.PasswordResetToken;
 import fr.eseo.equipe2.pglback.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +35,16 @@ public class UserService {
      * @return list of all the users
      */
     public List<User> getUsers() {
-         return userDao.findAll();
+         return userDao.findAll(Sort.by(Sort.Direction.DESC, "id"));
+    }
+
+    /**
+     * Get one user
+     * @param userId user id
+     * @return list of all the users
+     */
+    public Optional<User> getUser(Integer userId) {
+        return userDao.findById(userId);
     }
 
     /**
@@ -63,11 +73,31 @@ public class UserService {
     }
 
     /**
+     * Add user
+     * @param userDto user data
+     */
+    public void addUser(UserDto userDto) {
+        if (userDao.existsByEmail(userDto.getEmail()))
+            throw exception(EntityType.USER, ExceptionType.DUPLICATE_ENTITY);
+
+        userDao.save(UserMapper.toUser(userDto));
+    }
+
+
+    /**
      * Update user data
-     * @param userDto user object
+     * @param userDto user dto object
      */
     public void updateUser(UserDto userDto) {
         userDao.save(UserMapper.toUser(userDto));
+    }
+
+    /**
+     * Update user data
+     * @param user user object
+     */
+    public void updateUser(User user) {
+        userDao.save(user);
     }
 
 
@@ -76,9 +106,19 @@ public class UserService {
      * @param email user email
      */
     public void deleteUser(String email) {
-        if(userDao.existsByEmail(email)){
+        if(userDao.existsByEmail(email))
             userDao.deleteByEmail(email);
-        }
+    }
+
+    /**
+     * Remove user by id
+     * @param id user id
+     */
+    public void deleteUser(Integer id) {
+        if(!userDao.existsById(id))
+            throw exception(EntityType.USER, ExceptionType.ENTITY_NOT_FOUND);
+
+        userDao.deleteById(id);
     }
 
     /**
