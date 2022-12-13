@@ -71,7 +71,6 @@ const UserData = (props) => {
       password: values.password,
       sex: values.sex,
     });
-    console.log(res);
   };
 
   //Delete user
