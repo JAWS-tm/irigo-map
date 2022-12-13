@@ -11,7 +11,9 @@
     // line-height: 1.2;
     font-family: var(--font-primary);
     font-size: 14px;
+  }
 
+  input.field {
     &:focus,
     &:not(:placeholder-shown) {
       outline-color: var(--primary-color);
@@ -20,6 +22,10 @@
         transform: translate(0, -80%) scale(0.85);
       }
     }
+  }
+
+  select.field:not(.empty) ~ .label {
+    transform: translate(0, -80%) scale(0.85);
   }
 
   .label {
