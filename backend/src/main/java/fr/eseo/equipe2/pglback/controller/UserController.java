@@ -32,7 +32,7 @@ public class UserController {
      * @param userDto
      */
     @PutMapping("/{email}")
-    public Response updateUser(@RequestBody UserDto userDto, @PathVariable String email){
+    public Response<?> updateUser(@RequestBody UserDto userDto, @PathVariable String email){
         userService.updateUser(userDto);
         System.out.println(userDto);
         return Response.ok();

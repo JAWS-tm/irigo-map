@@ -11,7 +11,7 @@ const About = (props) => {
       <div className="card-section">
         <div className="card-list">
           <div className="card">
-            <Link to="/user_data">Informations Utilisateur</Link>
+            <Link to="/User_data">Informations Utilisateur</Link>
           </div>
           <div className="card">
             <Link onClick={PopupError}>Demande Data Scientist</Link>

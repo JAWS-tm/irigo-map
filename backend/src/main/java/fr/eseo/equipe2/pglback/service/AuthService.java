@@ -82,7 +82,7 @@ public class AuthService {
      * Returns a new RuntimeException
      * @param entityType
      * @param exceptionType
-     * @param args
+     * @param args,
      * @return
      */
     private RuntimeException exception(EntityType entityType, ExceptionType exceptionType, String... args) {

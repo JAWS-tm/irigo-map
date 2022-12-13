@@ -1,6 +1,7 @@
 package fr.eseo.equipe2.pglback.dao;
 
 import fr.eseo.equipe2.pglback.model.User;
+import fr.eseo.equipe2.pglback.payload.UserDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,4 +15,5 @@ public interface UserDao extends JpaRepository<User, Integer> {
     Boolean existsByEmail(String email);
     @Transactional
     void deleteByEmail(String email);
+
 }

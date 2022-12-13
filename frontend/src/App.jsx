@@ -3,7 +3,6 @@ import About from './pages/About';
 import Home from './pages/Home';
 import Navbar from './layout/Navbar';
 import Footer from './layout/Footer';
-import Contact from './pages/Contact';
 import Help from './pages/Help';
 import ContentLayout from './layout/ContentLayout';
 import Login from './pages/Login';
@@ -39,13 +38,12 @@ function App() {
         <Route path="/" element={<ContentLayout />}>
           <Route index element={<Home />} />
           <Route path="about" element={<About />} />
-          <Route path="contact" element={<Contact />} />
           <Route path="help" element={<Help />} />
 
           <Route path="/" element={<PrivateRoute />}>
             <Route path="map" element={<Map />} />
             <Route path="logout" element={<Logout />} />
-            <Route path="profile" element={<UserData />} />
+            <Route path="User_data" element={<UserData />} />
           </Route>
 
           <Route path="/" element={<PublicRoute />}>
