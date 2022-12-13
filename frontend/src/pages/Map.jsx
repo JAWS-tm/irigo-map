@@ -20,6 +20,7 @@ import StarNotation from '../components/StarNotation';
 import FormInput from '../components/FormInput';
 import Button from '../components/Button';
 import commentService from '../services/comment.service';
+import { useRef } from 'react';
 
 const southWest = L.latLng(47.39, -0.66);
 const northEast = L.latLng(47.58, -0.44);
@@ -61,6 +62,7 @@ const Map = (props) => {
   const [busData, setBusData] = useState(null);
   const [linesData, setLinesData] = useState(null);
   const [stopsData, setStopsData] = useState(null);
+  const mapRef = useRef();
 
   useEffect(() => {
     mapService.getStops().then((stops) => setStopsData(stops));
@@ -79,11 +81,10 @@ const Map = (props) => {
 
   const busList = useMemo(() => {
     if (!busData) return;
-
     return busData.map((bus) => {
       return {
         ...bus,
-        color: colorLine[bus.lineNb],
+        color: colorLine[Number.parseInt(bus.lineNb)],
         delay: Math.round(bus.delay / 60),
         nextStopTime: moment(bus.nextStopTime).fromNow(),
       };
@@ -104,10 +105,22 @@ const Map = (props) => {
     return linesData;
   }, [linesData]);
 
+  // Reload map layout after loading lines (to fix size change)
+  useEffect(() => {
+    mapRef.current && mapRef.current.invalidateSize();
+  }, [linesList]);
+
   return (
     <div id="ContainerMapPage">
       <div>
-        <MapContainer id="Map" center={position} zoom={15} minZoom={12.5} maxBounds={bounds}>
+        <MapContainer
+          id="Map"
+          center={position}
+          zoom={15}
+          minZoom={12.5}
+          maxBounds={bounds}
+          ref={mapRef}
+        >
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -158,9 +171,7 @@ const Map = (props) => {
                   key={line.lineId}
                   name={'(' + line.lineId + ') ' + line.lineName}
                 >
-                  <LayerGroup>
-                    <Polyline positions={line.coordinates} color={'#' + line.lineColor} />
-                  </LayerGroup>
+                  <Polyline positions={line.coordinates} color={'#' + line.lineColor} />
                 </LayersControl.Overlay>
               ))}
           </LayersControl>
@@ -183,7 +194,7 @@ var Legend = ({ lines }) => {
     if (!lines) return;
     setDisplayNotation({ ...lines.map(() => false) });
   }, [lines]);
-  console.log(displayNotation);
+
   const handleSent = (numberLine) => (values) => {
     commentService.handleSent(values.notation, values.comment, numberLine);
   };
