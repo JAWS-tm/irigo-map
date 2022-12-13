@@ -35,6 +35,7 @@
       padding: 5px 15px;
       color: inherit;
       position: relative;
+      transition: 0.2s;
 
       &::after {
         content: '';
