@@ -53,8 +53,13 @@ public class IrigoApi {
 
         if (buses == null) return;
 
+        busDao.deleteAll();
+
+        List<String> destBlacklist = Arrays.asList("TEST NOIR", "PAS EN SERVICE");
+
         List<Bus> busesEntities = Arrays.stream(buses)
                 .map(IrigoResponseMapper::toBusEntity)
+                .filter((bus) -> !destBlacklist.contains(bus.getDestination()))
                 .collect(Collectors.toList());
 
         busDao.saveAll(busesEntities);

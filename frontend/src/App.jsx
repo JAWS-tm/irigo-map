@@ -14,10 +14,13 @@ import PublicRoute from './components/routes/PublicRoute';
 import Logout from './pages/Logout';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getMe, selectRequestedPage } from './store/slices/authSlice';
+import { clearAuthStatus, getMe, selectRequestedPage } from './store/slices/authSlice';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import NotFound from './pages/NotFound';
+import ManageUsers from './pages/admin/ManageUsers';
+import { UserRoles } from './constants';
+import RestrictedRoute from './components/routes/RestrictedRoute';
 
 function App() {
   const dispatch = useDispatch();
@@ -28,6 +31,8 @@ function App() {
     const token = localStorage.getItem('token');
     if (token && token.length > 1)
       dispatch(getMe()).then(() => requestedPage && navigate(requestedPage));
+    else dispatch(clearAuthStatus()); // set auth loading to idle
+
     // Todo : fix double call
   }, [requestedPage]);
 
@@ -44,6 +49,11 @@ function App() {
             <Route path="map" element={<Map />} />
             <Route path="logout" element={<Logout />} />
             <Route path="User_data" element={<UserData />} />
+
+            <Route path="admin" element={<RestrictedRoute role={UserRoles.ADMIN} />}>
+              <Route index element={<p>Admin panel</p>} />
+              <Route path="users" element={<ManageUsers />} />
+            </Route>
           </Route>
 
           <Route path="/" element={<PublicRoute />}>
@@ -52,6 +62,7 @@ function App() {
             <Route path="forgot-password" element={<ForgotPassword />} />
             <Route path="reset-password/:token" element={<ResetPassword />} />
           </Route>
+
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
