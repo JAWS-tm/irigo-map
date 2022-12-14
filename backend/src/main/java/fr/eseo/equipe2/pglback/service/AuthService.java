@@ -1,13 +1,14 @@
 package fr.eseo.equipe2.pglback.service;
 
 import fr.eseo.equipe2.pglback.dao.UserDao;
-import fr.eseo.equipe2.pglback.payload.AuthDto;
-import fr.eseo.equipe2.pglback.payload.UserDto;
-import fr.eseo.equipe2.pglback.payload.mapper.UserMapper;
+import fr.eseo.equipe2.pglback.enumeration.Role;
 import fr.eseo.equipe2.pglback.exception.CustomException;
 import fr.eseo.equipe2.pglback.exception.EntityType;
 import fr.eseo.equipe2.pglback.exception.ExceptionType;
 import fr.eseo.equipe2.pglback.model.User;
+import fr.eseo.equipe2.pglback.payload.AuthDto;
+import fr.eseo.equipe2.pglback.payload.UserDto;
+import fr.eseo.equipe2.pglback.payload.mapper.UserMapper;
 import fr.eseo.equipe2.pglback.security.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -40,9 +41,8 @@ public class AuthService {
             User user = (User) authentication.getPrincipal();
             String accessToken = jwtUtil.generateAccessToken(user);
 
-            return new AuthDto(user.getEmail(), accessToken);
+            return new AuthDto(UserMapper.toUserDto(user), accessToken);
         } catch (BadCredentialsException ex) {
-            System.out.println(ex);
             throw exception(EntityType.USER, ExceptionType.BAD_CREDENTIALS, "Bad credentials");
         }
     }
@@ -60,6 +60,7 @@ public class AuthService {
 
         User user = UserMapper.toUser(userDto)
                             .setPassword(passwordEncoder.encode(userDto.getPassword()));
+        user.setRole(Role.USER);
 
         return UserMapper.toUserDto(userDao.save(user).setPassword(""));
     }
@@ -83,7 +84,7 @@ public class AuthService {
      * Returns a new RuntimeException
      * @param entityType
      * @param exceptionType
-     * @param args
+     * @param args,
      * @return
      */
     private RuntimeException exception(EntityType entityType, ExceptionType exceptionType, String... args) {

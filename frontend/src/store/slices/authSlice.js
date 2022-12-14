@@ -6,10 +6,10 @@ export const login = createAsyncThunk(
   'auth/login',
   async ({ email, password }, { rejectWithValue }) => {
     try {
-      const value = await authService.login(email, password);
-      return value;
+      const res = await authService.login(email, password);
+      return res.payload.user;
     } catch (err) {
-      return rejectWithValue(err.response.data.errors.message);
+      return rejectWithValue(err.response?.data.errors.message || err.message);
     }
   }
 );
@@ -18,7 +18,7 @@ export const register = createAsyncThunk(
   'auth/register',
   async (registerForm, { rejectWithValue }) => {
     try {
-      const value = await authService.register(
+      const res = await authService.register(
         registerForm.email,
         registerForm.password,
         registerForm.lastName,
@@ -28,7 +28,7 @@ export const register = createAsyncThunk(
         registerForm.travelHabits,
         registerForm.travelFrequency
       );
-      return value;
+      return res.payload;
     } catch (err) {
       return rejectWithValue(err.response.data.errors.message);
     }
@@ -55,6 +55,7 @@ const authInitialState = {
   error: null,
   status: IDLE_STATE,
   requestedPage: null,
+  initialLoad: true, // for initial user load on website loading
 };
 
 // Create actions & reducer
@@ -67,6 +68,12 @@ export const authSlice = createSlice({
     },
     clearAuthError: (state, action) => {
       state.error = null;
+    },
+    clearAuthStatus: (state) => {
+      state.status = IDLE_STATE;
+    },
+    setInitialLoad: (state, action) => {
+      state.initialLoad = action.payload;
     },
   },
   extraReducers(builder) {
@@ -103,7 +110,11 @@ export const authSlice = createSlice({
     // });
 
     builder
+      .addCase(getMe.pending, (state, action) => {
+        state.status = LOADING_STATE;
+      })
       .addCase(getMe.fulfilled, (state, action) => {
+        state.status = IDLE_STATE;
         state.currentUser = action.payload;
       })
       .addCase(getMe.rejected, (state, action) => {
@@ -130,7 +141,8 @@ export const authSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { clearAuthError, setRequestedPage } = authSlice.actions;
+export const { clearAuthError, setRequestedPage, clearAuthStatus, setInitialLoad } =
+  authSlice.actions;
 
 export default authSlice.reducer;
 
@@ -139,4 +151,5 @@ export default authSlice.reducer;
 export const selectAuthError = (state) => state.auth.error;
 export const selectAuthIsLoading = (state) => state.auth.status == LOADING_STATE;
 export const selectCurrentUser = (state) => state.auth.currentUser;
+export const selectUserRole = (state) => state.auth.currentUser?.role;
 export const selectRequestedPage = (state) => state.auth.requestedPage;

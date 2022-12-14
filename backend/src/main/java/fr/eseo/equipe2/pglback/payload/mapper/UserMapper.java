@@ -5,6 +5,11 @@ import fr.eseo.equipe2.pglback.model.User;
 
 
 public class UserMapper {
+    /**
+     * Create userDto by user
+     * @param user
+     * @return
+     */
     public static UserDto toUserDto(User user) {
         UserDto userDto = new UserDto()
                 .setEmail(user.getEmail())
@@ -14,10 +19,16 @@ public class UserMapper {
                 .setSex(user.getSex())
                 .setBirthday(user.getBirthday())
                 .setTravelHabits(user.getTravelHabits())
-                .setTravelFrequency(user.getTravelFrequency());
+                .setTravelFrequency(user.getTravelFrequency())
+                .setRole(user.getRole());
         return userDto;
     }
 
+    /**
+     * Create an user by userDto
+     * @param userDto
+     * @return user
+     */
     public static User toUser(UserDto userDto) {
         User user = new User()
                 .setEmail(userDto.getEmail())

@@ -1,8 +1,9 @@
 package fr.eseo.equipe2.pglback.payload.request.mapper;
 
+
+import fr.eseo.equipe2.pglback.payload.UserDto;
 import fr.eseo.equipe2.pglback.payload.request.LoginRequest;
 import fr.eseo.equipe2.pglback.payload.request.RegisterRequest;
-import fr.eseo.equipe2.pglback.payload.UserDto;
 
 /**
  * Used to convert Request to DTO (Data Transfer Object)

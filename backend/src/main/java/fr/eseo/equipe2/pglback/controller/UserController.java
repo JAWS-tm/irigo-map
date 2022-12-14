@@ -7,6 +7,7 @@ import fr.eseo.equipe2.pglback.payload.response.Response;
 import fr.eseo.equipe2.pglback.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,6 +18,7 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Response getUsers() {
         return Response.ok().setPayload(userService.getUsers());
     }
@@ -31,8 +33,8 @@ public class UserController {
      * when we do modification on user
      * @param userDto
      */
-    @PutMapping("/change/{email}")
-    public Response updateUser(@RequestBody UserDto userDto, @PathVariable String email){
+    @PutMapping("/{email}")
+    public Response<?> updateUser(@RequestBody UserDto userDto, @PathVariable String email){
         userService.updateUser(userDto);
         System.out.println(userDto);
         return Response.ok();
@@ -44,7 +46,7 @@ public class UserController {
      * @param email email of the user
      */
 
-    @DeleteMapping("/user/{email}")
+    @DeleteMapping("/{email}")
     public Response<?> deleteUser(@PathVariable String email){
         userService.deleteUser(email);
         return Response.ok();

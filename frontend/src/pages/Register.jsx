@@ -41,7 +41,7 @@ const validationSchema = Yup.object({
   password: passwordValidator,
   confirmPassword: confirmPasswordValidator,
   birthday: Yup.date()
-    .min(moment().subtract(150, 'year'), "La date n'est pas valide")
+    .min(moment().subtract(120, 'year'), "La date n'est pas valide")
     .max(moment().subtract(16, 'year'), 'Vous devez avoir au minimum 16 ans')
     .test('valid', 'La date est invalide', (value) => {
       return moment(value).isValid();
@@ -60,8 +60,8 @@ const Register = (props) => {
 
   const handleSubmit = (values, { setSubmitting }) => {
     if (loading) return;
-    dispatch(register(values)).then(() => {
-      setIsRegistered(true);
+    dispatch(register(values)).then((res) => {
+      if (res.type === 'auth/register/fulfilled') setIsRegistered(true);
     });
   };
 

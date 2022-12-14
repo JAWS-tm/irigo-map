@@ -6,15 +6,31 @@
 
   .hero-section {
     display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
     gap: 40px;
     padding: 0 var(--container-margin);
 
     & > div {
-      width: 50%;
+      width: 100%;
+    }
+    .hero-img {
+      display: flex;
+      justify-content: center;
+    }
+    img {
+      width: 80%;
     }
 
-    img {
-      width: 100%;
+    // on bigger screens
+    @include sm {
+      flex-direction: row;
+      & > div {
+        width: 50%;
+      }
+      img {
+        width: 100%;
+      }
     }
 
     .hero-data {
