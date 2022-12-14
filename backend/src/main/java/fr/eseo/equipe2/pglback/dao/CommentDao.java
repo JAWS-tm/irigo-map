@@ -11,6 +11,8 @@ import java.util.List;
 public interface CommentDao extends JpaRepository<Comment, Integer> {
 
     List<Comment> findCommentsByUser(User user);
+
+    List<Comment> getAllByNumberLine(String numberLine);
     Boolean existsByUserAndNumberLine(User user, String numberLine);
     Comment getByUserAndNumberLine(User user, String numberLine);
 
