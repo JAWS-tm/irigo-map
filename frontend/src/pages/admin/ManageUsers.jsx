@@ -55,7 +55,7 @@ const ManageUsers = (props) => {
     setSelectedUser(userId);
     setModalMode(mode);
     setShowModal(true);
-    if (mode === 'edit') setSelectValue(usersList.find((user) => user.id === userId).role);
+    if (mode === 'edit') setSelectValue(usersList.find((user) => user.id === userId).role ?? '');
   };
   useEffect(() => {
     if (!modalValidateLoading) {
