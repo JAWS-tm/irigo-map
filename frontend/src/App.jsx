@@ -26,6 +26,9 @@ import NotFound from './pages/NotFound';
 import RestrictedRoute from './components/routes/RestrictedRoute';
 import ManageUsers from './pages/admin/ManageUsers';
 import { UserRoles } from './constants';
+import AdminPanel from './pages/admin/AdminPanel';
+import GradeRequest from './pages/GradeRequest';
+import ManageRequests from './pages/admin/ManageRequests';
 
 function App() {
   const dispatch = useDispatch();
@@ -56,11 +59,13 @@ function App() {
           <Route path="/" element={<PrivateRoute />}>
             <Route path="map" element={<Map />} />
             <Route path="logout" element={<Logout />} />
-            <Route path="User_data" element={<UserData />} />
+            <Route path="profile" element={<UserData />} />
+            <Route path="request-grade" element={<GradeRequest />} />
 
             <Route path="admin" element={<RestrictedRoute role={UserRoles.ADMIN} />}>
-              <Route index element={<p>Admin panel</p>} />
+              <Route index element={<AdminPanel />} />
               <Route path="users" element={<ManageUsers />} />
+              <Route path="grade-requests" element={<ManageRequests />} />
             </Route>
           </Route>
 

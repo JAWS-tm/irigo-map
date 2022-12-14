@@ -12,7 +12,7 @@ const List = ({ columns, rows, className, loading }) => {
       <tbody>
         {loading ? (
           <tr style={{ borderBottom: 'none' }}>
-            <td style={{ gridColumn: '1/6' }}>
+            <td style={{ gridColumn: '1/' + (columns.length + 1) }}>
               <Loader size={150} />
             </td>
           </tr>
@@ -25,7 +25,7 @@ const List = ({ columns, rows, className, loading }) => {
           ))
         ) : (
           <tr>
-            <td style={{ gridColumn: '1/6' }}>Aucune données</td>
+            <td style={{ gridColumn: '1/' + (columns.length + 1) }}>Aucune données</td>
           </tr>
         )}
       </tbody>

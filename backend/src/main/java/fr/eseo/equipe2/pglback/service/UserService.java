@@ -1,7 +1,10 @@
 package fr.eseo.equipe2.pglback.service;
 
+import fr.eseo.equipe2.pglback.dao.GradeRequestDao;
 import fr.eseo.equipe2.pglback.dao.PasswordResetTokenDao;
 import fr.eseo.equipe2.pglback.dao.UserDao;
+import fr.eseo.equipe2.pglback.enumeration.Role;
+import fr.eseo.equipe2.pglback.model.GradeRequest;
 import fr.eseo.equipe2.pglback.payload.UserDto;
 import fr.eseo.equipe2.pglback.payload.mapper.UserMapper;
 import fr.eseo.equipe2.pglback.exception.CustomException;
@@ -9,6 +12,7 @@ import fr.eseo.equipe2.pglback.exception.EntityType;
 import fr.eseo.equipe2.pglback.exception.ExceptionType;
 import fr.eseo.equipe2.pglback.model.PasswordResetToken;
 import fr.eseo.equipe2.pglback.model.User;
+import fr.eseo.equipe2.pglback.payload.request.DataScientistGradeRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,6 +27,9 @@ public class UserService {
 
     @Autowired
     private PasswordResetTokenDao passwordResetTokenDao;
+
+    @Autowired
+    private GradeRequestDao gradeRequestDao;
 
     @Autowired
     private MailService mailService;
@@ -186,6 +193,91 @@ public class UserService {
         mailService.sendMessage(user.getEmail(), "Mot de passe réinitialisé", "Bonjour "+ user.getFirstName() +", \nVotre mot de passe vient d'être réinitialisé avec succès. \nSi vous n'etes pas à l'origine de ce changement contactez un administrateur dès que possible.");
     }
 
+
+    /**
+     * Add a grade request
+     * @param request request data
+     */
+    public boolean requestDataScientistGrade(DataScientistGradeRequest request, String userEmail) {
+        if (!userDao.existsByEmail(userEmail)) {
+            throw exception(EntityType.USER, ExceptionType.ENTITY_NOT_FOUND, userEmail);
+        }
+
+        User user = userDao.getByEmail(userEmail);
+
+        List<Role> unauthorizedRoles = new ArrayList<>(Arrays.asList(Role.ADMIN, Role.DATA_SCIENTIST));
+
+        if (unauthorizedRoles.contains(user.getRole()))
+            return false;
+
+        if (gradeRequestDao.findByUser(user).isPresent())
+            throw exception(EntityType.GRADE_REQUEST, ExceptionType.DUPLICATE_ENTITY);
+
+        GradeRequest gradeRequest = new GradeRequest();
+        gradeRequest.setUser(user)
+                .setCompany(request.getCompany())
+                .setJob(request.getJob())
+                .setDescription(request.getDescription());
+
+        gradeRequestDao.save(gradeRequest);
+        return true;
+    }
+
+    /**
+     * Has done a request
+     * @param email user mail
+     */
+    public boolean hasDoneGradeRequest( String userEmail) {
+        if (!userDao.existsByEmail(userEmail)) {
+            throw exception(EntityType.USER, ExceptionType.ENTITY_NOT_FOUND, userEmail);
+        }
+
+        User user = userDao.getByEmail(userEmail);
+
+        return gradeRequestDao.findByUser(user).isPresent();
+    }
+
+    /**
+     * Get all grade requests
+     */
+    public List<GradeRequest> getGradeRequests() {
+        return gradeRequestDao.findAll();
+    }
+
+    /**
+     * Validate grade request
+     */
+    public boolean validateGradeRequest(Integer id) {
+        Optional<GradeRequest> gradeRequest = gradeRequestDao.findById(id);
+
+        if (gradeRequest.isEmpty()) return false;
+
+        User user = gradeRequest.get().getUser();
+        user.setRole(Role.DATA_SCIENTIST);
+
+        userDao.save(user);
+
+        gradeRequestDao.deleteById(id);
+
+        mailService.sendMessage(user.getEmail(), "Votre demande de Data Scientist à été acceptée", "Bonjour "+ user.getFirstName()+", \nVotre demande de grade Data Scientist à été étudiée par notre équipe et à été acceptée.\nVous avez désormais accès aux pages d'analyses.");
+
+        return true;
+    }
+
+    /**
+     * Remove grade request
+     */
+    public void removeGradeRequest(Integer id) {
+        Optional<GradeRequest> gradeRequest = gradeRequestDao.findById(id);
+
+        if (gradeRequest.isEmpty()) return;
+        User user = gradeRequest.get().getUser();
+
+        gradeRequestDao.deleteById(id);
+
+        mailService.sendMessage(user.getEmail(), "Votre demande de Data Scientist à été refusée", "Bonjour "+ user.getFirstName()+", \nVotre demande de grade Data Scientist à été étudiée par notre équipe et à été refusé.\nVous ne correspondez pas assez au profil recherché. \nCordialement");
+    }
+
     /**
      * Returns a new RuntimeException
      * @param entityType
@@ -196,4 +288,6 @@ public class UserService {
     private RuntimeException exception(EntityType entityType, ExceptionType exceptionType, String... args) {
         return CustomException.throwException(entityType, exceptionType, args);
     }
+
+
 }

@@ -1,9 +1,11 @@
 package fr.eseo.equipe2.pglback.controller;
 
+import fr.eseo.equipe2.pglback.dao.GradeRequestDao;
 import fr.eseo.equipe2.pglback.enumeration.Role;
 import fr.eseo.equipe2.pglback.model.User;
 import fr.eseo.equipe2.pglback.payload.request.AddUserRequest;
 import fr.eseo.equipe2.pglback.payload.response.Response;
+import fr.eseo.equipe2.pglback.service.MailService;
 import fr.eseo.equipe2.pglback.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -41,6 +43,35 @@ public class AdminController {
         user.setRole(role);
 
         userService.updateUser(user);
+        return Response.ok().build();
+    }
+
+    /**
+     * Get all grade requests
+     * @return List of grade requests
+     */
+    @GetMapping("/grade-requests")
+    public ResponseEntity<?> getGradeRequests() {
+       return Response.ok().setPayload(userService.getGradeRequests()).build();
+    }
+
+    /**
+     * Validate grade request
+     */
+    @GetMapping("/grade-requests/{id}/validate")
+    public ResponseEntity<?> validateGradeRequest(@PathVariable Integer id) {
+        if (userService.validateGradeRequest(id))
+            return Response.ok().build();
+        else
+            return Response.exception().build();
+    }
+
+    /**
+     * Validate grade request
+     */
+    @GetMapping("/grade-requests/{id}/remove")
+    public ResponseEntity<?> removeGradeRequest(@PathVariable Integer id) {
+        userService.removeGradeRequest(id);
         return Response.ok().build();
     }
 }
