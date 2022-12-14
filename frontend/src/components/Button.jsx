@@ -12,10 +12,15 @@ const defaultOptions = {
     preserveAspectRatio: 'xMidYMid slice',
   },
 };
-const Button = ({ text, className, onClick, type, disabled, loading }) => {
+const Button = ({ text, className, onClick, type, disabled, loading, secondary }) => {
   return (
     <button
-      className={classNames('primary-button', className, loading && 'loading')}
+      className={classNames(
+        'primary-button',
+        secondary && 'secondary',
+        className,
+        loading && 'loading'
+      )}
       type={type}
       onClick={loading ? null : onClick}
       disabled={disabled}
@@ -32,6 +37,7 @@ const Button = ({ text, className, onClick, type, disabled, loading }) => {
 Button.defaultProps = {
   type: 'button',
   loading: false,
+  secondary: false,
 };
 //used to make sure the data you receive is valid
 //we need to do: name: PropTypes.type   type can be: func, array, string,
@@ -42,6 +48,7 @@ Button.propTypes = {
   type: PropTypes.oneOf(['submit', 'button']),
   disabled: PropTypes.bool,
   loading: PropTypes.bool,
+  secondary: PropTypes.bool,
 };
 
 export default Button;

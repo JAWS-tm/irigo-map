@@ -1,5 +1,6 @@
 package fr.eseo.equipe2.pglback.model;
 
+import fr.eseo.equipe2.pglback.enumeration.Role;
 import fr.eseo.equipe2.pglback.enumeration.TravelFrequency;
 import fr.eseo.equipe2.pglback.enumeration.TravelHabits;
 import fr.eseo.equipe2.pglback.enumeration.UserSex;
@@ -7,11 +8,11 @@ import fr.eseo.equipe2.pglback.enumeration.UserSex;
 //import lombok.Setter;
 //import lombok.experimental.Accessors;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.Date;
+import java.util.*;
 
 //@Getter
 //@Setter
@@ -43,13 +44,15 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private Date birthday;
 
-    @Column
     @Enumerated(EnumType.STRING)
     private TravelHabits travelHabits;
 
-    @Column
     @Enumerated(EnumType.STRING)
     private TravelFrequency travelFrequency;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Role role = Role.USER;
 
     public User() {}
 
@@ -98,7 +101,9 @@ public class User implements UserDetails {
     // Spring security
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        Set<SimpleGrantedAuthority> authorities = new HashSet<>();
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + role));
+        return authorities;
     }
     @Override
     public String getUsername() { return this.email; }
@@ -202,6 +207,15 @@ public class User implements UserDetails {
 
     public User setTravelFrequency(TravelFrequency travelFrequency) {
         this.travelFrequency = travelFrequency;
+        return this;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public User setRole(Role role) {
+        this.role = role;
         return this;
     }
 }

@@ -6,25 +6,31 @@
   font-family: var(--font-secondary);
   background-color: var(--dark-background-color);
 
+  flex-direction: column;
+
   .bus-icon {
     background-color: none;
   }
 
   #Map {
     height: 100%;
-    width: 80vw;
+    width: 100%;
+    min-height: 100vh;
     z-index: 9;
   }
 
   .legend {
     margin: 0 10px;
     text-align: left;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
 
     .grid {
       display: grid;
       grid-template-columns: 25px 1fr;
-      margin: 10px 0;
+      margin: 10px;
       cursor: pointer;
+      align-items: center;
     }
 
     .icon {
@@ -55,7 +61,7 @@
     height: 100%;
     width: 100%;
     color: aliceblue;
-    width: 20vw;
+    width: 100%;
     text-align: center;
     // overflow-y: scroll;
 
@@ -80,5 +86,23 @@
     //     }
     //   }
     // }
+  }
+  @include md {
+    flex-direction: row;
+
+    #Map {
+      width: 80vw;
+    }
+
+    .legend {
+      display: block;
+
+      .grid {
+        margin: 10px 0;
+      }
+    }
+    #legend {
+      width: 20vw;
+    }
   }
 }

@@ -18,23 +18,23 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AuthDto {
-    private String email;
+    private UserDto user;
     private String accessToken;
 
     public AuthDto() {
     }
 
-    public AuthDto(String email, String accessToken) {
-        this.email = email;
+    public AuthDto(UserDto user, String accessToken) {
+        this.user = user;
         this.accessToken = accessToken;
     }
 
-    public String getEmail() {
-        return email;
+    public UserDto getUser() {
+        return user;
     }
 
-    public AuthDto setEmail(String email) {
-        this.email = email;
+    public AuthDto setUser(UserDto user) {
+        this.user = user;
         return this;
     }
 

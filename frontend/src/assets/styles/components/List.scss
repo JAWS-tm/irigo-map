@@ -1,0 +1,33 @@
+.List {
+  text-align: center;
+  border-collapse: separate;
+
+  tr {
+    display: grid;
+    grid-template-columns: 50px 1fr 2fr 1fr 100px;
+    border-bottom: 1px solid var(--table-border-color);
+  }
+
+  td {
+    padding: 10px 10px;
+    overflow: hidden;
+  }
+
+  thead {
+    tr {
+      border-bottom: 2px solid var(--table-border-color);
+    }
+    th {
+      padding: 5px 10px;
+      color: var(--primary-text-color);
+    }
+  }
+
+  tbody {
+    tr {
+      &:hover {
+        background-color: var(--table-row-color);
+      }
+    }
+  }
+}

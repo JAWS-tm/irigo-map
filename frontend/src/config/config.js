@@ -2,7 +2,7 @@
 
 const dev = {
   API_URL: 'http://localhost:8081/api',
-  FRONT_URL: 'http://127.0.0.1:5173',
+  FRONT_URL: 'http://localhost:5173',
 };
 
 const prod = {

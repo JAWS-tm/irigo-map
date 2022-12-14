@@ -2,28 +2,46 @@ import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import Input from './Input';
 import moment from 'moment';
+import { useState } from 'react';
 
 const DatePicker = ({ field, form }) => {
-  const dayRef = useRef(1);
+  const dayRef = useRef('');
   const monthRef = useRef('');
   const yearRef = useRef('');
+  const [lastValues, setLastValues] = useState({
+    day: null,
+    month: null,
+    year: null,
+  });
 
-  const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
+  // const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
 
-  const limitInput = (e) => {
-    const target = e.target;
-    const max = target.max;
-    const min = target.min;
-    const nextVal = +(target.value + e.key);
+  const validateInput = (e) => {
+    var event = e || window.event;
 
-    // Ignore if not number
-    if (e.key === 'e' || e.key === '+' || e.key === '-' || e.key === '.' || e.key === ',')
-      e.preventDefault();
+    var key = event.key;
+    let keyCode = event.keyCode || e.which;
 
-    if (isNaN(e.key)) return;
-
-    e.preventDefault();
-    target.value = clamp(nextVal, min, max);
+    var regex = /[0-9]/;
+    if (
+      !regex.test(key) &&
+      keyCode !== 8 &&
+      keyCode !== 9 &&
+      keyCode !== 13 &&
+      keyCode !== 46 &&
+      keyCode !== 37 &&
+      keyCode !== 39
+    ) {
+      event.returnValue = false;
+      if (event.preventDefault) event.preventDefault();
+    } else {
+      // sauvegarde des anciennes valeurs
+      setLastValues({
+        day: dayRef.current.value,
+        month: monthRef.current.value,
+        year: yearRef.current.value,
+      });
+    }
   };
 
   const autoFocus = (e) => {
@@ -32,7 +50,10 @@ const DatePicker = ({ field, form }) => {
     const current = target.getAttribute('data-id');
 
     if (e.keyCode == 9) return;
-    if (inputLength >= target.max.toString().length) {
+    // pas de switch si pas de changement
+    if (lastValues[current] === target.value) return;
+
+    if (inputLength >= target.maxLength) {
       if (current === 'day') monthRef.current.focus();
       else if (current === 'month') yearRef.current.focus();
       else if (current === 'year') target.blur();
@@ -64,36 +85,39 @@ const DatePicker = ({ field, form }) => {
       <div className="input-row">
         <Input
           label="Jour"
-          type="number"
+          type="text"
           min={0}
           max={31}
+          maxLength={2}
           ref={dayRef}
           onKeyUp={autoFocus}
-          onKeyDown={limitInput}
+          onKeyDown={validateInput}
           onChange={updateDateValue}
           data-id="day"
           autoComplete="bday-day"
         />
         <Input
           label="Mois"
-          type="number"
+          type="text"
           min={0}
           max={12}
+          maxLength={2}
           ref={monthRef}
           onKeyUp={autoFocus}
-          onKeyDown={limitInput}
+          onKeyDown={validateInput}
           onChange={updateDateValue}
           data-id="month"
           autoComplete="bday-month"
         />
         <Input
           label="Année"
-          type="number"
+          type="text"
           min={0}
           max={new Date().getFullYear()}
+          maxLength={4}
           ref={yearRef}
           onKeyUp={autoFocus}
-          onKeyDown={limitInput}
+          onKeyDown={validateInput}
           onChange={updateDateValue}
           data-id="year"
           autoComplete="bday-year"

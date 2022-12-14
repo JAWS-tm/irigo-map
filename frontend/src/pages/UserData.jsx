@@ -1,25 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Formik, Form, ErrorMessage, Field } from 'formik';
 import * as Yup from 'yup';
 import UnderlinedTitle from '../components/UnderlinedTitle';
 import FormInput from '../components/FormInput';
 import Button from '../components/Button';
-import {
-  clearAuthError,
-  register,
-  selectAuthError,
-  selectCurrentUser,
-} from '../store/slices/authSlice';
+import { getMe, register, selectAuthError, selectCurrentUser } from '../store/slices/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import ErrorBanner from '../components/ErrorBanner';
-import PopupError from '../components/PopupError';
-import { useAuth } from '../hooks/auth';
 import RadioGroup from '../components/Radio/RadioGroup';
 import RadioOption from '../components/Radio/RadioOption';
 import { UserSex } from '../constants';
 import axios from 'axios';
 import { config } from '../config/config';
-import { logout } from '../store/slices/authSlice';
+import authHeader from '../services/auth-header';
+import jsPDF from 'jspdf';
+import { useNavigate } from 'react-router-dom';
 
 //get values if is necessary
 const initialValues = {
@@ -50,36 +45,64 @@ const validationSchema = Yup.object({
   sex: Yup.string(),
 });
 
-const User_data = (props) => {
+const UserData = (props) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const handleSubmit = (values, { setSubmitting }) => {
+    // attention register est pour créer un compte
     dispatch(register(values));
   };
-
-  useEffect(() => {
-    return () => {
-      dispatch(clearAuthError());
-    };
-  }, []);
 
   //update changes
   const submitChanges = async (values) => {
     console.log(values);
-    const AUTH_API_URL = config.API_URL + '/data/change/' + localStorage.getItem('email');
-    let res = await axios.put(AUTH_API_URL, {
+    const AUTH_API_URL = config.API_URL + '/users/' + localStorage.getItem('email');
+    let res = await axios.post(AUTH_API_URL, {
       firstName: values.firstName,
       lastName: values.lastName,
       password: values.password,
       sex: values.sex,
     });
-    console.log(res);
+    console.log(values.firstName);
   };
+
   //Delete user
   const submitDelete = async () => {
-    console.log('1: ' + localStorage.getItem('email'));
-    const AUTH_API_URL = config.API_URL + '/data/delete/' + localStorage.getItem('email');
-    console.log('2: ' + localStorage.getItem('email'));
-    let res = await axios.delete(AUTH_API_URL);
+    const AUTH_API_URL = config.API_URL + '/users/' + localStorage.getItem('email');
+    let res = await axios.delete(AUTH_API_URL, { headers: authHeader() }).then(() => {
+      navigate('/logout');
+    });
+  };
+
+  const userData = useSelector(selectCurrentUser);
+
+  // print pdf of informations
+  const print = () => {
+    console.log('print pdf');
+    //var image = new Image();
+    //image.src = '../pictures/banière.png';
+    const pdf = new jsPDF('p', 'px');
+
+    pdf.addFont('helvetica', 'normal');
+    //pdf.addImage(image, 'PNG');
+    pdf.text('Bienvenue sur votre page information', 120, 20);
+    pdf.text('Prénom', 30, 50);
+    pdf.text(userData.firstName, 90, 50);
+    pdf.text('Nom', 30, 70);
+    pdf.text(userData.lastName, 90, 70);
+    pdf.text('Email', 30, 90);
+    pdf.text(userData.email, 90, 90);
+    pdf.text('Sexe', 30, 110);
+    pdf.text(userData.sex, 90, 110);
+    pdf.text('Anniversaire', 30, 130);
+    pdf.text(userData.birthday, 130, 130);
+    pdf.text('Habitude de voyage', 30, 150);
+    pdf.text(userData.travelHabits, 150, 150);
+    pdf.text('Fréquence de voyage', 30, 170);
+    pdf.text(userData.travelFrequency, 150, 170);
+    pdf.text("EMPTY signifie que vous n'avez pas entré de donnée", 30, 210);
+    pdf.save('infos.pdf');
   };
 
   const authError = useSelector(selectAuthError);
@@ -180,53 +203,44 @@ const User_data = (props) => {
           </p>
         </div>
         <br />
-        <Button onClick={PopupError} text="Télécharger" />
+        <Button type="button" onClick={print} text="Télécharger PDF" />
       </div>
     </div>
   );
-}; //end register
+};
 
-User_data.propTypes = {};
+UserData.propTypes = {};
 
-export default User_data;
+export default UserData;
 
-//data reload
+const initialValues_data = {
+  firstName: 'Loading',
+  lastName: 'Loading',
+  email: 'Loading',
+  sex: 'Loading',
+};
 const Display_user_data = () => {
-  const initialValues_data = {
-    firstName: 'Loading',
-    lastName: 'Loading',
-    email: 'Loading',
-    sex: 'Loading',
-  };
+  const dispatch = useDispatch();
+  const userData = useSelector(selectCurrentUser);
 
-  //function get informations about user by his email
-  const AUTH_API_URL = config.API_URL + '/users/';
-  const fetch_ud = async (email) => {
-    let res = await axios.get(AUTH_API_URL + email);
-    setData(res.data.payload);
-  };
-
-  const [data, setData] = useState(initialValues_data); //return data and function(modif data)
-
-  //at the begging (loading page)
   useEffect(() => {
-    fetch_ud(localStorage.getItem('email')); //get infos to date
-  });
+    dispatch(getMe());
+  }, []);
 
   return (
     <div className="infos">
       <br />
       <p>
-        Prénom : <span>{data.firstName}</span>
+        Prénom : <span>{userData.firstName}</span>
       </p>
       <p>
-        Nom : <span>{data.lastName}</span>
+        Nom : <span>{userData.lastName}</span>
       </p>
       <p>
-        Email : <span>{data.email}</span>
+        Email : <span>{userData.email}</span>
       </p>
       <p>
-        Sexe : <span>{data.sex}</span>
+        Sexe : <span>{userData.sex}</span>
       </p>
     </div>
   );

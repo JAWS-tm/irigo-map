@@ -2,14 +2,17 @@ package fr.eseo.equipe2.pglback.security;
 
 import fr.eseo.equipe2.pglback.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import javax.annotation.Resource;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +24,10 @@ import java.io.IOException;
 public class JwtTokenFilter extends OncePerRequestFilter {
     @Autowired
     private JwtTokenUtil jwtUtil;
+
+    @Lazy
+    @Resource(name = "userDetailsService")
+    private UserDetailsService userDetailsService;
 
     /**
      * invoked once per request within a single request thread
@@ -42,6 +49,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                 filterChain.doFilter(request, response);
             } else {
                 setAuthenticationContext(token, request);
+
                 filterChain.doFilter(request, response);
             }
         }
@@ -68,18 +76,11 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     }
 
     private void setAuthenticationContext(String token, HttpServletRequest request) {
-        UserDetails userDetails = getUserDetails(token);
-        UsernamePasswordAuthenticationToken
-                authentication = new UsernamePasswordAuthenticationToken(userDetails, null, null);
-        authentication.setDetails(
-                new WebAuthenticationDetailsSource().buildDetails(request));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-    }
+        String email = jwtUtil.getEmailFromToken(token);
+        UserDetails userDetails = userDetailsService.loadUserByUsername(email);
 
-    private UserDetails getUserDetails(String token) {
-        User userDetails = new User();
-        String[] jwtSubject = jwtUtil.getSubject(token).split(",");
-        userDetails.setEmail(jwtSubject[0]);
-        return userDetails;
+        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 }
