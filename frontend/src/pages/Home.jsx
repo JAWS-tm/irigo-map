@@ -29,7 +29,7 @@ const Home = (props) => {
               <Button onClick={goToAbout} text="En savoir plus" />
             </div>
           </div>
-          <div>
+          <div className="hero-img">
             <img src={heroImg} alt="" />
           </div>
         </div>

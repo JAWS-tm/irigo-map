@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import classNames from 'classnames';
 import Logo from './Logo';
 import { useAuth } from '../hooks/auth';
@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { selectUserRole } from '../store/slices/authSlice';
 import { UserRoles } from '../constants';
 import MultipleLink from '../components/MultipleLink';
+import Hamburger from 'hamburger-react';
 
 const linksList = [
   { name: 'Accueil', to: '/', props: { end: true } },
@@ -15,6 +16,7 @@ const linksList = [
 
 function Navbar(props) {
   const [stickyClass, setStickyClass] = useState('');
+  const [toggleNav, setToggleNav] = useState(false);
 
   useEffect(() => {
     window.addEventListener('scroll', stickNavbar);
@@ -30,6 +32,13 @@ function Navbar(props) {
     }
   };
 
+  let location = useLocation();
+
+  useEffect(() => {
+    // close on page change
+    setToggleNav(false);
+  }, [location]);
+
   const isAuth = useAuth();
   const isAdmin = useSelector(selectUserRole) === UserRoles.ADMIN;
 
@@ -38,7 +47,10 @@ function Navbar(props) {
       <div>
         <Logo />
       </div>
-      <div className="links-list">
+      <div className="burger-toggle">
+        <Hamburger toggled={toggleNav} onToggle={() => setToggleNav(!toggleNav)} />
+      </div>
+      <div className={'links-list ' + (toggleNav ? 'opened' : '')}>
         {linksList.map((link, i) => (
           <NavLink to={link.to} key={i} {...link.props}>
             {link.name}
