@@ -21,9 +21,17 @@ class UserService {
     return axios.post(USER_API_URL + '/reset-password', { token, password: newPassword });
   }
 
-  // getUserBoard() {
-  //   return axios.get(USER_API_URL + '1', { headers: authHeader() });
-  // }
+  requestGrade(job, company, description) {
+    return axios.post(
+      USER_API_URL + '/request-grade',
+      { job, company, description },
+      { headers: authHeader() }
+    );
+  }
+
+  hasDoneGradeRequest() {
+    return axios.get(USER_API_URL + '/request-grade', { headers: authHeader() });
+  }
 }
 
 export default new UserService();

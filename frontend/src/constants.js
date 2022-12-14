@@ -26,6 +26,7 @@ export const errorsMessages = {
   'user.not.found': 'Utilisateur introuvable',
   'user.duplicate': 'Cet email est déjà utilisé',
   'user.bad.credentials': 'Les identifiants sont invalides',
+  'grade_request.duplicate': 'Vous avez déjà fait une demande',
 };
 
 export const UserRoles = {

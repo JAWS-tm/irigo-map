@@ -13,7 +13,8 @@
     font-size: 14px;
   }
 
-  input.field {
+  input.field,
+  textarea.field {
     &:focus,
     &:not(:placeholder-shown) {
       outline-color: var(--primary-color);

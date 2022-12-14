@@ -23,6 +23,25 @@ class AdminService {
     if (res.data.status === 'OK') return true;
     return false;
   }
+
+  async getRequests() {
+    const res = await axiosClient.get('/admin/grade-requests', { headers: authHeader() });
+    return res.data;
+  }
+
+  async validateRequest(id) {
+    const res = await axiosClient.get(`/admin/grade-requests/${id}/validate`, {
+      headers: authHeader(),
+    });
+    return res.data;
+  }
+
+  async removeRequest(id) {
+    const res = await axiosClient.get(`/admin/grade-requests/${id}/remove`, {
+      headers: authHeader(),
+    });
+    return res.data;
+  }
 }
 
 export default new AdminService();

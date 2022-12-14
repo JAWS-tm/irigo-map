@@ -64,7 +64,7 @@ function Navbar(props) {
                 to={'/admin'}
                 links={[
                   { name: 'Utilisateurs', to: '/admin/users' },
-                  { name: 'Demandes de promotion', to: '/admin/data-scientists' },
+                  { name: 'Demandes de promotion', to: '/admin/grade-requests' },
                 ]}
               >
                 Administration

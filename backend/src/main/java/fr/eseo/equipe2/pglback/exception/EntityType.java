@@ -5,5 +5,6 @@ public enum EntityType {
     COMMENT,
     BUS,
     BUS_STOP,
-    BUS_LINE
+    BUS_LINE,
+    GRADE_REQUEST,
 }

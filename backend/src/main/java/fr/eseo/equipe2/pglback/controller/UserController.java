@@ -1,6 +1,7 @@
 package fr.eseo.equipe2.pglback.controller;
 
 import fr.eseo.equipe2.pglback.payload.UserDto;
+import fr.eseo.equipe2.pglback.payload.request.DataScientistGradeRequest;
 import fr.eseo.equipe2.pglback.payload.request.ForgotPasswordRequest;
 import fr.eseo.equipe2.pglback.payload.request.PasswordResetRequest;
 import fr.eseo.equipe2.pglback.payload.response.Response;
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 @RestController
 @CrossOrigin
@@ -95,5 +98,36 @@ public class UserController {
 
         userService.updatePassword(passwordResetRequest.getToken(), passwordResetRequest.getPassword());
         return Response.ok().build();
+    }
+
+    /**
+     * Request a datascientist grade
+     * @param request request values
+     * @param principal user who make the request
+     */
+    @PostMapping("/request-grade")
+    public ResponseEntity<?> requestGrade(@RequestBody DataScientistGradeRequest request, Principal principal) {
+       if (principal == null)
+           return Response.unauthorized().build();
+
+       if (userService.requestDataScientistGrade(request, principal.getName()))
+           return Response.ok().build();
+       else
+           return Response.badRequest().build();
+    }
+
+    /**
+     * Check if user have done a grade request
+     * @param principal user who make the request
+     */
+    @GetMapping("/request-grade")
+    public ResponseEntity<?> requestGrade(Principal principal) {
+        if (principal == null)
+            return Response.unauthorized().build();
+
+        if (userService.hasDoneGradeRequest(principal.getName()))
+            return Response.ok().build();
+        else
+            return Response.notFound().build();
     }
 }
