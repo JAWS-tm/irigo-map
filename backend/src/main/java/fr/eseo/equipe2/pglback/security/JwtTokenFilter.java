@@ -1,18 +1,15 @@
 package fr.eseo.equipe2.pglback.security;
 
-import fr.eseo.equipe2.pglback.model.User;
+import fr.eseo.equipe2.pglback.dao.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.annotation.Resource;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -25,9 +22,12 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     @Autowired
     private JwtTokenUtil jwtUtil;
 
-    @Lazy
-    @Resource(name = "userDetailsService")
-    private UserDetailsService userDetailsService;
+//    @Lazy
+//    @Resource(name = "userDetailsService")
+//    private UserDetailsService userDetailsService;
+
+    @Autowired
+    private UserDao userDao;
 
     /**
      * invoked once per request within a single request thread
@@ -77,7 +77,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
     private void setAuthenticationContext(String token, HttpServletRequest request) {
         String email = jwtUtil.getEmailFromToken(token);
-        UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+        UserDetails userDetails = userDao.getByEmail(email);
 
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
         authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

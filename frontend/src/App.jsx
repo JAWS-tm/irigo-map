@@ -43,7 +43,7 @@ function App() {
         requestedPage && navigate(requestedPage);
         dispatch(setInitialLoad(false));
       });
-    else dispatch(clearAuthStatus()); // set auth loading to idle
+    else dispatch(setInitialLoad(false)); // set auth loading to idle
 
     // Todo : fix double call
   }, [requestedPage]);

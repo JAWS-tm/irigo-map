@@ -36,7 +36,7 @@ const addOptions = {
 const ManageRequests = (props) => {
   const [showModal, setShowModal] = useState(false);
   const [modalMode, setModalMode] = useState('');
-  const [requestsList, setRequestsList] = useState([]);
+  const [requestsList, setRequestsList] = useState();
   const [loadingRequests, setLoadingRequests] = useState(true);
   const [selectedRequest, setSelectedRequest] = useState();
   const [modalValidateLoading, setModalValidateLoading] = useState(false);

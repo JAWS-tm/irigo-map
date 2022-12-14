@@ -56,7 +56,6 @@ const UserData = (props) => {
 
   //update changes
   const submitChanges = async (values) => {
-    console.log(values);
     const AUTH_API_URL = config.API_URL + '/users/' + localStorage.getItem('email');
     let res = await axios.post(AUTH_API_URL, {
       firstName: values.firstName,
@@ -64,7 +63,6 @@ const UserData = (props) => {
       password: values.password,
       sex: values.sex,
     });
-    console.log(values.firstName);
   };
 
   //Delete user
@@ -79,7 +77,6 @@ const UserData = (props) => {
 
   // print pdf of informations
   const print = () => {
-    console.log('print pdf');
     //var image = new Image();
     //image.src = '../pictures/banière.png';
     const pdf = new jsPDF('p', 'px');
