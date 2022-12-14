@@ -113,6 +113,8 @@ public class UserService {
      * @param email user email
      */
     public void deleteUser(String email) {
+        User user = userDao.getByEmail(email);
+        mailService.sendMessage(user.getEmail(), "Votre compte à bien été supprimé", "Bonjour "+user.getFirstName()+",\nVotre compte à bien été supprimé. \nÀ bientot !");
         if(userDao.existsByEmail(email))
             userDao.deleteByEmail(email);
     }
@@ -122,6 +124,9 @@ public class UserService {
      * @param id user id
      */
     public void deleteUser(Integer id) {
+        User user = userDao.getReferenceById(id);
+        mailService.sendMessage(user.getEmail(), "Votre compte à été supprimé", "Bonjour "+user.getFirstName()+",\nVotre compte à été supprimé par un administrateur. \nÀ bientot !");
+
         if(!userDao.existsById(id))
             throw exception(EntityType.USER, ExceptionType.ENTITY_NOT_FOUND);
 

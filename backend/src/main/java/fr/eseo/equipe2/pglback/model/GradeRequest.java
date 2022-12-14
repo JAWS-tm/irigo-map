@@ -9,7 +9,7 @@ public class GradeRequest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true)
     @JoinColumn(nullable = false, name = "user_id", unique = true)
     private User user;
 

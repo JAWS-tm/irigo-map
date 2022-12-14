@@ -105,6 +105,7 @@ public class User implements UserDetails {
         authorities.add(new SimpleGrantedAuthority("ROLE_" + role));
         return authorities;
     }
+
     @Override
     public String getUsername() { return this.email; }
     @Override
