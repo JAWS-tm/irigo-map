@@ -22,6 +22,7 @@ import {
 } from './store/slices/authSlice';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
+import Comments from './pages/Comments';
 import NotFound from './pages/NotFound';
 import RestrictedRoute from './components/routes/RestrictedRoute';
 import ManageUsers from './pages/admin/ManageUsers';
@@ -55,6 +56,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path="about" element={<About />} />
           <Route path="help" element={<Help />} />
+          <Route path="comments" element={<Comments />} />
 
           <Route path="/" element={<PrivateRoute />}>
             <Route path="map" element={<Map />} />

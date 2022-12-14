@@ -28,6 +28,9 @@ const About = (props) => {
               Demande Data Scientist
             </Link>
           </div>
+          <div className="card">
+            <Link to="/Comments">Commentaires Lignes</Link>
+          </div>
         </div>
       </div>
     </div>
