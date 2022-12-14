@@ -53,7 +53,7 @@ export const logout = createAsyncThunk('auth/logout', () => {
 const authInitialState = {
   currentUser: null,
   error: null,
-  status: IDLE_STATE, // To avoid multiple redirect on page loading
+  status: IDLE_STATE,
   requestedPage: null,
   initialLoad: true, // for initial user load on website loading
 };

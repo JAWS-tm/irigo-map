@@ -217,7 +217,7 @@ var Legend = ({ lines }) => {
 
         {lines &&
           lines.map((line) => (
-            <React.Fragment key={line.lineId}>
+            <div key={line.lineId}>
               <div
                 className="grid"
                 onClick={() =>
@@ -258,7 +258,7 @@ var Legend = ({ lines }) => {
                   </div>
                 </Form>
               </Formik>
-            </React.Fragment>
+            </div>
           ))}
         {!lines && (
           <SkeletonTheme baseColor="#272727" highlightColor="#323232">

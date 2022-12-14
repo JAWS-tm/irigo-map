@@ -17,7 +17,10 @@ const NotFound = (props) => {
   const navigate = useNavigate();
   return (
     <div className="NotFound">
-      <Lottie options={defaultOptions} width={400} height={300} />
+      <Lottie
+        options={defaultOptions}
+        style={{ maxWidth: '90%', width: '400px', aspectRatio: '3/2' }}
+      />
       <h2>La page demandée n'existe pas</h2>
       <Button
         text="Retour à l'accueil"

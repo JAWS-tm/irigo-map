@@ -36,6 +36,8 @@
   font-family: var(--font-primary);
   color: var(--primary-text-color);
 
+  --container-margin: 15px;
+
   @include sm {
     --container-margin: 20px;
   }
@@ -80,5 +82,10 @@ a {
 
 .content-layout {
   flex: 1;
-  padding-top: 100px;
+  padding-top: 75px;
+
+  // when mobile navbar
+  @include md {
+    padding-top: 100px;
+  }
 }
