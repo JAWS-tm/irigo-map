@@ -4,7 +4,7 @@ import { Navigate, Outlet, useLocation } from 'react-router';
 import { useAuth } from '../../hooks/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectAuthIsLoading, setRequestedPage } from '../../store/slices/authSlice';
-import Loader from '../Loader';
+// import Loader from '../Loader';
 
 const PrivateRoute = () => {
   const auth = useAuth();
@@ -28,7 +28,7 @@ const PrivateRoute = () => {
           alignItems: 'center',
         }}
       >
-        <Loader size={200} />
+        {/* <Loader size={200} /> */}
       </div>
     );
   }

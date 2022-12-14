@@ -13,7 +13,7 @@ import * as Yup from 'yup';
 import { Field, Form, Formik } from 'formik';
 import FormInput from '../components/FormInput';
 import ErrorBanner from '../components/ErrorBanner';
-import StyledLink from '../components/Link';
+import StyledLink from '../components/StyledLink';
 import { emailValidator } from '../helpers/validators';
 import { useNavigate } from 'react-router-dom';
 

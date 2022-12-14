@@ -21,3 +21,9 @@ export const UserSex = {
   UNKNOWN: 'UNKNOWN',
   OTHER: 'OTHER',
 };
+
+export const errorsMessages = {
+  'user.not.found': 'Utilisateur introuvable',
+  'user.duplicate': 'Cet email est déjà utilisé',
+  'user.bad.credentials': 'Les identifiants sont invalides',
+};
