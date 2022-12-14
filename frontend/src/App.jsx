@@ -18,6 +18,9 @@ import { clearAuthStatus, getMe, selectRequestedPage } from './store/slices/auth
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import NotFound from './pages/NotFound';
+import RestrictedRoute from './components/routes/RestrictedRoute';
+import ManageUsers from './pages/admin/ManageUsers';
+import { UserRoles } from './constants';
 
 function App() {
   const dispatch = useDispatch();
@@ -47,10 +50,10 @@ function App() {
             <Route path="logout" element={<Logout />} />
             <Route path="User_data" element={<UserData />} />
 
-            {/* <Route path="admin" element={<RestrictedRoute role={UserRoles.ADMIN} />}>
+            <Route path="admin" element={<RestrictedRoute role={UserRoles.ADMIN} />}>
               <Route index element={<p>Admin panel</p>} />
-              <Route path="users" element={<ManageUsers />} /> 
-            </Route> */}
+              <Route path="users" element={<ManageUsers />} />
+            </Route>
           </Route>
 
           <Route path="/" element={<PublicRoute />}>
