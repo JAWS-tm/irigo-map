@@ -16,6 +16,7 @@ import java.util.Objects;
 
 @SpringBootApplication
 @EnableSwagger2 // /swagger-ui/index.html
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class PglBackApplication extends SpringBootServletInitializer {
     @Autowired
     IrigoApi irigoApi;
