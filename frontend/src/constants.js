@@ -27,3 +27,15 @@ export const errorsMessages = {
   'user.duplicate': 'Cet email est déjà utilisé',
   'user.bad.credentials': 'Les identifiants sont invalides',
 };
+
+export const UserRoles = {
+  USER: 'USER',
+  DATA_SCIENTIST: 'DATA_SCIENTIST',
+  ADMIN: 'ADMIN',
+};
+
+export const UserRolesString = {
+  USER: 'Utilisateur',
+  DATA_SCIENTIST: 'Data Scientist',
+  ADMIN: 'Administrateur',
+};

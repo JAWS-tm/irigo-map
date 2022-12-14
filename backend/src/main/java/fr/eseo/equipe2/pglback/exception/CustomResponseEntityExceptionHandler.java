@@ -3,6 +3,7 @@ package fr.eseo.equipe2.pglback.exception;
 import fr.eseo.equipe2.pglback.payload.response.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,6 +33,11 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
         Response response = Response.unauthorized();
         response.addErrorMsgToResponse(ex.getMessage(), ex);
         return new ResponseEntity(response, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public final ResponseEntity<?> handleAccessDeniedException(AccessDeniedException ex, WebRequest request) {
+        return Response.accessDenied().build();
     }
 
     @ExceptionHandler(RuntimeException.class)

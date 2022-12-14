@@ -3,6 +3,10 @@ import { Link, NavLink } from 'react-router-dom';
 import classNames from 'classnames';
 import Logo from './Logo';
 import { useAuth } from '../hooks/auth';
+import { useSelector } from 'react-redux';
+import { selectUserRole } from '../store/slices/authSlice';
+import { UserRoles } from '../constants';
+import MultipleLink from '../components/MultipleLink';
 
 const linksList = [
   { name: 'Accueil', to: '/', props: { end: true } },
@@ -27,6 +31,7 @@ function Navbar(props) {
   };
 
   const isAuth = useAuth();
+  const isAdmin = useSelector(selectUserRole) === UserRoles.ADMIN;
 
   return (
     <nav className={classNames('Navbar', stickyClass)}>
@@ -42,6 +47,17 @@ function Navbar(props) {
         <div className="separator"></div>
         {isAuth ? (
           <>
+            {isAdmin && (
+              <MultipleLink
+                to={'/admin'}
+                links={[
+                  { name: 'Utilisateurs', to: '/admin/users' },
+                  { name: 'Demandes de promotion', to: '/admin/data-scientists' },
+                ]}
+              >
+                Administration
+              </MultipleLink>
+            )}
             <NavLink to={'/about'}>Outils</NavLink>
             <NavLink to={'/map'}>Carte</NavLink>
             <NavLink to={'/logout'}>Déconnexion</NavLink>

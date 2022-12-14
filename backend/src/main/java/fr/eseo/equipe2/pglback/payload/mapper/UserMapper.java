@@ -19,7 +19,8 @@ public class UserMapper {
                 .setSex(user.getSex())
                 .setBirthday(user.getBirthday())
                 .setTravelHabits(user.getTravelHabits())
-                .setTravelFrequency(user.getTravelFrequency());
+                .setTravelFrequency(user.getTravelFrequency())
+                .setRole(user.getRole());
         return userDto;
     }
 

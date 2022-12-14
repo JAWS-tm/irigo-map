@@ -1,6 +1,7 @@
 package fr.eseo.equipe2.pglback.config;
 
 import fr.eseo.equipe2.pglback.dao.UserDao;
+import fr.eseo.equipe2.pglback.enumeration.Role;
 import fr.eseo.equipe2.pglback.security.JwtTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -69,6 +70,7 @@ public class ApplicationSecurity {
                 .antMatchers(AUTH_WHITELIST).permitAll()
                 .antMatchers("/api/auth/**").permitAll()
                 .antMatchers("/api/users/forgot-password", "/api/users/reset-password",  "/api/users/validate-password-token/*").permitAll()
+                .antMatchers("/api/admin/**").hasRole(Role.ADMIN.toString())
                 .antMatchers("/api/**").authenticated()
                 .anyRequest().permitAll();
 
