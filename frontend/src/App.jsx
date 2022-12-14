@@ -14,7 +14,12 @@ import PublicRoute from './components/routes/PublicRoute';
 import Logout from './pages/Logout';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { clearAuthStatus, getMe, selectRequestedPage } from './store/slices/authSlice';
+import {
+  clearAuthStatus,
+  getMe,
+  selectRequestedPage,
+  setInitialLoad,
+} from './store/slices/authSlice';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import NotFound from './pages/NotFound';
@@ -30,7 +35,10 @@ function App() {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token && token.length > 1)
-      dispatch(getMe()).then(() => requestedPage && navigate(requestedPage));
+      dispatch(getMe()).then(() => {
+        requestedPage && navigate(requestedPage);
+        dispatch(setInitialLoad(false));
+      });
     else dispatch(clearAuthStatus()); // set auth loading to idle
 
     // Todo : fix double call

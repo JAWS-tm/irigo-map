@@ -1,28 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Formik, Form, ErrorMessage, Field } from 'formik';
 import * as Yup from 'yup';
 import UnderlinedTitle from '../components/UnderlinedTitle';
 import FormInput from '../components/FormInput';
 import Button from '../components/Button';
-import {
-  clearAuthError,
-  getMe,
-  register,
-  selectAuthError,
-  selectCurrentUser,
-} from '../store/slices/authSlice';
+import { getMe, register, selectAuthError, selectCurrentUser } from '../store/slices/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import ErrorBanner from '../components/ErrorBanner';
-import PopupError from '../components/PopupError';
 import RadioGroup from '../components/Radio/RadioGroup';
 import RadioOption from '../components/Radio/RadioOption';
 import { UserSex } from '../constants';
 import axios from 'axios';
 import { config } from '../config/config';
 import authHeader from '../services/auth-header';
-import authService from '../services/auth.service';
-import { useNavigate } from 'react-router-dom';
 import jsPDF from 'jspdf';
+import { useNavigate } from 'react-router-dom';
 
 //get values if is necessary
 const initialValues = {
@@ -85,7 +77,7 @@ const UserData = (props) => {
 
   const userData = useSelector(selectCurrentUser);
 
-  //print pdf of informations
+  // print pdf of informations
   const print = () => {
     console.log('print pdf');
     //var image = new Image();
@@ -215,7 +207,7 @@ const UserData = (props) => {
       </div>
     </div>
   );
-}; //end register
+};
 
 UserData.propTypes = {};
 
@@ -234,20 +226,6 @@ const Display_user_data = () => {
   useEffect(() => {
     dispatch(getMe());
   }, []);
-
-  //function get informations about user by his email
-  // const AUTH_API_URL = config.API_URL + '/users/';
-  // const fetch_ud = async (email) => {
-  //   let res = await axios.get(AUTH_API_URL + email);
-  //   setData(res.data.payload);
-  // };
-
-  // const [data, setData] = useState(initialValues_data); //return data and function(modif data)
-
-  //at the begging (loading page)
-  // useEffect(() => {
-  //   fetch_ud(localStorage.getItem('email')); //get infos to date
-  // }, []);
 
   return (
     <div className="infos">
