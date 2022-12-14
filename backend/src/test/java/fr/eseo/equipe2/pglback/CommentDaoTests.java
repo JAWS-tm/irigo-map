@@ -25,7 +25,7 @@ public class CommentDaoTests {
         if (principal == null)
             return Response.unauthorized();
         
-        return Response.ok().setPayload(commentService.register(CommentRequestMapper.toCommentDto(OpinionRequest), principal.getName()));
+        //return Response.ok().setPayload(commentService.register(CommentRequestMapper.toCommentDto(OpinionRequest), principal.getName()));
     }
     @Test
     @Order(1)
@@ -46,6 +46,6 @@ public class CommentDaoTests {
         Integer notation = 4;
         String commentary = "coucouc";
         OpinionRequest OpinionRequest = new  OpinionRequest{notation, commentary, numberLine};
-        addComment(OpinionRequest, creatDefaultUser(););
+        addComment(OpinionRequest, creatDefaultUser());
     }
 }

@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
+import { useEffect } from 'react';
 import { Form } from 'react-router-dom';
 
 const StarNotation = (props) => {
   const [rate, setRate] = useState(0);
+
+  useEffect(() => {
+    setRate(props.field.value);
+    console.log(props);
+  }, []);
   return (
     <div
       style={{
@@ -17,8 +23,9 @@ const StarNotation = (props) => {
         return (
           <label key={index}>
             <div
-              style={{ cursor: 'pointer' }}
+              style={{ cursor: props.blocked ? 'default' : 'pointer' }}
               onClick={() => {
+                if (props.blocked) return;
                 setRate(givenRating);
                 props.form.setFieldValue(props.field.name, givenRating, true);
               }}

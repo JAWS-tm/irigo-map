@@ -20,6 +20,8 @@ import StarNotation from '../components/StarNotation';
 import FormInput from '../components/FormInput';
 import Button from '../components/Button';
 import commentService from '../services/comment.service';
+import { config } from '../config/config';
+import axios from 'axios';
 
 const southWest = L.latLng(47.39, -0.66);
 const northEast = L.latLng(47.58, -0.44);
@@ -95,12 +97,10 @@ const Map = (props) => {
     linesData.sort((lineA, lineB) => {
       let idA = lineA.lineId,
         idB = lineB.lineId;
-
       if (idA < idB) return -1;
       if (idA > idB) return 1;
       return 0;
     });
-
     return linesData;
   }, [linesData]);
 
@@ -125,10 +125,6 @@ const Map = (props) => {
                     >
                       <Popup>
                         Nom de l'arrêt: {stop.name} <br />
-                        {/* nom de la ligne: {stop.nameLine}({stop.numberLine}) <br /> */}
-                        {/* prochain passage: {stop.arriveTime} <br /> */}
-                        {/* destination: {stop.nextDest} <br /> */}
-                        {/* date: {stop.date} */}
                       </Popup>
                     </CircleMarker>
                   ))}
@@ -144,7 +140,6 @@ const Map = (props) => {
                         Destination: {bus.destination} <br />
                         Prochain arret: {bus.nextStopName} {bus.nextStopTime}
                         <br />
-                        {/* Arrivée au prochain arret: {bus.nextStopTime} <br /> */}
                         Retard estimé: {bus.delay} minute{Math.abs(bus.delay) > 1 && 's'} <br />
                       </Popup>
                     </Marker>
@@ -178,15 +173,33 @@ export default Map;
 //define component to display legend content
 var Legend = ({ lines }) => {
   const [displayNotation, setDisplayNotation] = useState({});
+  const [lineNotation, setLineNotation] = useState({});
 
   useEffect(() => {
     if (!lines) return;
     setDisplayNotation({ ...lines.map(() => false) });
   }, [lines]);
-  console.log(displayNotation);
+
   const handleSent = (numberLine) => (values) => {
     commentService.handleSent(values.notation, values.comment, numberLine);
   };
+
+  useEffect(() => {
+    commentService.getUserComments().then((data) => {
+      let newState = {};
+      data.forEach((commentary) => {
+        newState = {
+          [commentary.numberLine]: {
+            notation: commentary.notation,
+            comment: commentary.commentary,
+          },
+          ...newState,
+        };
+      });
+      setLineNotation(newState);
+    });
+  }, []);
+
   return (
     <div id="legend">
       <h2>Légende Map</h2>
@@ -203,7 +216,6 @@ var Legend = ({ lines }) => {
           </div>
           <span className="label">BUS</span>
         </div>
-
         {lines &&
           lines.map((line) => (
             <React.Fragment key={line.lineId}>
@@ -223,12 +235,20 @@ var Legend = ({ lines }) => {
                 </div>
                 <span className="label">{line.lineName}</span>
               </div>
-
               <Formik
                 onSubmit={handleSent(line.lineId)}
-                initialValues={{ notation: 0, comment: '' }}
+                initialValues={
+                  lineNotation[line.lineId]
+                    ? {
+                        notation: lineNotation[line.lineId].notation,
+                        comment: lineNotation[line.lineId].comment,
+                      }
+                    : {
+                        notation: '',
+                        comment: '',
+                      }
+                }
               >
-                {/* initialValues={data ? initialValues_data : ValueFormik()} */}
                 <Form>
                   <div style={{ display: displayNotation[line.lineId] ? 'inline-block' : 'none' }}>
                     <Field component={StarNotation} name="notation"></Field>
@@ -260,29 +280,6 @@ var Legend = ({ lines }) => {
           </SkeletonTheme>
         )}
       </div>
-
-      {/* <div id="bus">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style={{ width: '1rem' }}>
-          <path
-            d="M256 0C390.4 0 480 35.2 480 80V96l0 32c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32l0 160c0 17.7-14.3 32-32 32v32c0 17.7-14.3 32-32 32H384c-17.7 0-32-14.3-32-32V448H160v32c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32l0-32c-17.7 0-32-14.3-32-32l0-160c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h0V96h0V80C32 35.2 121.6 0 256 0zM96 160v96c0 17.7 14.3 32 32 32H240V128H128c-17.7 0-32 14.3-32 32zM272 288H384c17.7 0 32-14.3 32-32V160c0-17.7-14.3-32-32-32H272V288zM112 400c17.7 0 32-14.3 32-32s-14.3-32-32-32s-32 14.3-32 32s14.3 32 32 32zm288 0c17.7 0 32-14.3 32-32s-14.3-32-32-32s-32 14.3-32 32s14.3 32 32 32zM352 80c0-8.8-7.2-16-16-16H176c-8.8 0-16 7.2-16 16s7.2 16 16 16H336c8.8 0 16-7.2 16-16z"
-            fill="white"
-          />
-        </svg>{' '}
-        Bus
-        <ul>
-          {lines &&
-            lines.map((line) => (
-              <li key={line.lineId}>
-                <span id="bullet" style={{ color: '#' + line.lineColor }}>
-                  {' '}
-                  -{' '}
-                </span>
-                <span id="number">{line.lineId} </span>
-                {line.lineName}
-              </li>
-            ))}
-        </ul>
-      </div> */}
     </div>
   );
 };

@@ -19,6 +19,9 @@ const About = (props) => {
           <div className="card">
             <Link onClick={PopupError}>Demande Administrateur</Link>
           </div>
+          <div className="card">
+            <Link to="/Comments">Commentaires Lignes</Link>
+          </div>
         </div>
       </div>
     </div>

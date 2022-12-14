@@ -20,6 +20,30 @@ public class CommentController {
 
     /**
      * give a comment accordingly to the user
+     * @param principal
+     * @return all comments (notation and commentary) of the current user
+     */
+    @GetMapping("/own")
+    public Response getCommentByUser(Principal principal) {
+        if (principal == null)
+            return Response.unauthorized();
+
+        return Response.ok().setPayload(commentService.findByUserEmail(principal.getName()));
+    }
+
+    /**
+     * give a comment accordingly to the bus line
+     * @param lineNb
+     * @return comment (notation and commentary) of all users about a bus line
+     */
+    @GetMapping("/{lineNb}")
+    public Response getCommentsByNumberLine(@PathVariable String lineNb) {
+        System.out.println(lineNb);
+        return Response.ok().setPayload(commentService.findByNumberLine(lineNb));
+    }
+
+    /**
+     * give a comment accordingly to the user
      * @param principal current user
      * @return comment (notation and commentary)
      */
