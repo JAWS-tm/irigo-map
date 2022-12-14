@@ -1,0 +1,73 @@
+.commentPage {
+  display: flex;
+  align-items: center;
+}
+
+.legendPt {
+  margin: 0 10px;
+  text-align: left;
+  flex-direction: column;
+  display: flex;
+  width: 25%;
+}
+
+.gridComm {
+  display: grid;
+  grid-template-columns: 25px 1fr;
+  border-radius: 10px;
+  background-color: #f4f1f1;
+  margin: 5px;
+  cursor: pointer;
+  &:hover {
+    // border-bottom: 1px solid var(--secondary-color);
+    background-color: #f9f9f9;
+  }
+}
+
+.icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.lineComm {
+  $line-icon-size: 20px;
+  color: white;
+  border-radius: 50%;
+  width: $line-icon-size;
+  height: $line-icon-size;
+  line-height: $line-icon-size;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+}
+.label {
+  margin-left: 5px;
+  font-size: 15px;
+}
+
+.commentPt {
+  width: 70%;
+
+  .commentBlock {
+    margin: 1% 0%;
+    display: inline-block;
+    text-align: left;
+    width: 60em;
+    background-color: #6fb7ae;
+    border-radius: 10px;
+  }
+
+  .name {
+    display: inline-block;
+    margin: 0.5% 4%;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-decoration-color: var(--secondary-color);
+  }
+  .commentary {
+    margin: 0.5% 2%;
+  }
+  .notation {
+    margin: 0.5% 4%;
+  }
+}

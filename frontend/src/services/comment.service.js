@@ -12,6 +12,14 @@ class CommentService {
       { headers: authHeader() }
     );
   }
+  async getUserComments() {
+    const response = await axios.get(COMMENT_API_URL + 'own', { headers: authHeader() });
+    return response.data.payload;
+  }
+  async getAllUsersCommentsByNumberLine(lineId) {
+    const response = await axios.get(COMMENT_API_URL + lineId, { headers: authHeader() });
+    return response.data.payload;
+  }
 }
 
 export default new CommentService();

@@ -34,22 +34,14 @@ public class CommentService {
     }
 
     /**
-     * Update user data
-     * @param commentDto user object
+     * Find all comments by numberLine
+     * @param numberLine
+     * @return comments
      */
-    public void updateComment(CommentDto commentDto) {
-        commentDao.save(CommentMapper.toComment(commentDto));
+    public List<Comment> findByNumberLine(String numberLine) {
+        List<Comment> comments = commentDao.getAllByNumberLine(numberLine);
+        return comments;
     }
-
-    public Comment findByUserId(int id) {
-        Optional<Comment> comment = commentDao.findById(id);
-        return comment.get();
-    }
-    public Comment findByUser(User user) {
-        Optional<Comment> comment = commentDao.findById(user.getId());
-        return comment.get();
-    }
-    //public boolean existsByUserAndNumberLine(User user, Integer numberLine);
 
     /**
      * chose to save the comment in a new row or replace the old one
