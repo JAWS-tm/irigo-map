@@ -53,8 +53,9 @@ export const logout = createAsyncThunk('auth/logout', () => {
 const authInitialState = {
   currentUser: null,
   error: null,
-  status: LOADING_STATE, // To avoid multiple redirect on page loading
+  status: IDLE_STATE, // To avoid multiple redirect on page loading
   requestedPage: null,
+  initialLoad: true, // for initial user load on website loading
 };
 
 // Create actions & reducer
@@ -70,6 +71,9 @@ export const authSlice = createSlice({
     },
     clearAuthStatus: (state) => {
       state.status = IDLE_STATE;
+    },
+    setInitialLoad: (state, action) => {
+      state.initialLoad = action.payload;
     },
   },
   extraReducers(builder) {
@@ -137,7 +141,8 @@ export const authSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { clearAuthError, setRequestedPage, clearAuthStatus } = authSlice.actions;
+export const { clearAuthError, setRequestedPage, clearAuthStatus, setInitialLoad } =
+  authSlice.actions;
 
 export default authSlice.reducer;
 

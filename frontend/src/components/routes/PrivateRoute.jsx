@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Navigate, Outlet, useLocation } from 'react-router';
 import { useAuth } from '../../hooks/auth';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectAuthIsLoading, setRequestedPage } from '../../store/slices/authSlice';
+import { setRequestedPage } from '../../store/slices/authSlice';
 import Loader from '../Loader';
 
 const PrivateRoute = () => {
@@ -11,13 +11,13 @@ const PrivateRoute = () => {
   const dispatch = useDispatch();
   const location = useLocation();
 
-  const authLoading = useSelector(selectAuthIsLoading);
+  const initialLoading = useSelector((state) => state.auth.initialLoad);
 
   useEffect(() => {
     if (!auth && location.pathname != '/logout') dispatch(setRequestedPage(location.pathname));
   }, [location, dispatch]);
 
-  if (authLoading) {
+  if (initialLoading) {
     return (
       <div
         style={{
