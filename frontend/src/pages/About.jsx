@@ -7,7 +7,7 @@ import { selectCurrentUser } from '../store/slices/authSlice';
 import { UserRoles } from '../constants';
 
 const About = (props) => {
-  const role = useSelector(selectCurrentUser).role;
+  const role = useSelector(selectCurrentUser)?.role ?? '';
   return (
     <div className="About">
       <UnderlinedTitle className="title">Outils</UnderlinedTitle>
