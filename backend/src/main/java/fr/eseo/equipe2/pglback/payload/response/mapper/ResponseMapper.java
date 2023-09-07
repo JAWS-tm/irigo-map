@@ -48,7 +48,7 @@ public class ResponseMapper {
             routesCoordinates.add(new ArrayList<>());
         }
 
-        for (LinePoint linePoint: busLine.getLinePoints()) {
+        for (LinePoint linePoint : busLine.getLinePoints()) {
             routesCoordinates.get(linePoint.getRouteGroup()).add(linePoint.getCoordinate());
         }
         line.setCoordinates(routesCoordinates);

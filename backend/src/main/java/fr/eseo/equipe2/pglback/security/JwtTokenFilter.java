@@ -32,8 +32,9 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
     /**
      * invoked once per request within a single request thread
-     * @param request type doGet, doPost, ...
-     * @param response with token access or Json
+     *
+     * @param request     type doGet, doPost, ...
+     * @param response    with token access or Json
      * @param filterChain
      * @throws ServletException
      * @throws IOException
@@ -56,6 +57,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
     /**
      * Verify if header type is a bearer type
+     *
      * @param request type doGet, doPost, ...
      * @return boolean
      */
@@ -64,8 +66,9 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         return !ObjectUtils.isEmpty(header) && header.startsWith("Bearer");
     }
 
-    /** 
+    /**
      * get header authorization
+     *
      * @param request type doGet, doPost, ...
      * @return
      */

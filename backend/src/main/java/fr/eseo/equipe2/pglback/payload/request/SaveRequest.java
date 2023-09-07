@@ -13,9 +13,10 @@ public class SaveRequest {
     private String password;
     private UserSex sex;
 
-    public SaveRequest(){
+    public SaveRequest() {
 
     }
+
     public String getFirstName() {
         return firstName;
     }

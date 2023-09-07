@@ -20,6 +20,7 @@ public class CommentController {
 
     /**
      * give a comment accordingly to the user
+     *
      * @param principal
      * @return all comments (notation and commentary) of the current user
      */
@@ -33,6 +34,7 @@ public class CommentController {
 
     /**
      * give a comment accordingly to the bus line
+     *
      * @param lineNb
      * @return comment (notation and commentary) of all users about a bus line
      */
@@ -44,6 +46,7 @@ public class CommentController {
 
     /**
      * give a comment accordingly to the user
+     *
      * @param principal current user
      * @return comment (notation and commentary)
      */
@@ -57,10 +60,11 @@ public class CommentController {
 
 
     /**
-    * add an opinion (notation and commentary) to the DB
-    * @param OpinionRequest and principal
-    * @return unauthorized if the current user is not allowed and register it in a new row or on the old opinion
-    */
+     * add an opinion (notation and commentary) to the DB
+     *
+     * @param OpinionRequest and principal
+     * @return unauthorized if the current user is not allowed and register it in a new row or on the old opinion
+     */
     @PostMapping
     public Response addComment(@RequestBody OpinionRequest OpinionRequest, Principal principal) {
         if (principal == null)

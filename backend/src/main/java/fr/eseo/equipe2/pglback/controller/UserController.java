@@ -32,31 +32,32 @@ public class UserController {
     }
 
     /**
+     * @param userDto
      * @author Louise
      * when we do modification on user
-     * @param userDto
      */
     @PutMapping("/{email}")
-    public Response<?> updateUser(@RequestBody UserDto userDto, @PathVariable String email){
+    public Response<?> updateUser(@RequestBody UserDto userDto, @PathVariable String email) {
         userService.updateUser(userDto);
         System.out.println(userDto);
         return Response.ok();
     }
 
     /**
+     * @param email email of the user
      * @author Louise
      * if we want delete user with his unique id
-     * @param email email of the user
      */
 
     @DeleteMapping("/{email}")
-    public Response<?> deleteUser(@PathVariable String email){
+    public Response<?> deleteUser(@PathVariable String email) {
         userService.deleteUser(email);
         return Response.ok();
     }
 
     /**
      * Forgot password (create & send recovery link)
+     *
      * @param forgotPasswordRequest account email to recover
      */
     @PostMapping("/forgot-password")
@@ -67,6 +68,7 @@ public class UserController {
 
     /**
      * Validate the password token
+     *
      * @param token token to verify
      */
     @GetMapping("/validate-password-token/{token}")
@@ -84,6 +86,7 @@ public class UserController {
 
     /**
      * Update the password
+     *
      * @param passwordResetRequest params used to update (token & password)
      */
     @PostMapping("/reset-password")
@@ -102,22 +105,24 @@ public class UserController {
 
     /**
      * Request a datascientist grade
-     * @param request request values
+     *
+     * @param request   request values
      * @param principal user who make the request
      */
     @PostMapping("/request-grade")
     public ResponseEntity<?> requestGrade(@RequestBody DataScientistGradeRequest request, Principal principal) {
-       if (principal == null)
-           return Response.unauthorized().build();
+        if (principal == null)
+            return Response.unauthorized().build();
 
-       if (userService.requestDataScientistGrade(request, principal.getName()))
-           return Response.ok().build();
-       else
-           return Response.badRequest().build();
+        if (userService.requestDataScientistGrade(request, principal.getName()))
+            return Response.ok().build();
+        else
+            return Response.badRequest().build();
     }
 
     /**
      * Check if user have done a grade request
+     *
      * @param principal user who make the request
      */
     @GetMapping("/request-grade")

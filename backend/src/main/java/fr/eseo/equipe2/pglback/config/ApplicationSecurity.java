@@ -23,6 +23,20 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 public class ApplicationSecurity {
+    private static final String[] AUTH_WHITELIST = {
+            // -- Swagger UI v2
+            "/v2/api-docs",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/configuration/ui",
+            "/configuration/security",
+            "/swagger-ui.html",
+            "/webjars/**",
+            // -- Swagger UI v3 (OpenAPI)
+            "/v3/api-docs/**",
+            "/swagger-ui/**"
+            // other public endpoints of your API may be appended to this array
+    };
     @Autowired
     private UserDao userDao;
     @Autowired
@@ -46,47 +60,32 @@ public class ApplicationSecurity {
         return authConfig.getAuthenticationManager();
     }
 
-    private static final String[] AUTH_WHITELIST = {
-            // -- Swagger UI v2
-            "/v2/api-docs",
-            "/swagger-resources",
-            "/swagger-resources/**",
-            "/configuration/ui",
-            "/configuration/security",
-            "/swagger-ui.html",
-            "/webjars/**",
-            // -- Swagger UI v3 (OpenAPI)
-            "/v3/api-docs/**",
-            "/swagger-ui/**"
-            // other public endpoints of your API may be appended to this array
-    };
-
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable);
         http.cors(cors -> cors.configure(http));
         http.sessionManagement((sessionManagement) ->
-            sessionManagement.
-                sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                sessionManagement.
+                        sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         );
         http.authorizeHttpRequests((authorizeHttpRequests) ->
-            authorizeHttpRequests
-                .requestMatchers(AUTH_WHITELIST).permitAll()
-                .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers("/api/users/forgot-password", "/api/users/reset-password",  "/api/users/validate-password-token/*").permitAll()
-                .requestMatchers("/api/admin/**").hasRole(Role.ADMIN.toString())
-                .requestMatchers("/api/**").authenticated()
-                .anyRequest().permitAll()
+                authorizeHttpRequests
+                        .requestMatchers(AUTH_WHITELIST).permitAll()
+                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/users/forgot-password", "/api/users/reset-password", "/api/users/validate-password-token/*").permitAll()
+                        .requestMatchers("/api/admin/**").hasRole(Role.ADMIN.toString())
+                        .requestMatchers("/api/**").authenticated()
+                        .anyRequest().permitAll()
         );
 
         http.exceptionHandling((exceptionHandling) ->
-            exceptionHandling
-                .authenticationEntryPoint(
-                    (request, response, ex) -> response.sendError(
-                            HttpServletResponse.SC_UNAUTHORIZED,
-                            ex.getMessage() + " erreur test dans AppSecuritu"
-                    )
-                )
+                exceptionHandling
+                        .authenticationEntryPoint(
+                                (request, response, ex) -> response.sendError(
+                                        HttpServletResponse.SC_UNAUTHORIZED,
+                                        ex.getMessage() + " erreur test dans AppSecuritu"
+                                )
+                        )
         );
 
         http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);

@@ -31,12 +31,13 @@ public class MailService {
 
     /**
      * Send email to user using template (in /resources/templates/mails/)
-     * @param to email of user
-     * @param subject email subject
-     * @param template name of the template (ex : resetPassword.html)
+     *
+     * @param to           email of user
+     * @param subject      email subject
+     * @param template     name of the template (ex : resetPassword.html)
      * @param templateData map of each variable used in the template file
      */
-    public void sendHtmlMessage(String to, String subject, String template, Map<String, Object> templateData)  {
+    public void sendHtmlMessage(String to, String subject, String template, Map<String, Object> templateData) {
         MimeMessage message = javaMailSender.createMimeMessage();
 
         Context context = new Context();
@@ -60,11 +61,12 @@ public class MailService {
 
     /**
      * Send email to user using text string
-     * @param to email of user
-     * @param subject email subject
+     *
+     * @param to         email of user
+     * @param subject    email subject
      * @param messageStr message to send
      */
-    public void sendMessage(String to, String subject, String messageStr)  {
+    public void sendMessage(String to, String subject, String messageStr) {
         MimeMessage message = javaMailSender.createMimeMessage();
 
         try {

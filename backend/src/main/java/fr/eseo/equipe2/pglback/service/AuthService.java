@@ -21,14 +21,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthService {
     @Autowired
-    private UserDao userDao;
-
-    @Autowired
     AuthenticationManager authenticationManager;
-
     @Autowired
     JwtTokenUtil jwtUtil;
-
+    @Autowired
+    private UserDao userDao;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -49,6 +46,7 @@ public class AuthService {
 
     /**
      * Register a new user
+     *
      * @param userDto register form data
      * @return created user
      * @throws CustomException.DuplicateEntityException if user already exist
@@ -59,7 +57,7 @@ public class AuthService {
         }
 
         User user = UserMapper.toUser(userDto)
-                            .setPassword(passwordEncoder.encode(userDto.getPassword()));
+                .setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setRole(Role.USER);
 
         return UserMapper.toUserDto(userDao.save(user).setPassword(""));
@@ -67,6 +65,7 @@ public class AuthService {
 
     /**
      * Get current user data
+     *
      * @param email email of logged user
      * @return user data
      */
@@ -82,6 +81,7 @@ public class AuthService {
 
     /**
      * Returns a new RuntimeException
+     *
      * @param entityType
      * @param exceptionType
      * @param args,

@@ -58,6 +58,7 @@ public class Comment {
     public User getUser() {
         return user;
     }
+
     public Comment setUser(User user) {
         this.user = user;
         return this;

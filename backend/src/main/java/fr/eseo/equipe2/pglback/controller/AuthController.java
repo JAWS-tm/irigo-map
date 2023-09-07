@@ -20,10 +20,10 @@ public class AuthController {
     AuthService authService;
 
     /**
-     * @author Louise
-     * Check if User is authorized
      * @param request of authentication
      * @return Unauthorized or Ok
+     * @author Louise
+     * Check if User is authorized
      */
     @PostMapping("/login")
     public Response<AuthDto> login(@RequestBody LoginRequest loginRequest) {
@@ -32,6 +32,7 @@ public class AuthController {
 
     /**
      * Register a new user
+     *
      * @param registerRequest request with register data
      * @return Ok or 409 CONFLICT
      */
@@ -42,6 +43,7 @@ public class AuthController {
 
     /**
      * Get current user data
+     *
      * @param principal currentUser
      * @return Ok or Unauthorized
      */

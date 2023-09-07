@@ -39,14 +39,16 @@ public class UserService {
 
     /**
      * List all users
+     *
      * @return list of all the users
      */
     public List<User> getUsers() {
-         return userDao.findAll(Sort.by(Sort.Direction.DESC, "id"));
+        return userDao.findAll(Sort.by(Sort.Direction.DESC, "id"));
     }
 
     /**
      * Get one user
+     *
      * @param userId user id
      * @return list of all the users
      */
@@ -56,6 +58,7 @@ public class UserService {
 
     /**
      * Find a user by id
+     *
      * @param userId user
      * @return corresponding user
      */
@@ -66,8 +69,10 @@ public class UserService {
         }
         return user.get();
     }
+
     /**
      * Find a user by email
+     *
      * @param userEmail user
      * @return corresponding user
      */
@@ -81,6 +86,7 @@ public class UserService {
 
     /**
      * Add user
+     *
      * @param userDto user data
      */
     public void addUser(UserDto userDto) {
@@ -93,6 +99,7 @@ public class UserService {
 
     /**
      * Update user data
+     *
      * @param userDto user dto object
      */
     public void updateUser(UserDto userDto) {
@@ -101,6 +108,7 @@ public class UserService {
 
     /**
      * Update user data
+     *
      * @param user user object
      */
     public void updateUser(User user) {
@@ -110,24 +118,26 @@ public class UserService {
 
     /**
      * Remove user by email
+     *
      * @param email user email
      */
     public void deleteUser(String email) {
         User user = userDao.getByEmail(email);
-        mailService.sendMessage(user.getEmail(), "Votre compte à bien été supprimé", "Bonjour "+user.getFirstName()+",\nVotre compte à bien été supprimé. \nÀ bientot !");
-        if(userDao.existsByEmail(email))
+        mailService.sendMessage(user.getEmail(), "Votre compte à bien été supprimé", "Bonjour " + user.getFirstName() + ",\nVotre compte à bien été supprimé. \nÀ bientot !");
+        if (userDao.existsByEmail(email))
             userDao.deleteByEmail(email);
     }
 
     /**
      * Remove user by id
+     *
      * @param id user id
      */
     public void deleteUser(Integer id) {
         User user = userDao.getReferenceById(id);
-        mailService.sendMessage(user.getEmail(), "Votre compte à été supprimé", "Bonjour "+user.getFirstName()+",\nVotre compte à été supprimé par un administrateur. \nÀ bientot !");
+        mailService.sendMessage(user.getEmail(), "Votre compte à été supprimé", "Bonjour " + user.getFirstName() + ",\nVotre compte à été supprimé par un administrateur. \nÀ bientot !");
 
-        if(!userDao.existsById(id))
+        if (!userDao.existsById(id))
             throw exception(EntityType.USER, ExceptionType.ENTITY_NOT_FOUND);
 
         userDao.deleteById(id);
@@ -135,6 +145,7 @@ public class UserService {
 
     /**
      * Send mail with reset link to the given email
+     *
      * @param email user email
      */
     public void forgotPassword(String email) {
@@ -153,11 +164,12 @@ public class UserService {
         mailData.put("name", user.getFirstName());
         mailData.put("token", token);
 
-        mailService.sendHtmlMessage(user.getEmail(), "Réinitialiser votre mot de passe","resetPassword.html", mailData);
+        mailService.sendHtmlMessage(user.getEmail(), "Réinitialiser votre mot de passe", "resetPassword.html", mailData);
     }
 
     /**
      * Check if password token is valid
+     *
      * @param token token to validate
      * @return invalidToken if token is not valid, expired if token is expired or null if token is valid
      */
@@ -171,6 +183,7 @@ public class UserService {
 
     /**
      * Verify the validity of the given token
+     *
      * @param token token to validate
      * @return if its expired or not
      */
@@ -181,8 +194,9 @@ public class UserService {
 
     /**
      * update the password user by the token
+     *
      * @param password new password
-     * @param token validation token
+     * @param token    validation token
      */
     public void updatePassword(String token, String password) {
         User user = passwordResetTokenDao.getByToken(token).getUser();
@@ -195,12 +209,13 @@ public class UserService {
         passwordResetTokenDao.deleteAllByUser(user);
 
         // notify the user
-        mailService.sendMessage(user.getEmail(), "Mot de passe réinitialisé", "Bonjour "+ user.getFirstName() +", \nVotre mot de passe vient d'être réinitialisé avec succès. \nSi vous n'etes pas à l'origine de ce changement contactez un administrateur dès que possible.");
+        mailService.sendMessage(user.getEmail(), "Mot de passe réinitialisé", "Bonjour " + user.getFirstName() + ", \nVotre mot de passe vient d'être réinitialisé avec succès. \nSi vous n'etes pas à l'origine de ce changement contactez un administrateur dès que possible.");
     }
 
 
     /**
      * Add a grade request
+     *
      * @param request request data
      */
     public boolean requestDataScientistGrade(DataScientistGradeRequest request, String userEmail) {
@@ -230,9 +245,10 @@ public class UserService {
 
     /**
      * Has done a request
+     *
      * @param email user mail
      */
-    public boolean hasDoneGradeRequest( String userEmail) {
+    public boolean hasDoneGradeRequest(String userEmail) {
         if (!userDao.existsByEmail(userEmail)) {
             throw exception(EntityType.USER, ExceptionType.ENTITY_NOT_FOUND, userEmail);
         }
@@ -264,7 +280,7 @@ public class UserService {
 
         gradeRequestDao.deleteById(id);
 
-        mailService.sendMessage(user.getEmail(), "Votre demande de Data Scientist à été acceptée", "Bonjour "+ user.getFirstName()+", \nVotre demande de grade Data Scientist à été étudiée par notre équipe et à été acceptée.\nVous avez désormais accès aux pages d'analyses.");
+        mailService.sendMessage(user.getEmail(), "Votre demande de Data Scientist à été acceptée", "Bonjour " + user.getFirstName() + ", \nVotre demande de grade Data Scientist à été étudiée par notre équipe et à été acceptée.\nVous avez désormais accès aux pages d'analyses.");
 
         return true;
     }
@@ -280,11 +296,12 @@ public class UserService {
 
         gradeRequestDao.deleteById(id);
 
-        mailService.sendMessage(user.getEmail(), "Votre demande de Data Scientist à été refusée", "Bonjour "+ user.getFirstName()+", \nVotre demande de grade Data Scientist à été étudiée par notre équipe et à été refusé.\nVous ne correspondez pas assez au profil recherché. \nCordialement");
+        mailService.sendMessage(user.getEmail(), "Votre demande de Data Scientist à été refusée", "Bonjour " + user.getFirstName() + ", \nVotre demande de grade Data Scientist à été étudiée par notre équipe et à été refusé.\nVous ne correspondez pas assez au profil recherché. \nCordialement");
     }
 
     /**
      * Returns a new RuntimeException
+     *
      * @param entityType
      * @param exceptionType
      * @param args

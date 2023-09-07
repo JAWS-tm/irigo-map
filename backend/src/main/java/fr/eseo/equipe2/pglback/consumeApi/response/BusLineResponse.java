@@ -12,43 +12,6 @@ public class BusLineResponse {
     private String route_color;
     private Shape shape;
 
-    public static class Shape {
-        private String type;
-        private Geometry geometry;
-
-        public String getType() {
-            return type;
-        }
-
-        public Shape setType(String type) {
-            this.type = type;
-            return this;
-        }
-
-        public Geometry getGeometry() {
-            return geometry;
-        }
-
-        public Shape setGeometry(Geometry geometry) {
-            this.geometry = geometry;
-            return this;
-        }
-
-        public static class Geometry {
-            private List<List<List<Double>>> coordinates;
-
-            public List<List<List<Double>>> getCoordinates() {
-                return coordinates;
-            }
-
-            public Geometry setCoordinates(List<List<List<Double>>> coordinates) {
-                this.coordinates = coordinates;
-                return this;
-            }
-        }
-    }
-
-
     public String getRoute_id() {
         return route_id;
     }
@@ -83,5 +46,41 @@ public class BusLineResponse {
     public BusLineResponse setShape(Shape shape) {
         this.shape = shape;
         return this;
+    }
+
+    public static class Shape {
+        private String type;
+        private Geometry geometry;
+
+        public String getType() {
+            return type;
+        }
+
+        public Shape setType(String type) {
+            this.type = type;
+            return this;
+        }
+
+        public Geometry getGeometry() {
+            return geometry;
+        }
+
+        public Shape setGeometry(Geometry geometry) {
+            this.geometry = geometry;
+            return this;
+        }
+
+        public static class Geometry {
+            private List<List<List<Double>>> coordinates;
+
+            public List<List<List<Double>>> getCoordinates() {
+                return coordinates;
+            }
+
+            public Geometry setCoordinates(List<List<List<Double>>> coordinates) {
+                this.coordinates = coordinates;
+                return this;
+            }
+        }
     }
 }

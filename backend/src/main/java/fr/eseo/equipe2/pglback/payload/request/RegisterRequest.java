@@ -10,6 +10,7 @@ import java.util.Date;
 //@Getter
 //@Setter
 //@Accessors(chain = true)
+
 /**
  * Request used for register
  */

@@ -25,6 +25,7 @@ public class CommentService {
 
     /**
      * Find all by userID
+     *
      * @param userEmail user
      * @return corresponding user
      */
@@ -35,6 +36,7 @@ public class CommentService {
 
     /**
      * Find all comments by numberLine
+     *
      * @param numberLine
      * @return comments
      */
@@ -45,6 +47,7 @@ public class CommentService {
 
     /**
      * chose to save the comment in a new row or replace the old one
+     *
      * @param commentDto
      * @param userEmail
      * @return save the comment
@@ -52,7 +55,7 @@ public class CommentService {
     public CommentDto register(CommentDto commentDto, String userEmail) {
         Optional<User> userReq = userDao.findByEmail(userEmail);
 
-        if(userReq.isEmpty())
+        if (userReq.isEmpty())
             throw exception(EntityType.USER, ExceptionType.ENTITY_NOT_FOUND);
 
         User user = userReq.get();
@@ -73,6 +76,7 @@ public class CommentService {
 
     /**
      * Returns a new RuntimeException
+     *
      * @param entityType
      * @param exceptionType
      * @param args

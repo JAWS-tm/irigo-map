@@ -14,16 +14,24 @@ public class CommentDto {
     }
 
 
-    public int getId() { return id;}
+    public int getId() {
+        return id;
+    }
+
     public CommentDto setId(int id) {
         this.id = id;
         return this;
     }
-    public User getUser() { return user;}
+
+    public User getUser() {
+        return user;
+    }
+
     public CommentDto setUser(User user) {
         this.user = user;
         return this;
     }
+
     public String getNumberLine() {
         return numberLine;
     }
@@ -42,7 +50,9 @@ public class CommentDto {
         return this;
     }
 
-    public String getCommentary() {return comment;}
+    public String getCommentary() {
+        return comment;
+    }
 
     public CommentDto setCommentary(String comment) {
         this.comment = comment;

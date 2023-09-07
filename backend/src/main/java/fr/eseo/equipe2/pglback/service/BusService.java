@@ -69,6 +69,7 @@ public class BusService {
 
     /**
      * Returns a new RuntimeException
+     *
      * @param entityType
      * @param exceptionType
      * @param args

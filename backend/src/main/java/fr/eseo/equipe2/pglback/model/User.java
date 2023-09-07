@@ -54,16 +54,18 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role = Role.USER;
 
-    public User() {}
+    public User() {
+    }
 
     /**
      * when we want new user we take all parameters
+     *
      * @param email     e-mail
      * @param password  password
      * @param firstName first name
      * @param lastName  last name
      * @param sex       (H,F,other,no precision)
-     * @param birthday (AAAA-MM-DD)
+     * @param birthday  (AAAA-MM-DD)
      */
     public User(String email, String password, String firstName, String lastName, UserSex sex, Date birthday) {
         this.email = email;
@@ -76,13 +78,14 @@ public class User implements UserDetails {
 
     /**
      * when we want new user we take all parameters
-     * @param email     e-mail
-     * @param password  password
-     * @param firstName      first name
-     * @param lastName  last name
-     * @param sex       (H,F,other,no precision)
-     * @param birthday (AAAA-MM-DD)
-     * @param travelHabits habits of travel
+     *
+     * @param email           e-mail
+     * @param password        password
+     * @param firstName       first name
+     * @param lastName        last name
+     * @param sex             (H,F,other,no precision)
+     * @param birthday        (AAAA-MM-DD)
+     * @param travelHabits    habits of travel
      * @param travelFrequency frequency of travel
      */
     public User(String email, String password, String firstName, String lastName, UserSex sex, Date birthday, TravelHabits travelHabits, TravelFrequency travelFrequency) {
@@ -97,7 +100,6 @@ public class User implements UserDetails {
     }
 
 
-
     // Spring security
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -107,24 +109,29 @@ public class User implements UserDetails {
     }
 
     @Override
-    public String getUsername() { return this.email; }
+    public String getUsername() {
+        return this.email;
+    }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
+
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
+
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
+
     @Override
     public boolean isEnabled() {
         return true;
     }
-
 
 
     // Getters & Setters

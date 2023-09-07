@@ -95,7 +95,7 @@ public class IrigoApi {
     }
 
     public Optional<StopTimeResponse[]> fetchStopTimetable(String stopId) {
-        String uri = API_URL + "/bus-tram-circulation-passages/exports/json?where=mnemoarret=\""+stopId+"\"";
+        String uri = API_URL + "/bus-tram-circulation-passages/exports/json?where=mnemoarret=\"" + stopId + "\"";
 
         StopTimeResponse[] stopTimetable = restTemplate.getForObject(uri, StopTimeResponse[].class);
 

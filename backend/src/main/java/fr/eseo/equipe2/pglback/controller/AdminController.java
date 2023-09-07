@@ -46,11 +46,12 @@ public class AdminController {
 
     /**
      * Get all grade requests
+     *
      * @return List of grade requests
      */
     @GetMapping("/grade-requests")
     public ResponseEntity<?> getGradeRequests() {
-       return Response.ok().setPayload(userService.getGradeRequests()).build();
+        return Response.ok().setPayload(userService.getGradeRequests()).build();
     }
 
     /**

@@ -15,7 +15,8 @@ public class JwtTokenUtil {
     // to long delay is a bad practice (use refresh token for renew access token regularly)
     private static final long EXPIRE_DURATION = 24 * 60 * 60 * 1000;
 
-    @Value("${app.jwt.secret}") // You need to update the document "application.properties" WARNING!! some information are confidential
+    @Value("${app.jwt.secret}")
+    // You need to update the document "application.properties" WARNING!! some information are confidential
     private String SECRET_KEY;
 
     public String getEmailFromToken(String token) {

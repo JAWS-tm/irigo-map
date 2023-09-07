@@ -35,8 +35,8 @@ public class IrigoResponseMapper {
         List<LinePoint> linePoints = new ArrayList<>();
         Integer orderId = 0;
         Integer groupId = 0;
-        for (List<List<Double>> routes: busLineRes.getShape().getGeometry().getCoordinates()) {
-            for (List<Double> routePoints: routes) {
+        for (List<List<Double>> routes : busLineRes.getShape().getGeometry().getCoordinates()) {
+            for (List<Double> routePoints : routes) {
                 Coordinate coord = new Coordinate(routePoints.get(1), routePoints.get(0));
                 linePoints.add(new LinePoint(orderId, groupId, coord, busLine));
                 orderId++;

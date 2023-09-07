@@ -20,6 +20,9 @@ public class Response<T> {
     private Object errors;
     private Object metadata;
 
+    public Response() {
+    }
+
     public static <T> Response<T> badRequest() {
         Response<T> response = new Response<>();
         response.setStatus(HttpStatus.BAD_REQUEST);
@@ -81,9 +84,6 @@ public class Response<T> {
 
     public ResponseEntity<Response<T>> build() {
         return new ResponseEntity<Response<T>>(this, this.status);
-    }
-
-    public Response() {
     }
 
     public HttpStatus getStatus() {

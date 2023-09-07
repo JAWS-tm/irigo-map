@@ -7,6 +7,7 @@ import fr.eseo.equipe2.pglback.payload.UserDto;
 public class UserMapper {
     /**
      * Create userDto by user
+     *
      * @param user
      * @return
      */
@@ -26,6 +27,7 @@ public class UserMapper {
 
     /**
      * Create an user by userDto
+     *
      * @param userDto
      * @return user
      */

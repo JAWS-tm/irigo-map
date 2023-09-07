@@ -10,7 +10,7 @@ public class LinePoint {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "lineId",nullable = false)
+    @JoinColumn(name = "lineId", nullable = false)
     private BusLine busLine;
 
     @Column(nullable = false)

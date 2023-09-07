@@ -23,6 +23,10 @@ public class PglBackApplication extends SpringBootServletInitializer {
     @Value("${spring.profiles.active:Unknown}")
     private String activeProfile;
 
+    public static void main(String[] args) {
+        SpringApplication.run(PglBackApplication.class, args);
+    }
+
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
         return builder.sources(PglBackApplication.class);
@@ -34,9 +38,5 @@ public class PglBackApplication extends SpringBootServletInitializer {
             irigoApi.fetchAllStop();
             irigoApi.fetchBusLines();
         }
-    }
-
-    public static void main(String[] args) {
-        SpringApplication.run(PglBackApplication.class, args);
     }
 }

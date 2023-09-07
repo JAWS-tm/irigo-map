@@ -13,6 +13,27 @@ public class StopTimetableResponse {
     private String stopId;
     private List<StopTime> timetable;
 
+    public StopTimetableResponse() {
+    }
+
+    public String getStopId() {
+        return stopId;
+    }
+
+    public StopTimetableResponse setStopId(String stopId) {
+        this.stopId = stopId;
+        return this;
+    }
+
+    public List<StopTime> getTimetable() {
+        return timetable;
+    }
+
+    public StopTimetableResponse setTimetable(List<StopTime> timetable) {
+        this.timetable = timetable;
+        return this;
+    }
+
     public static class StopTime {
         private String stopId;
         private Date theoreticalArrival;
@@ -24,10 +45,6 @@ public class StopTimetableResponse {
         private String lineId;
         private String destination;
         private String lineCodeName;
-
-        public enum TimeReliability {
-            THEORETICAL, RELIABLE
-        }
 
         public StopTime() {
         }
@@ -112,26 +129,9 @@ public class StopTimetableResponse {
             this.lineCodeName = lineCodeName;
             return this;
         }
-    }
 
-    public StopTimetableResponse() {
-    }
-
-    public String getStopId() {
-        return stopId;
-    }
-
-    public StopTimetableResponse setStopId(String stopId) {
-        this.stopId = stopId;
-        return this;
-    }
-
-    public List<StopTime> getTimetable() {
-        return timetable;
-    }
-
-    public StopTimetableResponse setTimetable(List<StopTime> timetable) {
-        this.timetable = timetable;
-        return this;
+        public enum TimeReliability {
+            THEORETICAL, RELIABLE
+        }
     }
 }
