@@ -1,7 +1,6 @@
 package fr.eseo.equipe2.pglback.model;
 
 import jakarta.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "bus_stops")

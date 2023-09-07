@@ -1,7 +1,7 @@
 package fr.eseo.equipe2.pglback.payload.mapper;
 
-import fr.eseo.equipe2.pglback.payload.UserDto;
 import fr.eseo.equipe2.pglback.model.User;
+import fr.eseo.equipe2.pglback.payload.UserDto;
 
 
 public class UserMapper {

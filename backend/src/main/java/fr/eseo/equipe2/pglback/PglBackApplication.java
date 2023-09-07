@@ -11,10 +11,6 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.event.EventListener;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 
-
-
-import java.util.Objects;
-
 @SpringBootApplication
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 /*@EnableJpaRepositories("fr.eseo.equipe2.pglback.*")

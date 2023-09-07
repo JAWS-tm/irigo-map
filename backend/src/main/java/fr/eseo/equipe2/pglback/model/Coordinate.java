@@ -1,7 +1,5 @@
 package fr.eseo.equipe2.pglback.model;
 
-import org.springframework.lang.Nullable;
-
 import jakarta.persistence.Embeddable;
 
 @Embeddable

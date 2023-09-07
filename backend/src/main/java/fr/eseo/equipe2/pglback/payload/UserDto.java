@@ -6,10 +6,6 @@ import fr.eseo.equipe2.pglback.enumeration.Role;
 import fr.eseo.equipe2.pglback.enumeration.TravelFrequency;
 import fr.eseo.equipe2.pglback.enumeration.TravelHabits;
 import fr.eseo.equipe2.pglback.enumeration.UserSex;
-//import lombok.Getter;
-//import lombok.NoArgsConstructor;
-//import lombok.Setter;
-//import lombok.experimental.Accessors;
 
 import java.util.Date;
 

@@ -1,11 +1,9 @@
 package fr.eseo.equipe2.pglback.controller;
 
-import fr.eseo.equipe2.pglback.dao.GradeRequestDao;
 import fr.eseo.equipe2.pglback.enumeration.Role;
 import fr.eseo.equipe2.pglback.model.User;
 import fr.eseo.equipe2.pglback.payload.request.AddUserRequest;
 import fr.eseo.equipe2.pglback.payload.response.Response;
-import fr.eseo.equipe2.pglback.service.MailService;
 import fr.eseo.equipe2.pglback.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

@@ -1,11 +1,10 @@
 package fr.eseo.equipe2.pglback.dao;
 
 import fr.eseo.equipe2.pglback.model.User;
-import fr.eseo.equipe2.pglback.payload.UserDto;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import jakarta.transaction.Transactional;
 import java.util.Optional;
 
 @Repository

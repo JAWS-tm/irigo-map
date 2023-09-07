@@ -1,13 +1,12 @@
 package fr.eseo.equipe2.pglback.controller;
 
+import fr.eseo.equipe2.pglback.payload.AuthDto;
+import fr.eseo.equipe2.pglback.payload.UserDto;
 import fr.eseo.equipe2.pglback.payload.request.LoginRequest;
 import fr.eseo.equipe2.pglback.payload.request.RegisterRequest;
 import fr.eseo.equipe2.pglback.payload.request.mapper.UserRequestMapper;
-import fr.eseo.equipe2.pglback.payload.AuthDto;
-import fr.eseo.equipe2.pglback.payload.UserDto;
 import fr.eseo.equipe2.pglback.payload.response.Response;
 import fr.eseo.equipe2.pglback.service.AuthService;
-import fr.eseo.equipe2.pglback.service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

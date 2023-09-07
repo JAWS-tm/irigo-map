@@ -2,7 +2,6 @@ package fr.eseo.equipe2.pglback.consumeApi.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import fr.eseo.equipe2.pglback.model.Coordinate;
-import io.swagger.models.auth.In;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class BusStopResponse {
