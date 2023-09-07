@@ -2,7 +2,7 @@ package fr.eseo.equipe2.pglback.model;
 
 import org.springframework.lang.Nullable;
 
-import javax.persistence.Embeddable;
+import jakarta.persistence.Embeddable;
 
 @Embeddable
 public class Coordinate {

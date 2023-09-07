@@ -1,5 +1,8 @@
 package fr.eseo.equipe2.pglback.service;
 
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.InternetAddress;
+import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -8,11 +11,8 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.thymeleaf.context.Context;
-import org.thymeleaf.spring5.SpringTemplateEngine;
+import org.thymeleaf.spring6.SpringTemplateEngine;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.module.Configuration;
@@ -32,7 +32,7 @@ public class MailService {
     private JavaMailSender javaMailSender;
 
     @Autowired
-    private  SpringTemplateEngine templateEngine;
+    private SpringTemplateEngine templateEngine;
 
     /**
      * Send email to user using template (in /resources/templates/mails/)
@@ -56,7 +56,7 @@ public class MailService {
             helper.setSubject(subject);
             String html = templateEngine.process(template, context);
             helper.setText(html, true);
-        } catch (MessagingException | UnsupportedEncodingException e) {
+        } catch (UnsupportedEncodingException | jakarta.mail.MessagingException e) {
             e.printStackTrace();
         }
 
@@ -79,7 +79,7 @@ public class MailService {
             helper.setTo(to);
             helper.setSubject(subject);
             helper.setText(messageStr);
-        } catch (MessagingException | UnsupportedEncodingException e) {
+        } catch (UnsupportedEncodingException | MessagingException e) {
             e.printStackTrace();
         }
 

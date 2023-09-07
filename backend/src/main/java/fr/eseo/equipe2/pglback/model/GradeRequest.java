@@ -1,6 +1,6 @@
 package fr.eseo.equipe2.pglback.model;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "grade_requests")

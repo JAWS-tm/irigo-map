@@ -10,6 +10,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,8 +18,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -63,24 +68,31 @@ public class ApplicationSecurity {
 
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
-        http.csrf().disable();
-        http.cors();
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.authorizeRequests()
-                .antMatchers(AUTH_WHITELIST).permitAll()
-                .antMatchers("/api/auth/**").permitAll()
-                .antMatchers("/api/users/forgot-password", "/api/users/reset-password",  "/api/users/validate-password-token/*").permitAll()
-                .antMatchers("/api/admin/**").hasRole(Role.ADMIN.toString())
-                .antMatchers("/api/**").authenticated()
-                .anyRequest().permitAll();
+        http.csrf(AbstractHttpConfigurer::disable);
+        http.cors(cors -> cors.configure(http));
+        http.sessionManagement((sessionManagement) ->
+            sessionManagement.
+                sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        );
+        http.authorizeHttpRequests((authorizeHttpRequests) ->
+            authorizeHttpRequests
+                .requestMatchers(AUTH_WHITELIST).permitAll()
+                .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/api/users/forgot-password", "/api/users/reset-password",  "/api/users/validate-password-token/*").permitAll()
+                .requestMatchers("/api/admin/**").hasRole(Role.ADMIN.toString())
+                .requestMatchers("/api/**").authenticated()
+                .anyRequest().permitAll()
+        );
 
-        http.exceptionHandling()
+        http.exceptionHandling((exceptionHandling) ->
+            exceptionHandling
                 .authenticationEntryPoint(
-                        (request, response, ex) -> response.sendError(
-                                HttpServletResponse.SC_UNAUTHORIZED,
-                                ex.getMessage() + " erreur test dans AppSecuritu"
-                        )
-                );
+                    (request, response, ex) -> response.sendError(
+                            HttpServletResponse.SC_UNAUTHORIZED,
+                            ex.getMessage() + " erreur test dans AppSecuritu"
+                    )
+                )
+        );
 
         http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();

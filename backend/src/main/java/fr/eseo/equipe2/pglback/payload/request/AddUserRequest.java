@@ -1,8 +1,8 @@
 package fr.eseo.equipe2.pglback.payload.request;
 
-import com.sun.istack.NotNull;
 import fr.eseo.equipe2.pglback.enumeration.Role;
 import fr.eseo.equipe2.pglback.enumeration.UserSex;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Date;
 

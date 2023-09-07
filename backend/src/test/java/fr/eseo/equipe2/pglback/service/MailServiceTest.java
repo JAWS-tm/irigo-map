@@ -3,7 +3,7 @@ package fr.eseo.equipe2.pglback.service;
 import com.icegreen.greenmail.configuration.GreenMailConfiguration;
 import com.icegreen.greenmail.junit5.GreenMailExtension;
 import com.icegreen.greenmail.util.ServerSetupTest;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @ActiveProfiles("test")
 @RunWith(SpringRunner.class)
-class MailServiceTest {
+public class MailServiceTest {
 
     @Autowired
     private MailService mailService;
@@ -32,7 +32,7 @@ class MailServiceTest {
             .withPerMethodLifecycle(false);
     
     @Test
-    void sendHtmlMessage() throws MessagingException, IOException {
+    public void sendHtmlMessage() throws MessagingException, IOException {
         String to = "jules.dempt@outlook.fr";
         String subject = "Test message";
         String template = "resetPassword.html";

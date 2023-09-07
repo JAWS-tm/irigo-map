@@ -1,9 +1,9 @@
 package fr.eseo.equipe2.pglback.payload.request;
 
-import com.sun.istack.NotNull;
 import fr.eseo.equipe2.pglback.enumeration.TravelFrequency;
 import fr.eseo.equipe2.pglback.enumeration.TravelHabits;
 import fr.eseo.equipe2.pglback.enumeration.UserSex;
+import org.jetbrains.annotations.NotNull;
 //import lombok.Getter;
 //import lombok.Setter;
 //import lombok.experimental.Accessors;

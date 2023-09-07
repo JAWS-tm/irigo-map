@@ -2,7 +2,6 @@ package fr.eseo.equipe2.pglback.payload.request;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.sun.istack.NotNull;
 import fr.eseo.equipe2.pglback.enumeration.UserSex;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)

@@ -10,13 +10,16 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+
 
 import java.util.Objects;
 
 @SpringBootApplication
-@EnableSwagger2 // /swagger-ui/index.html
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+/*@EnableJpaRepositories("fr.eseo.equipe2.pglback.*")
+@ComponentScan("fr.eseo.equipe2.pglback.*")
+@EntityScan("fr.eseo.equipe2.pglback.model.*")*/
 public class PglBackApplication extends SpringBootServletInitializer {
     @Autowired
     IrigoApi irigoApi;

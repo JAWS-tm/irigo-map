@@ -7,11 +7,11 @@ import fr.eseo.equipe2.pglback.enumeration.UserSex;
 //import lombok.Getter;
 //import lombok.Setter;
 //import lombok.experimental.Accessors;
+import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
 import java.util.*;
 
 //@Getter

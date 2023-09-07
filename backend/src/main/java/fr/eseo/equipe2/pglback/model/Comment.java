@@ -1,7 +1,7 @@
 package fr.eseo.equipe2.pglback.model;
 
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 //table comment avec notation et commentary dedans pour les notes et les coms
 

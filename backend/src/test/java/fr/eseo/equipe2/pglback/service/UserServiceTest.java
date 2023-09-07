@@ -12,7 +12,7 @@ import fr.eseo.equipe2.pglback.payload.request.ForgotPasswordRequest;
 import fr.eseo.equipe2.pglback.payload.request.PasswordResetRequest;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +21,8 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.ActiveProfiles;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import java.io.IOException;
 import java.util.Date;
 
@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class UserServiceTest {
+public class UserServiceTest {
     @LocalServerPort
     private int port;
 
@@ -52,7 +52,7 @@ class UserServiceTest {
 
     @Test
     @Order(1)
-    void createDefaultUser() {
+    public void createDefaultUser() {
         userDao.save(new User(
                 "jules.dempt@outlook.fr",
                 "test",
@@ -65,7 +65,7 @@ class UserServiceTest {
 
     @Test
     @Order(2)
-    void forgotPassword() throws MessagingException, IOException {
+    public void forgotPassword() throws MessagingException, IOException {
         String email = "jules.dempt@outlook.fr";
         ForgotPasswordRequest forgotPasswordRequest = new ForgotPasswordRequest();
         forgotPasswordRequest.setEmail(email);
@@ -86,7 +86,7 @@ class UserServiceTest {
 
     @Test
     @Order(3)
-    void validatePasswordToken() {
+    public void validatePasswordToken() {
         PasswordResetToken passwordResetToken = passwordResetTokenDao.getReferenceById(1);
 
         assertNotNull(passwordResetToken);
@@ -98,7 +98,7 @@ class UserServiceTest {
 
     @Test
     @Order(4)
-    void updatePassword() {
+    public void updatePassword() {
         PasswordResetToken passwordResetToken = passwordResetTokenDao.getReferenceById(1);
         System.out.println(passwordResetToken.getToken());
         PasswordResetRequest passwordResetRequest = new PasswordResetRequest();
@@ -110,7 +110,7 @@ class UserServiceTest {
     }
 
     @Test
-    void validateUnknownPasswordToken() {
+    public void validateUnknownPasswordToken() {
         String res = restTemplate.getForObject("http://localhost:"+port+"/api/users/validate-password-token/afbafuabf", String.class);
 
         assertTrue(res.contains("BAD_REQUEST"));
@@ -118,7 +118,7 @@ class UserServiceTest {
 
 
     @Test
-    void validateOutdatedPasswordToken() {
+    public void validateOutdatedPasswordToken() {
         User user = userDao.save(new User(
                 "test@test.fr",
                 "test",
@@ -139,6 +139,4 @@ class UserServiceTest {
 
         assertTrue(res.contains("BAD_REQUEST"));
     }
-
-
 }

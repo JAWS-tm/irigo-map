@@ -1,6 +1,6 @@
 package fr.eseo.equipe2.pglback.payload.request;
 
-import javax.persistence.Column;
+import jakarta.persistence.Column;
 
 public class DataScientistGradeRequest {
     private String job;
