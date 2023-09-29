@@ -11,8 +11,6 @@ services:
       MYSQL_PASSWORD: root
       MYSQL_DATABASE: pgl
       MYSQL_ROOT_PASSWORD: root
-    # networks:
-    #   - pgl-network
     ports:
       - 3306:3306
 
@@ -25,28 +23,20 @@ services:
     environment:
       PMA_HOST: mariadb
       MYSQL_ROOT_PASSWORD: root
-    # networks:
-    #   - pgl-network
 
-  web:
+  backend:
     depends_on:
       - mariadb
-    image: tomcat:jdk11
-
-    volumes:
-      - ./backend/build/libs/app.war:/usr/local/tomcat/webapps/ROOT.war
-    # networks:
-    #   - pgl-network
+    build: ./backend
+    image: irigo-map-backend
     ports:
       - "8082:8080"
-    # environment:
-    # MYSQL_ROOT_PASSWORD: root
-    # MYSQL_DATABASE: pgl
-    # MYSQL_USER: pgl
-    # MYSQL_PASSWORD: root
 
-# networks:
-#   pgl-network:
+  frontend:
+    build: ./frontend
+    image: irigo-map-frontend
+    ports:
+      - "8083:80"
 
 volumes:
   db:

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { config } from '../config/config';
+import authHeader from './auth-header';
 
 export const axiosClient = axios.create({
   baseURL: config.API_URL,
@@ -7,6 +8,12 @@ export const axiosClient = axios.create({
     Accept: 'application/json',
     'Content-Type': 'application/json',
   },
+});
+
+axiosClient.interceptors.request.use(function (config) {
+  config.headers.Authorization = authHeader().Authorization;
+  console.log('axiosClient.interceptors.request.use', config);
+  return config;
 });
 
 axiosClient.interceptors.response.use(

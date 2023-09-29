@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import classNames from 'classnames';
 import Logo from './Logo';
 import { useAuth } from '../hooks/auth';
@@ -14,7 +14,7 @@ const linksList = [
   { name: 'Aide', to: '/help' },
 ];
 
-function Navbar(props) {
+function Navbar() {
   const [stickyClass, setStickyClass] = useState('');
   const [toggleNav, setToggleNav] = useState(false);
 

@@ -4,9 +4,12 @@ import fr.eseo.equipe2.pglback.model.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.crypto.SecretKey;
 import java.util.Date;
 import java.util.function.Function;
 
@@ -18,6 +21,7 @@ public class JwtTokenUtil {
     @Value("${app.jwt.secret}")
     // You need to update the document "application.properties" WARNING!! some information are confidential
     private String SECRET_KEY;
+
 
     public String getEmailFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);
@@ -33,8 +37,10 @@ public class JwtTokenUtil {
     }
 
     private Claims getAllClaimsFromToken(String token) {
-        return Jwts.parser()
-                .setSigningKey(SECRET_KEY)
+        SecretKey secret = Keys.hmacShaKeyFor(Decoders.BASE64.decode(SECRET_KEY));
+        return Jwts.parserBuilder()
+                .setSigningKey(secret)
+                .build()
                 .parseClaimsJws(token)
                 .getBody();
     }
@@ -45,18 +51,21 @@ public class JwtTokenUtil {
     }
 
     public String generateAccessToken(User user) {
+        SecretKey secret = Keys.hmacShaKeyFor(Decoders.BASE64.decode(SECRET_KEY));
         return Jwts.builder()
                 .setSubject(user.getEmail())
                 .setIssuer("IrigoMap")
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRE_DURATION))
-                .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
+                .signWith(secret, SignatureAlgorithm.HS512)
                 .compact();
     }
 
     public boolean validateAccessToken(String token) {
+        SecretKey secret = Keys.hmacShaKeyFor(Decoders.BASE64.decode(SECRET_KEY));
         try {
-            Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token);
+            Jwts.parserBuilder().setSigningKey(secret).build().parseClaimsJws(token);
+
             return !isTokenExpired(token);
         } catch (Exception e) {
 //            e.printStackTrace();

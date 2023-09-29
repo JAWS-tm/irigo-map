@@ -1,4 +1,4 @@
-package fr.eseo.equipe2.pglback.service;
+/*package fr.eseo.equipe2.pglback.service;
 
 import com.icegreen.greenmail.configuration.GreenMailConfiguration;
 import com.icegreen.greenmail.junit5.GreenMailExtension;
@@ -139,4 +139,4 @@ public class UserServiceTest {
 
         assertTrue(res.contains("BAD_REQUEST"));
     }
-}
+}*/

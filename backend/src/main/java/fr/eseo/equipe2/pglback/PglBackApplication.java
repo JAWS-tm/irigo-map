@@ -9,13 +9,10 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.event.EventListener;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 
 @SpringBootApplication
-@EnableGlobalMethodSecurity(prePostEnabled = true)
-/*@EnableJpaRepositories("fr.eseo.equipe2.pglback.*")
-@ComponentScan("fr.eseo.equipe2.pglback.*")
-@EntityScan("fr.eseo.equipe2.pglback.model.*")*/
+@EnableMethodSecurity()
 public class PglBackApplication extends SpringBootServletInitializer {
     @Autowired
     IrigoApi irigoApi;

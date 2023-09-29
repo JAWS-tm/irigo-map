@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import About from './pages/About';
 import Home from './pages/Home';
 import Navbar from './layout/Navbar';
@@ -14,12 +14,7 @@ import PublicRoute from './components/routes/PublicRoute';
 import Logout from './pages/Logout';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  clearAuthStatus,
-  getMe,
-  selectRequestedPage,
-  setInitialLoad,
-} from './store/slices/authSlice';
+import { getMe, selectRequestedPage, setInitialLoad } from './store/slices/authSlice';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import Comments from './pages/Comments';

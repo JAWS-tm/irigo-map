@@ -1,6 +1,6 @@
 #ContainerMapPage {
   display: flex;
-  height: 100%;
+  height: calc(100vh - 100px);
   width: 100%;
   flex-direction: row;
   font-family: var(--font-secondary);
@@ -15,7 +15,7 @@
   #Map {
     height: 100%;
     width: 100%;
-    min-height: 100vh;
+    // min-height: 100vh;
     z-index: 9;
   }
 
@@ -63,6 +63,7 @@
     color: aliceblue;
     width: 100%;
     text-align: center;
+    overflow: auto;
     // overflow-y: scroll;
 
     h2 {

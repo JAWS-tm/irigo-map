@@ -20,8 +20,6 @@ import StarNotation from '../components/StarNotation';
 import FormInput from '../components/FormInput';
 import Button from '../components/Button';
 import commentService from '../services/comment.service';
-import { config } from '../config/config';
-import axios from 'axios';
 import { useRef } from 'react';
 
 const southWest = L.latLng(47.39, -0.66);
@@ -60,7 +58,7 @@ const svgIcon = (color) => {
   });
 };
 
-const Map = (props) => {
+const Map = () => {
   const [busData, setBusData] = useState(null);
   const [linesData, setLinesData] = useState(null);
   const [stopsData, setStopsData] = useState(null);

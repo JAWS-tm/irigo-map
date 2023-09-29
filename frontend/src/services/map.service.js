@@ -1,36 +1,33 @@
-import axios from 'axios';
 import { config } from '../config/config';
-import authHeader from './auth-header';
+import { axiosClient } from '.';
 
 const BUS_API_URL = config.API_URL + '/bus';
 
-const busApi = axios.create({ baseURL: BUS_API_URL, headers: authHeader() });
-
 class MapService {
   getBus() {
-    return busApi
-      .get('')
+    return axiosClient
+      .get(BUS_API_URL)
       .then((res) => res.data?.payload)
       .catch((err) => console.log(err));
   }
 
   getStops() {
-    return busApi
-      .get('/stops')
+    return axiosClient
+      .get(BUS_API_URL + '/stops')
       .then((res) => res.data?.payload)
       .catch((err) => console.log(err));
   }
 
   getLines() {
-    return busApi
-      .get('/lines')
+    return axiosClient
+      .get(BUS_API_URL + '/lines')
       .then((res) => res.data?.payload)
       .catch((err) => console.log(err));
   }
 
   getStopTimetable(id) {
-    return busApi
-      .get('/stops/' + id + '/timetable')
+    return axiosClient
+      .get(BUS_API_URL + '/stops/' + id + '/timetable')
       .then((res) => res.data?.payload)
       .catch((err) => console.log(err));
   }

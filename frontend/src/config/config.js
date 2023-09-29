@@ -6,8 +6,8 @@ const dev = {
 };
 
 const prod = {
-  API_URL: 'http://51.75.207.170/api',
-  FRONT_URL: 'http://51.75.207.170',
+  API_URL: 'https://irigo-map.jules-dempt.com/api',
+  FRONT_URL: 'https://irigo-map.jules-dempt.com/',
 };
 
 export const config = process.env.NODE_ENV === 'development' ? dev : prod;

@@ -42,6 +42,9 @@ public class IrigoApi {
         restTemplate = new RestTemplate();
     }
 
+    /**
+     * Fetch buses every 30 seconds
+     */
     @Scheduled(cron = "*/30 * * * * *")
     public void fetchAllBus() {
         String uri = API_URL + "/bus-tram-position-tr/exports/json";
@@ -79,7 +82,7 @@ public class IrigoApi {
 
     @Scheduled(cron = "@monthly")
     public void fetchBusLines() {
-        String uri = API_URL + "/irigo_gtfs_lines/exports/json?where=route_short_name in (\"01\", \"02\", \"03\", \"04\", \"05\", \"06\", \"07\", \"08\", \"09\", \"10\", \"11\", \"12\")";
+        String uri = API_URL + "/irigo_gtfs_lines/exports/json?where=route_short_name in (\"1\", \"2\", \"3\", \"4\", \"5\", \"6\", \"7\", \"8\", \"9\", \"10\", \"11\", \"12\")";
 
         BusLineResponse[] busLines = restTemplate.getForObject(uri, BusLineResponse[].class);
 
