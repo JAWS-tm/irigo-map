@@ -11,32 +11,32 @@ services:
       MYSQL_PASSWORD: root
       MYSQL_DATABASE: pgl
       MYSQL_ROOT_PASSWORD: root
-    ports:
-      - 3306:3306
+    # ports:
+    # - 3306
 
-  phpmyadmin:
-    depends_on:
-      - mariadb
-    image: phpmyadmin/phpmyadmin
-    ports:
-      - "8081:80"
-    environment:
-      PMA_HOST: mariadb
-      MYSQL_ROOT_PASSWORD: root
+  # phpmyadmin:
+  #   depends_on:
+  #     - mariadb
+  #   image: phpmyadmin/phpmyadmin
+  #   ports:
+  #     - "8081:80"
+  #   environment:
+  #     PMA_HOST: mariadb
+  #     MYSQL_ROOT_PASSWORD: root
 
   backend:
     depends_on:
       - mariadb
     build: ./backend
     image: irigo-map-backend
-    ports:
-      - "8082:8080"
+    # ports:
+    # - "8082:8080"
 
   frontend:
     build: ./frontend
     image: irigo-map-frontend
     ports:
-      - "8083:80"
+      - "8090:80"
 
 volumes:
   db:
