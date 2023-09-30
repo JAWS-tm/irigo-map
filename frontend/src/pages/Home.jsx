@@ -1,14 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import heroImg from '../assets/pictures/hero-bus-illustration.png';
 import UnderlinedTitle from '../components/UnderlinedTitle';
 import Button from '../components/Button';
-import PopupError from '../components/PopupError';
-import { Navigate, useNavigate } from 'react-router-dom';
 
-const Home = (props) => {
-  const navigate = useNavigate();
-
+const Home = () => {
   const goToAbout = () => {
     location.hash = '';
     location.hash = '#about';
@@ -21,9 +16,10 @@ const Home = (props) => {
           <div className="hero-data">
             <h2 className="title">Bienvenue sur IrigoMap</h2>
             <p className="description">
-              Nous sommes 3 étudiants en dernière année de Bachelor Ingénierie Informatique et
-              Electronique. Dans le cadre de notre formation, nous avons été amené à créer ce site
-              pour un enseignement intitulé Projet Génie Logiciel. Bonne visite !
+              Bienvenue sur IrigoMap, votre outil incontournable pour explorer les transports en
+              commun d'Angers en un clin d'œil. Découvrez les horaires, les itinéraires et les
+              arrêts de bus et de tramway de la ville, le tout avec simplicité et efficacité.
+              Planifiez vos déplacements en toute sérénité grâce à IrigoMap !
             </p>
             <div className="buttons-wrapper">
               <Button onClick={goToAbout} text="En savoir plus" />
@@ -57,9 +53,9 @@ const Home = (props) => {
       <section className="about-section" id="about">
         <UnderlinedTitle>À savoir</UnderlinedTitle>
         <p className="description">
-          Attention, dans le cadre de notre projet nous récolotons les informations que vous
-          avez/allez rentrer dans l'inscription mais aussi dans les demandes Data Scientist et
-          Administrateur
+          IrigoMap est un projet réalisé par des étudiants de l'ESEO d'Angers dans le cadre d'un
+          projet de fin d'année. L'objectif est d'afficher en temps réel toutes les informations sur
+          les transports en commun de la ville d'Angers.
         </p>
       </section>
     </div>
