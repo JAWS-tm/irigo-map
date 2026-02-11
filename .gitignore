@@ -1,2 +1,5 @@
 backend/src/main/resources/static/*
 
+# Fichiers de configuration avec données sensibles
+backend/src/main/resources/application-*.properties
+!backend/src/main/resources/application-test.properties
