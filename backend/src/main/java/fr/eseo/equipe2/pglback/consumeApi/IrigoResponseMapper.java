@@ -43,6 +43,12 @@ public class IrigoResponseMapper {
         String tripId = vehicle.getTrip().getTripId();
         String stopId = vehicle.getStopId();
 
+        // fetchBusLines() only tracks a fixed set of lines; skip vehicles running on any
+        // other line rather than showing them with a blank name.
+        if (!lineNameById.containsKey(routeId)) {
+            return Optional.empty();
+        }
+
         Bus bus = new Bus().setVehicleId(vehicleId)
                 .setLineNb(routeId)
                 .setLineName(lineNameById.get(routeId))
