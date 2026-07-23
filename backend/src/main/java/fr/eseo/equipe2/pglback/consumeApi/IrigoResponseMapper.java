@@ -21,10 +21,10 @@ public class IrigoResponseMapper {
     }
 
     public static BusStop toBusStopEntity(BusStopResponse busStopRes) {
-        return new BusStop().setId(busStopRes.getStop_id())
-                .setName(busStopRes.getStop_name())
-                .setCoordinates(busStopRes.getStop_coordinates())
-                .setWheelchairBoarding(busStopRes.getWheelchair_boarding() == 1);
+        return new BusStop().setId(busStopRes.getArret_id())
+                .setName(busStopRes.getArret_nom())
+                .setCoordinates(busStopRes.getArret_coordonnees())
+                .setWheelchairBoarding(busStopRes.getArret_accessibilite() == 1);
     }
 
     public static BusLine toBusLineEntity(BusLineResponse busLineRes) {

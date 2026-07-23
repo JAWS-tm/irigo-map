@@ -10,10 +10,14 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @SpringBootApplication
 @EnableMethodSecurity()
 public class PglBackApplication extends SpringBootServletInitializer {
+    private static final Logger logger = LoggerFactory.getLogger(PglBackApplication.class);
+
     @Autowired
     IrigoApi irigoApi;
 
@@ -32,8 +36,12 @@ public class PglBackApplication extends SpringBootServletInitializer {
     @EventListener(ApplicationReadyEvent.class)
     public void initializeDatabase() {
         if (activeProfile.equals("prod")) {
-            irigoApi.fetchAllStop();
-            irigoApi.fetchBusLines();
+            try {
+                irigoApi.fetchAllStop();
+                irigoApi.fetchBusLines();
+            } catch (Exception e) {
+                logger.error("Startup data initialization failed, application will continue without it", e);
+            }
         }
     }
 }

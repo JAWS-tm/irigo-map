@@ -5,56 +5,56 @@ import fr.eseo.equipe2.pglback.model.Coordinate;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class BusStopResponse {
-    private String stop_id;
-    private String stop_code;
-    private String stop_name;
-    private Coordinate stop_coordinates;
-    private Integer wheelchair_boarding;
+    private String arret_id;
+    private Integer arret_code;
+    private String arret_nom;
+    private Coordinate arret_coordonnees;
+    private Integer arret_accessibilite;
 
 
     // Getters & Setters
-    public String getStop_id() {
-        return stop_id;
+    public String getArret_id() {
+        return arret_id;
     }
 
-    public BusStopResponse setStop_id(String stop_id) {
-        this.stop_id = stop_id;
+    public BusStopResponse setArret_id(String arret_id) {
+        this.arret_id = arret_id;
         return this;
     }
 
-    public String getStop_code() {
-        return stop_code;
+    public Integer getArret_code() {
+        return arret_code;
     }
 
-    public BusStopResponse setStop_code(String stop_code) {
-        this.stop_code = stop_code;
+    public BusStopResponse setArret_code(Integer arret_code) {
+        this.arret_code = arret_code;
         return this;
     }
 
-    public String getStop_name() {
-        return stop_name;
+    public String getArret_nom() {
+        return arret_nom;
     }
 
-    public BusStopResponse setStop_name(String stop_name) {
-        this.stop_name = stop_name;
+    public BusStopResponse setArret_nom(String arret_nom) {
+        this.arret_nom = arret_nom;
         return this;
     }
 
-    public Coordinate getStop_coordinates() {
-        return stop_coordinates;
+    public Coordinate getArret_coordonnees() {
+        return arret_coordonnees;
     }
 
-    public BusStopResponse setStop_coordinates(Coordinate stop_coordinates) {
-        this.stop_coordinates = stop_coordinates;
+    public BusStopResponse setArret_coordonnees(Coordinate arret_coordonnees) {
+        this.arret_coordonnees = arret_coordonnees;
         return this;
     }
 
-    public Integer getWheelchair_boarding() {
-        return wheelchair_boarding;
+    public Integer getArret_accessibilite() {
+        return arret_accessibilite;
     }
 
-    public BusStopResponse setWheelchair_boarding(Integer wheelchair_boarding) {
-        this.wheelchair_boarding = wheelchair_boarding;
+    public BusStopResponse setArret_accessibilite(Integer arret_accessibilite) {
+        this.arret_accessibilite = arret_accessibilite;
         return this;
     }
 }
