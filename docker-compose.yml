@@ -25,6 +25,8 @@ services:
       - mariadb
     build: ./backend
     image: irigo-map-backend
+    environment:
+      JWT_SECRET: Rr4lh67fkhbzczQirt11dFYbGHaEBFcSiNGYr4NMijvElDEjhyTcjw1Z1zeUwwaeMzr9uIgMEeCiJmNFEVPc0g==
 
   frontend:
     depends_on:
