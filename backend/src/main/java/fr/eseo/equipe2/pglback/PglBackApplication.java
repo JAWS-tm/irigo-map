@@ -39,6 +39,7 @@ public class PglBackApplication extends SpringBootServletInitializer {
             try {
                 irigoApi.fetchAllStop();
                 irigoApi.fetchBusLines();
+                irigoApi.fetchStaticSchedule();
             } catch (Exception e) {
                 logger.error("Startup data initialization failed, application will continue without it", e);
             }
