@@ -2,7 +2,7 @@ import axios from 'axios';
 import { config } from '../config/config';
 import authHeader from './auth-header';
 
-const COMMENT_API_URL = config.API_URL + '/comments/';
+const COMMENT_API_URL = config.API_URL + '/comments';
 
 class CommentService {
   async handleSent(notation, comment, numberLine) {
@@ -13,11 +13,11 @@ class CommentService {
     );
   }
   async getUserComments() {
-    const response = await axios.get(COMMENT_API_URL + 'own', { headers: authHeader() });
+    const response = await axios.get(COMMENT_API_URL + '/own', { headers: authHeader() });
     return response.data.payload;
   }
   async getAllUsersCommentsByNumberLine(lineId) {
-    const response = await axios.get(COMMENT_API_URL + lineId, { headers: authHeader() });
+    const response = await axios.get(COMMENT_API_URL + '/' + lineId, { headers: authHeader() });
     return response.data.payload;
   }
 }
