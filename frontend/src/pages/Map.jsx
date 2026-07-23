@@ -124,7 +124,7 @@ const Map = () => {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
           <LayersControl position="topright">
-            <LayersControl.Overlay name={'Arrêts'}>
+            <LayersControl.Overlay name={'Arrêts'} checked>
               <LayerGroup>
                 {stopsData &&
                   stopsData.map((stop) => (
@@ -141,7 +141,7 @@ const Map = () => {
                   ))}
               </LayerGroup>
             </LayersControl.Overlay>
-            <LayersControl.Overlay name={'Bus'}>
+            <LayersControl.Overlay name={'Bus'} checked>
               <LayerGroup>
                 {busList &&
                   busList.map((bus, i) => (
@@ -163,6 +163,7 @@ const Map = () => {
                 <LayersControl.Overlay
                   key={line.lineId}
                   name={'(' + line.lineId + ') ' + line.lineName}
+                  checked
                 >
                   <Polyline positions={line.coordinates} color={'#' + line.lineColor} />
                 </LayersControl.Overlay>
