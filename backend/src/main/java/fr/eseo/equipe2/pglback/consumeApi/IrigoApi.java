@@ -7,7 +7,8 @@ import fr.eseo.equipe2.pglback.consumeApi.gtfs.GtfsStaticFeedClient;
 import fr.eseo.equipe2.pglback.consumeApi.gtfs.TripStopKey;
 import fr.eseo.equipe2.pglback.consumeApi.response.BusLineResponse;
 import fr.eseo.equipe2.pglback.consumeApi.response.BusStopResponse;
-import fr.eseo.equipe2.pglback.consumeApi.response.StopTimeResponse;
+import fr.eseo.equipe2.pglback.consumeApi.siri.SiriMonitoredStopVisit;
+import fr.eseo.equipe2.pglback.consumeApi.siri.SiriStopMonitoringClient;
 import fr.eseo.equipe2.pglback.dao.BusDao;
 import fr.eseo.equipe2.pglback.dao.BusLineDao;
 import fr.eseo.equipe2.pglback.dao.BusStopDao;
@@ -50,6 +51,7 @@ public class IrigoApi {
     private final RestTemplate restTemplate;
     private final GtfsRealtimeClient gtfsRealtimeClient;
     private final GtfsStaticFeedClient gtfsStaticFeedClient;
+    private final SiriStopMonitoringClient siriStopMonitoringClient;
 
     @Autowired
     public IrigoApi(BusDao busDao,
@@ -59,7 +61,8 @@ public class IrigoApi {
                      ScheduledStopTimeDao scheduledStopTimeDao,
                      RestTemplate restTemplate,
                      GtfsRealtimeClient gtfsRealtimeClient,
-                     GtfsStaticFeedClient gtfsStaticFeedClient) {
+                     GtfsStaticFeedClient gtfsStaticFeedClient,
+                     SiriStopMonitoringClient siriStopMonitoringClient) {
         this.busDao = busDao;
         this.busStopDao = busStopDao;
         this.busLineDao = busLineDao;
@@ -68,6 +71,7 @@ public class IrigoApi {
         this.restTemplate = restTemplate;
         this.gtfsRealtimeClient = gtfsRealtimeClient;
         this.gtfsStaticFeedClient = gtfsStaticFeedClient;
+        this.siriStopMonitoringClient = siriStopMonitoringClient;
     }
 
     /**
@@ -175,13 +179,9 @@ public class IrigoApi {
         }
     }
 
-    public Optional<StopTimeResponse[]> fetchStopTimetable(String stopId) {
+    public Optional<List<SiriMonitoredStopVisit>> fetchStopTimetable(String stopId) {
         try {
-            String uri = API_URL + "/bus-tram-circulation-passages/exports/json?where=mnemoarret=\"" + stopId + "\"";
-
-            StopTimeResponse[] stopTimetable = restTemplate.getForObject(uri, StopTimeResponse[].class);
-
-            return Optional.ofNullable(stopTimetable);
+            return Optional.of(siriStopMonitoringClient.fetchStopMonitoring(stopId));
         } catch (RestClientException e) {
             logger.error("fetchStopTimetable failed for stopId={}", stopId, e);
             return Optional.empty();

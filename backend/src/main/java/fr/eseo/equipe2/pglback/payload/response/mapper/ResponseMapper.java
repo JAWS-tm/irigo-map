@@ -1,6 +1,6 @@
 package fr.eseo.equipe2.pglback.payload.response.mapper;
 
-import fr.eseo.equipe2.pglback.consumeApi.response.StopTimeResponse;
+import fr.eseo.equipe2.pglback.consumeApi.siri.SiriMonitoredStopVisit;
 import fr.eseo.equipe2.pglback.model.*;
 import fr.eseo.equipe2.pglback.payload.response.BusLineResponse;
 import fr.eseo.equipe2.pglback.payload.response.BusResponse;
@@ -8,8 +8,9 @@ import fr.eseo.equipe2.pglback.payload.response.BusStopResponse;
 import fr.eseo.equipe2.pglback.payload.response.StopTimetableResponse;
 import fr.eseo.equipe2.pglback.payload.response.StopTimetableResponse.StopTime.TimeReliability;
 
+import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -56,21 +57,24 @@ public class ResponseMapper {
         return line;
     }
 
-    public static StopTimetableResponse toStopTimetableResponse(StopTimeResponse[] stopTimeResponses) {
-        List<StopTimetableResponse.StopTime> timetable = Arrays.stream(stopTimeResponses)
-                .map(time -> new StopTimetableResponse.StopTime()
-                        .setStopId(time.getMnemoarret())
-                        .setLineId(time.getMnemoligne())
-                        .setDestination(time.getDest())
-                        .setArrivalTime(time.getArrivee())
-                        .setDepartureTime(time.getDepart())
-                        .setTheoreticalArrival(time.getArriveetheorique())
-                        .setTheoreticalDeparture(time.getDeparttheorique())
-                        .setLineCodeName(time.getCodeparcours())
-                        .setReliability(time.getFiable() == "T" ? TimeReliability.THEORETICAL : TimeReliability.RELIABLE)
+    public static StopTimetableResponse toStopTimetableResponse(List<SiriMonitoredStopVisit> visits) {
+        List<StopTimetableResponse.StopTime> timetable = visits.stream()
+                .map(visit -> new StopTimetableResponse.StopTime()
+                        .setLineId(visit.lineRef())
+                        .setLineCodeName(visit.journeyPatternName())
+                        .setDestination(visit.destinationName())
+                        .setTheoreticalArrival(toDate(visit.aimedArrival()))
+                        .setTheoreticalDeparture(toDate(visit.aimedDeparture()))
+                        .setArrivalTime(toDate(visit.expectedArrival()))
+                        .setDepartureTime(toDate(visit.expectedDeparture()))
+                        .setReliability(visit.expectedArrival() != null ? TimeReliability.RELIABLE : TimeReliability.THEORETICAL)
                 )
                 .collect(Collectors.toList());
         return new StopTimetableResponse().setTimetable(timetable);
+    }
+
+    private static Date toDate(Instant instant) {
+        return instant == null ? null : Date.from(instant);
     }
 
 }

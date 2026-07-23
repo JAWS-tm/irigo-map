@@ -1,7 +1,7 @@
 package fr.eseo.equipe2.pglback.service;
 
 import fr.eseo.equipe2.pglback.consumeApi.IrigoApi;
-import fr.eseo.equipe2.pglback.consumeApi.response.StopTimeResponse;
+import fr.eseo.equipe2.pglback.consumeApi.siri.SiriMonitoredStopVisit;
 import fr.eseo.equipe2.pglback.dao.BusDao;
 import fr.eseo.equipe2.pglback.dao.BusLineDao;
 import fr.eseo.equipe2.pglback.dao.BusStopDao;
@@ -59,12 +59,12 @@ public class BusService {
         if (!busStopDao.existsById(stopId))
             throw exception(EntityType.BUS_STOP, ExceptionType.ENTITY_NOT_FOUND);
 
-        Optional<StopTimeResponse[]> stopTimeResponses = irigoApi.fetchStopTimetable(stopId);
+        Optional<List<SiriMonitoredStopVisit>> stopVisits = irigoApi.fetchStopTimetable(stopId);
 
-        if (stopTimeResponses.isEmpty())
+        if (stopVisits.isEmpty())
             throw exception(EntityType.BUS_STOP, ExceptionType.NO_VALUE);
 
-        return ResponseMapper.toStopTimetableResponse(stopTimeResponses.get());
+        return ResponseMapper.toStopTimetableResponse(stopVisits.get());
     }
 
     /**
