@@ -7,6 +7,7 @@ import fr.eseo.equipe2.pglback.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class IrigoResponseMapper {
     public static Bus toBusEntity(BusResponse busRes) {
@@ -21,10 +22,10 @@ public class IrigoResponseMapper {
     }
 
     public static BusStop toBusStopEntity(BusStopResponse busStopRes) {
-        return new BusStop().setId(busStopRes.getArret_id())
-                .setName(busStopRes.getArret_nom())
-                .setCoordinates(busStopRes.getArret_coordonnees())
-                .setWheelchairBoarding(busStopRes.getArret_accessibilite() == 1);
+        return new BusStop().setId(busStopRes.getId())
+                .setName(busStopRes.getName())
+                .setCoordinates(busStopRes.getCoordinates())
+                .setWheelchairBoarding(Objects.equals(busStopRes.getAccessibility(), 1));
     }
 
     public static BusLine toBusLineEntity(BusLineResponse busLineRes) {
