@@ -12,6 +12,7 @@ import Hamburger from 'hamburger-react';
 const linksList = [
   { name: 'Accueil', to: '/', props: { end: true } },
   { name: 'Aide', to: '/help' },
+  { name: 'Carte', to: '/map' },
 ];
 
 function Navbar() {
@@ -57,7 +58,6 @@ function Navbar() {
           </NavLink>
         ))}
         <div className="separator"></div>
-        <NavLink to={'/map'}>Carte</NavLink>
         {isAuth ? (
           <>
             {isAdmin && (

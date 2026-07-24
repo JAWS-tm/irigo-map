@@ -7,11 +7,6 @@ import Button from '../components/Button';
 const Home = () => {
   const navigate = useNavigate();
 
-  const goToAbout = () => {
-    location.hash = '';
-    location.hash = '#about';
-  };
-
   const goToMap = () => {
     navigate('/map');
   };
@@ -30,7 +25,6 @@ const Home = () => {
             </p>
             <div className="buttons-wrapper">
               <Button onClick={goToMap} text="Voir la carte en direct" />
-              <Button onClick={goToAbout} text="En savoir plus" secondary />
             </div>
           </div>
           <div className="hero-img">
