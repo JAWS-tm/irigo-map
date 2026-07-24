@@ -55,6 +55,22 @@
       margin-left: 5px;
       font-size: 15px;
     }
+
+    .login-prompt {
+      display: block;
+      margin: 5px 0 10px;
+      padding: 8px 10px;
+      font-size: 13px;
+      color: var(--light-text-color);
+
+      a {
+        color: var(--primary-light-color);
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
   }
 
   #legend {

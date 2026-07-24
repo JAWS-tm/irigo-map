@@ -286,8 +286,11 @@ var Legend = ({ lines }) => {
                   </Form>
                 </Formik>
               ) : (
-                <div style={{ display: displayNotation[line.lineId] ? 'block' : 'none' }}>
-                  <Link to="/sign-in">Connecte-toi pour noter cette ligne</Link>
+                <div
+                  className="login-prompt"
+                  style={{ display: displayNotation[line.lineId] ? 'block' : 'none' }}
+                >
+                  <Link to="/sign-in">Connecte-toi</Link> pour noter cette ligne
                 </div>
               )}
             </div>
