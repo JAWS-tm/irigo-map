@@ -72,6 +72,7 @@ public class ApplicationSecurity {
                 authorizeHttpRequests
                         .requestMatchers(AUTH_WHITELIST).permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/bus/**").permitAll()
                         .requestMatchers("/api/users/forgot-password", "/api/users/reset-password", "/api/users/validate-password-token/*").permitAll()
                         .requestMatchers("/api/admin/**").hasRole(Role.ADMIN.toString())
                         .requestMatchers("/api/**").authenticated()
