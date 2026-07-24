@@ -6,7 +6,7 @@ const dev = {
 };
 
 const prod = {
-  API_URL: 'https://irigo-map.jules-dempt.com/api',
+  API_URL: 'https://api.irigo-map.jules-dempt.com/api',
   FRONT_URL: 'https://irigo-map.jules-dempt.com/',
 };
 
