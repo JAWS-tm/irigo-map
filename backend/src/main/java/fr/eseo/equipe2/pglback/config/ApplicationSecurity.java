@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -73,6 +74,7 @@ public class ApplicationSecurity {
                         .requestMatchers(AUTH_WHITELIST).permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/bus/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/comments/**").permitAll()
                         .requestMatchers("/api/users/forgot-password", "/api/users/reset-password", "/api/users/validate-password-token/*").permitAll()
                         .requestMatchers("/api/admin/**").hasRole(Role.ADMIN.toString())
                         .requestMatchers("/api/**").authenticated()

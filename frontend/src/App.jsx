@@ -52,9 +52,9 @@ function App() {
           <Route path="about" element={<About />} />
           <Route path="help" element={<Help />} />
           <Route path="comments" element={<Comments />} />
+          <Route path="map" element={<Map />} />
 
           <Route path="/" element={<PrivateRoute />}>
-            <Route path="map" element={<Map />} />
             <Route path="logout" element={<Logout />} />
             <Route path="profile" element={<UserData />} />
             <Route path="request-grade" element={<GradeRequest />} />

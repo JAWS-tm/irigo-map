@@ -57,6 +57,7 @@ function Navbar() {
           </NavLink>
         ))}
         <div className="separator"></div>
+        <NavLink to={'/map'}>Carte</NavLink>
         {isAuth ? (
           <>
             {isAdmin && (
@@ -71,7 +72,6 @@ function Navbar() {
               </MultipleLink>
             )}
             <NavLink to={'/about'}>Outils</NavLink>
-            <NavLink to={'/map'}>Carte</NavLink>
             <NavLink to={'/logout'}>Déconnexion</NavLink>
           </>
         ) : (

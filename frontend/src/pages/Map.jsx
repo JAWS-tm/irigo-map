@@ -20,7 +20,9 @@ import StarNotation from '../components/StarNotation';
 import FormInput from '../components/FormInput';
 import Button from '../components/Button';
 import commentService from '../services/comment.service';
+import { useAuth } from '../hooks/auth';
 import { useRef } from 'react';
+import { Link } from 'react-router-dom';
 
 const southWest = L.latLng(47.39, -0.66);
 const northEast = L.latLng(47.58, -0.44);
@@ -184,6 +186,7 @@ export default Map;
 var Legend = ({ lines }) => {
   const [displayNotation, setDisplayNotation] = useState({});
   const [lineNotation, setLineNotation] = useState({});
+  const isAuth = useAuth();
 
   useEffect(() => {
     if (!lines) return;
@@ -195,20 +198,24 @@ var Legend = ({ lines }) => {
   };
 
   useEffect(() => {
-    commentService.getUserComments().then((data) => {
-      let newState = {};
-      data.forEach((commentary) => {
-        newState = {
-          [commentary.numberLine]: {
-            notation: commentary.notation,
-            comment: commentary.commentary,
-          },
-          ...newState,
-        };
-      });
-      setLineNotation(newState);
-    });
-  }, []);
+    if (!isAuth) return;
+    commentService
+      .getUserComments()
+      .then((data) => {
+        let newState = {};
+        data.forEach((commentary) => {
+          newState = {
+            [commentary.numberLine]: {
+              notation: commentary.notation,
+              comment: commentary.commentary,
+            },
+            ...newState,
+          };
+        });
+        setLineNotation(newState);
+      })
+      .catch((err) => console.log(err));
+  }, [isAuth]);
 
   return (
     <div id="legend">
@@ -245,38 +252,44 @@ var Legend = ({ lines }) => {
                 </div>
                 <span className="label">{line.lineName}</span>
               </div>
-              <Formik
-                onSubmit={handleSent(line.lineId)}
-                initialValues={
-                  lineNotation[line.lineId]
-                    ? {
-                        notation: lineNotation[line.lineId].notation,
-                        comment: lineNotation[line.lineId].comment,
-                      }
-                    : {
-                        notation: '',
-                        comment: '',
-                      }
-                }
-              >
-                <Form>
-                  <div style={{ display: displayNotation[line.lineId] ? 'inline-block' : 'none' }}>
-                    <Field component={StarNotation} name="notation"></Field>
-                    <div style={{ padding: '10px' }}>
-                      <Field
-                        label="commentaire ..."
-                        name="comment"
-                        className="input"
-                        component={FormInput}
-                      />
-                    </div>
+              {isAuth ? (
+                <Formik
+                  onSubmit={handleSent(line.lineId)}
+                  initialValues={
+                    lineNotation[line.lineId]
+                      ? {
+                          notation: lineNotation[line.lineId].notation,
+                          comment: lineNotation[line.lineId].comment,
+                        }
+                      : {
+                          notation: '',
+                          comment: '',
+                        }
+                  }
+                >
+                  <Form>
+                    <div style={{ display: displayNotation[line.lineId] ? 'inline-block' : 'none' }}>
+                      <Field component={StarNotation} name="notation"></Field>
+                      <div style={{ padding: '10px' }}>
+                        <Field
+                          label="commentaire ..."
+                          name="comment"
+                          className="input"
+                          component={FormInput}
+                        />
+                      </div>
 
-                    <div className="btn-wrapper" style={{ padding: '5px' }}>
-                      <Button type="submit" text="envoyer" />
+                      <div className="btn-wrapper" style={{ padding: '5px' }}>
+                        <Button type="submit" text="envoyer" />
+                      </div>
                     </div>
-                  </div>
-                </Form>
-              </Formik>
+                  </Form>
+                </Formik>
+              ) : (
+                <div style={{ display: displayNotation[line.lineId] ? 'block' : 'none' }}>
+                  <Link to="/sign-in">Connecte-toi pour noter cette ligne</Link>
+                </div>
+              )}
             </div>
           ))}
         {!lines && (

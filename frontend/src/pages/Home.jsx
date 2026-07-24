@@ -1,12 +1,19 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import heroImg from '../assets/pictures/hero-bus-illustration.png';
 import UnderlinedTitle from '../components/UnderlinedTitle';
 import Button from '../components/Button';
 
 const Home = () => {
+  const navigate = useNavigate();
+
   const goToAbout = () => {
     location.hash = '';
     location.hash = '#about';
+  };
+
+  const goToMap = () => {
+    navigate('/map');
   };
 
   return (
@@ -22,7 +29,8 @@ const Home = () => {
               Planifiez vos déplacements en toute sérénité grâce à IrigoMap !
             </p>
             <div className="buttons-wrapper">
-              <Button onClick={goToAbout} text="En savoir plus" />
+              <Button onClick={goToMap} text="Voir la carte en direct" />
+              <Button onClick={goToAbout} text="En savoir plus" secondary />
             </div>
           </div>
           <div className="hero-img">
