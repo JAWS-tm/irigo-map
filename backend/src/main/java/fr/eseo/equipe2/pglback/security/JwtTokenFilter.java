@@ -81,6 +81,13 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         String email = jwtUtil.getEmailFromToken(token);
         UserDetails userDetails = userDao.getByEmail(email);
 
+        // A signature can still be valid for a token whose user no longer exists
+        // (e.g. deleted since the token was issued) - treat that as unauthenticated
+        // rather than failing the request.
+        if (userDetails == null) {
+            return;
+        }
+
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
         authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         SecurityContextHolder.getContext().setAuthentication(authentication);
